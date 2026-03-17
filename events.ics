@@ -1,0 +1,515 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//OKC Event Radar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:OKC Event Radar
+X-WR-CALDESC:Oklahoma City events - art, music, food, sports, theater, comedy, film, festivals
+X-WR-TIMEZONE:America/Chicago
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:f108d1cb-143b-4e4b-adcb-e0d222bc27d3@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260327T190000Z
+DTEND:20260327T210000Z
+SUMMARY:Thunder vs. Chicago Bulls
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:OKC Thunder vs. Chicago Bulls at Paycom Center. 7:00 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:74e8a202-1497-4ae4-b0d9-99d14eabc43b@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260329T183000Z
+DTEND:20260329T203000Z
+SUMMARY:Thunder vs. New York Knicks
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:OKC Thunder vs. New York Knicks at Paycom Center. 6:30 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:16227a37-05a3-4ff3-ad7a-b9ce247ffdbc@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260330T203000Z
+DTEND:20260330T223000Z
+SUMMARY:Thunder vs. Detroit Pistons
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:OKC Thunder vs. Detroit Pistons. 8:30 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:113c7828-ad5e-4411-b730-e14db9cf6188@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260402T203000Z
+DTEND:20260402T223000Z
+SUMMARY:Thunder vs. LA Lakers
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:OKC Thunder host the LA Lakers. 8:30 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:f57d8a5a-841a-4719-8671-8215b100d033@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260405T180000Z
+DTEND:20260405T200000Z
+SUMMARY:Thunder vs. Utah Jazz
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:OKC Thunder vs. Utah Jazz. 6:00 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:e30bf5cc-0fdd-430b-8a74-cf5216f75a2c@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260319T170000Z
+DTEND:20260319T230000Z
+SUMMARY:NCAA Tournament - First Rounds
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:March Madness at Paycom Center. First and second round games.
+END:VEVENT
+BEGIN:VEVENT
+UID:35eb1b5b-4657-426f-94ab-2cd0b20ea295@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260321T170000Z
+DTEND:20260321T230000Z
+SUMMARY:NCAA Tournament - Session 2
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:Second session of NCAA Tournament at Paycom Center.
+END:VEVENT
+BEGIN:VEVENT
+UID:8489b254-9d28-4a08-ba71-25b832fed6f7@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260414T190000Z
+DTEND:20260414T213000Z
+SUMMARY:Lyric Theatre: SISTER ACT
+LOCATION:Lyric Theatre, Oklahoma City, OK
+DESCRIPTION:Tony-nominated musical at Lyric Theatre. Runs April 2026.
+END:VEVENT
+BEGIN:VEVENT
+UID:c6cea3dd-b07c-44c5-83b8-843ecf0cce40@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260616T190000Z
+DTEND:20260616T213000Z
+SUMMARY:Lyric Theatre: ANNIE
+LOCATION:Lyric Theatre at the Civic Center, Oklahoma City, OK
+DESCRIPTION:Lyric Theatre presents Annie at Civic Center Music Hall. Runs June 16-21.
+END:VEVENT
+BEGIN:VEVENT
+UID:b4f37452-743d-4eed-84b6-d76cfd79a64b@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260728T190000Z
+DTEND:20260728T213000Z
+SUMMARY:Lyric Theatre: SWEENEY TODD
+LOCATION:Lyric Theatre at the Civic Center, Oklahoma City, OK
+DESCRIPTION:Sondheim dark masterpiece at Lyric Theatre. Runs July 28 - Aug 2.
+END:VEVENT
+BEGIN:VEVENT
+UID:c546f3f8-b796-458f-884e-a551cb5bf47a@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260916T190000Z
+DTEND:20260916T213000Z
+SUMMARY:Lyric Theatre: COME FROM AWAY
+LOCATION:Lyric Theatre at the Civic Center, Oklahoma City, OK
+DESCRIPTION:Tony Award-winning musical. Runs Sept 16 - Oct 4.
+END:VEVENT
+BEGIN:VEVENT
+UID:1549e593-dfee-40d7-8ed7-7312e25a887f@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260610T170000Z
+DTEND:20260610T230000Z
+SUMMARY:deadCenter Film Festival - Day 1
+LOCATION:Oklahoma Contemporary, Oklahoma City, OK
+DESCRIPTION:26th Annual deadCenter Film Festival opens. Oklahoma only Oscar-qualifying film festival.
+END:VEVENT
+BEGIN:VEVENT
+UID:93e41345-81de-4182-839e-aa9d4634d61d@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260611T120000Z
+DTEND:20260611T230000Z
+SUMMARY:deadCenter Film Festival - Day 2
+LOCATION:Multiple Venues, Oklahoma City, OK
+DESCRIPTION:deadCenter Day 2 - screenings at Oklahoma Contemporary, Harkins Bricktown, OKCMOA.
+END:VEVENT
+BEGIN:VEVENT
+UID:4a26990f-c733-4567-aa7d-0257c5d29c5a@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260612T120000Z
+DTEND:20260612T230000Z
+SUMMARY:deadCenter Film Festival - Day 3
+LOCATION:Multiple Venues, Oklahoma City, OK
+DESCRIPTION:deadCenter Day 3 - panels, filmmaker networking, and evening parties.
+END:VEVENT
+BEGIN:VEVENT
+UID:eb5c9a33-5ad1-4056-a115-2cfbecf647df@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260613T120000Z
+DTEND:20260613T230000Z
+SUMMARY:deadCenter Film Festival - Day 4
+LOCATION:Multiple Venues, Oklahoma City, OK
+DESCRIPTION:deadCenter Day 4 - Saturday screenings and legendary evening parties.
+END:VEVENT
+BEGIN:VEVENT
+UID:362dbadc-b90d-42aa-aef0-943b9406b8e7@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260614T170000Z
+DTEND:20260614T230000Z
+SUMMARY:deadCenter Film Festival - Awards Night
+LOCATION:Oklahoma Contemporary, Oklahoma City, OK
+DESCRIPTION:26th Annual deadCenter Film Festival Awards Ceremony closing night.
+END:VEVENT
+BEGIN:VEVENT
+UID:5ec8070c-f5d3-4287-b1de-673d6d0a235b@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260414T183000Z
+DTEND:20260414T213000Z
+SUMMARY:The Brook and The Bluff
+LOCATION:The Jones Assembly, Oklahoma City, OK
+DESCRIPTION:Nashville indie-folk favorites at The Jones Assembly. Doors 6:30 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:00e7517b-ac83-4ea4-9b37-bebc9bad374e@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260422T183000Z
+DTEND:20260422T213000Z
+SUMMARY:Max McNown
+LOCATION:The Jones Assembly, Oklahoma City, OK
+DESCRIPTION:Singer-songwriter Max McNown at The Jones Assembly. Doors 6:30 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:3564ccf7-b944-4096-b09c-61aad58be64f@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260430T183000Z
+DTEND:20260430T213000Z
+SUMMARY:Blackberry Smoke
+LOCATION:The Jones Assembly, Oklahoma City, OK
+DESCRIPTION:Southern rock legends Blackberry Smoke at The Jones Assembly. Doors 6:30 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:dfbbf592-e4fc-4ea6-905e-c682d588df13@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260523T190000Z
+DTEND:20260523T220000Z
+SUMMARY:Shinedown: Dance Kid Dance Act II
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:Shinedown with Coheed and Cambria and Black Stone Cherry. 7:00 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:d74e508f-6a5f-4198-961f-c2e034f46fff@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260724T193000Z
+DTEND:20260724T223000Z
+SUMMARY:Jason Aldean: Songs About Us Tour
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:Jason Aldean with Chase Matthew, Mackenzie Carpenter and Dee Jay Silver. 7:30 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:9bcdb39e-4ec9-4aa1-9c92-c006ed28b86a@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260716T190000Z
+DTEND:20260716T220000Z
+SUMMARY:Dude Perfect: Squad Games Tour
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:Dude Perfect live at Paycom Center. 7:00 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:1cb0d92c-e1bc-44b1-bfd0-b12c6a8801ba@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260731T194500Z
+DTEND:20260731T224500Z
+SUMMARY:PBR: Team Series - Friday
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:Professional Bull Riders Team Series Friday night. 7:45 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:8a3ebe88-f3c0-44d4-93d1-2d324041b284@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260801T184500Z
+DTEND:20260801T214500Z
+SUMMARY:PBR: Team Series - Saturday
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:PBR Team Series Saturday. 6:45 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:8e344fbc-29ae-44d9-83b7-fec85a500b57@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260802T134500Z
+DTEND:20260802T164500Z
+SUMMARY:PBR: Team Series - Sunday
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:PBR Team Series Sunday final day. 1:45 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:5328275d-48d2-4b42-9cd8-57f8f94d7eb0@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20261001T190000Z
+DTEND:20261001T220000Z
+SUMMARY:Brooks and Dunn with Tucker Wetmore
+LOCATION:Paycom Center, Oklahoma City, OK
+DESCRIPTION:Country icons Brooks and Dunn with Tucker Wetmore. 7:00 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:3bda2f7d-35a6-4e1a-86e3-7d1870d094c6@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260321T201500Z
+DTEND:20260321T230000Z
+SUMMARY:The Great Divide - Cains Ballroom
+LOCATION:Cains Ballroom, Tulsa, OK
+DESCRIPTION:Oklahoma roots-rock legends at the historic Cains Ballroom. Doors 8:15 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:b0fc3a15-d1b6-4a0f-b046-991060c619c7@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260328T170000Z
+DTEND:20260328T220000Z
+SUMMARY:Bingo Loco - Cains Ballroom
+LOCATION:Cains Ballroom, Tulsa, OK
+DESCRIPTION:Rave-style bingo experience at Cains Ballroom. 21+. Doors 5:00 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:44451e9c-a85f-4369-b429-01487f209e63@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260417T183000Z
+DTEND:20260417T220000Z
+SUMMARY:Bob Wills Texas Playboys - Cains
+LOCATION:Cains Ballroom, Tulsa, OK
+DESCRIPTION:The legendary Bob Wills Texas Playboys at the home of Western Swing. Doors 6:30 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:814cc77c-413a-477d-acaa-fa4247dfe609@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260422T200000Z
+DTEND:20260422T230000Z
+SUMMARY:49 Winchester - Cains Ballroom
+LOCATION:Cains Ballroom, Tulsa, OK
+DESCRIPTION:Virginia roots-rock outfit 49 Winchester at Cains. Doors 8:00 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:256c5eb9-a682-491d-9927-f2d4bcec7b5b@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260523T100000Z
+DTEND:20260523T220000Z
+SUMMARY:Paseo Arts Festival - Day 1
+LOCATION:Paseo Arts District, Oklahoma City, OK
+DESCRIPTION:40+ year OKC Memorial Day tradition. 85 juried artists, 52 live performers, 20 food vendors. Free.
+END:VEVENT
+BEGIN:VEVENT
+UID:ea1120fa-532c-4746-a587-cde3ca1c7757@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260524T100000Z
+DTEND:20260524T220000Z
+SUMMARY:Paseo Arts Festival - Day 2
+LOCATION:Paseo Arts District, Oklahoma City, OK
+DESCRIPTION:Day 2 of Paseo Arts Festival. Live music until 10 PM across three stages.
+END:VEVENT
+BEGIN:VEVENT
+UID:edb631e7-5081-4958-9dcf-53dfc21ec85e@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260525T100000Z
+DTEND:20260525T220000Z
+SUMMARY:Paseo Arts Festival - Day 3
+LOCATION:Paseo Arts District, Oklahoma City, OK
+DESCRIPTION:Memorial Day - final day of Paseo Arts Festival. Free and open to all.
+END:VEVENT
+BEGIN:VEVENT
+UID:5a21a8cd-e3aa-40d7-a5d9-c5877b026636@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260320T170000Z
+DTEND:20260320T210000Z
+SUMMARY:Live! on the Plaza
+LOCATION:Plaza District, NW 16th St, Oklahoma City, OK
+DESCRIPTION:Free monthly art walk in the Plaza District. Live entertainment, markets, food. Free.
+END:VEVENT
+BEGIN:VEVENT
+UID:8ac4fee5-275d-4eba-962b-e074ceb410fb@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260417T170000Z
+DTEND:20260417T210000Z
+SUMMARY:Live! on the Plaza
+LOCATION:Plaza District, NW 16th St, Oklahoma City, OK
+DESCRIPTION:Free monthly art walk in the Plaza District. Live entertainment, markets, food. Free.
+END:VEVENT
+BEGIN:VEVENT
+UID:f9753d54-7858-46de-accf-451f9a79b675@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260515T170000Z
+DTEND:20260515T210000Z
+SUMMARY:Live! on the Plaza
+LOCATION:Plaza District, NW 16th St, Oklahoma City, OK
+DESCRIPTION:Free monthly art walk in the Plaza District. Live entertainment, markets, food. Free.
+END:VEVENT
+BEGIN:VEVENT
+UID:803d15d9-4732-45e1-b5ec-0c8ff1e19d55@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260619T170000Z
+DTEND:20260619T210000Z
+SUMMARY:Live! on the Plaza
+LOCATION:Plaza District, NW 16th St, Oklahoma City, OK
+DESCRIPTION:Free monthly art walk in the Plaza District. Live entertainment, markets, food. Free.
+END:VEVENT
+BEGIN:VEVENT
+UID:207c5af1-75f8-4604-a384-e223c7f424d3@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260717T170000Z
+DTEND:20260717T210000Z
+SUMMARY:Live! on the Plaza
+LOCATION:Plaza District, NW 16th St, Oklahoma City, OK
+DESCRIPTION:Free monthly art walk in the Plaza District. Live entertainment, markets, food. Free.
+END:VEVENT
+BEGIN:VEVENT
+UID:95560d11-9269-49b2-95e9-da44cba4cad7@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260321T080000Z
+DTEND:20260321T130000Z
+SUMMARY:OSU-OKC Farmers Market
+LOCATION:OSU-OKC Campus, Oklahoma City, OK
+DESCRIPTION:Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan goods.
+END:VEVENT
+BEGIN:VEVENT
+UID:7a2dd90b-50bd-4f9f-acf1-10b5e2e7b55b@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260404T080000Z
+DTEND:20260404T130000Z
+SUMMARY:OSU-OKC Farmers Market
+LOCATION:OSU-OKC Campus, Oklahoma City, OK
+DESCRIPTION:Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan goods.
+END:VEVENT
+BEGIN:VEVENT
+UID:87e2fbd8-bd2a-46b5-8308-9e546f25d472@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260418T080000Z
+DTEND:20260418T130000Z
+SUMMARY:OSU-OKC Farmers Market
+LOCATION:OSU-OKC Campus, Oklahoma City, OK
+DESCRIPTION:Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan goods.
+END:VEVENT
+BEGIN:VEVENT
+UID:c131276b-9c2f-4931-b196-b7b118fbbee0@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260502T080000Z
+DTEND:20260502T130000Z
+SUMMARY:OSU-OKC Farmers Market
+LOCATION:OSU-OKC Campus, Oklahoma City, OK
+DESCRIPTION:Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan goods.
+END:VEVENT
+BEGIN:VEVENT
+UID:18d2de13-f963-42c4-af56-f9e87ff6b7ce@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260516T080000Z
+DTEND:20260516T130000Z
+SUMMARY:OSU-OKC Farmers Market
+LOCATION:OSU-OKC Campus, Oklahoma City, OK
+DESCRIPTION:Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan goods.
+END:VEVENT
+BEGIN:VEVENT
+UID:c9302c45-d8bc-4c6e-b9a4-047b79e56359@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260606T080000Z
+DTEND:20260606T130000Z
+SUMMARY:OSU-OKC Farmers Market
+LOCATION:OSU-OKC Campus, Oklahoma City, OK
+DESCRIPTION:Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan goods.
+END:VEVENT
+BEGIN:VEVENT
+UID:550f8505-9495-4925-ad87-f1f02b6677b8@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260502T090000Z
+DTEND:20260502T120000Z
+SUMMARY:Paseo Farmers Market Opens
+LOCATION:Paseo Arts District, Oklahoma City, OK
+DESCRIPTION:Seasonal Paseo Farmers Market opens for 2026. Saturdays 9 AM to 12 PM through October.
+END:VEVENT
+BEGIN:VEVENT
+UID:e54ec048-b38f-401a-a7c6-c902ad9e7955@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260516T090000Z
+DTEND:20260516T120000Z
+SUMMARY:Paseo Farmers Market
+LOCATION:Paseo Arts District, Oklahoma City, OK
+DESCRIPTION:Paseo Farmers Market - Saturdays 9 AM to 12 PM. Fresh local produce and artisan items.
+END:VEVENT
+BEGIN:VEVENT
+UID:c7f24be5-a973-4095-bd96-f89c67fecc4d@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260606T090000Z
+DTEND:20260606T120000Z
+SUMMARY:Paseo Farmers Market
+LOCATION:Paseo Arts District, Oklahoma City, OK
+DESCRIPTION:Paseo Farmers Market - Saturdays 9 AM to 12 PM. Fresh local produce and artisan items.
+END:VEVENT
+BEGIN:VEVENT
+UID:1ce77453-9eab-4654-a2c6-507725b61c9f@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260711T090000Z
+DTEND:20260711T120000Z
+SUMMARY:Paseo Farmers Market
+LOCATION:Paseo Arts District, Oklahoma City, OK
+DESCRIPTION:Paseo Farmers Market - Saturdays 9 AM to 12 PM. Fresh local produce and artisan items.
+END:VEVENT
+BEGIN:VEVENT
+UID:407ab384-03ce-4961-a504-f587d630ba92@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260704T180000Z
+DTEND:20260704T230000Z
+SUMMARY:Independence Day - 4th of July OKC
+LOCATION:Scissortail Park, Oklahoma City, OK
+DESCRIPTION:OKC 4th of July celebrations with fireworks, live music at Scissortail Park and Bricktown.
+END:VEVENT
+BEGIN:VEVENT
+UID:023cb337-d64c-4020-963a-4922f6ffdb18@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260525T100000Z
+DTEND:20260525T220000Z
+SUMMARY:Memorial Day Weekend - OKC
+LOCATION:Oklahoma City, OK
+DESCRIPTION:Memorial Day Weekend in OKC. Paseo Arts Festival runs all 3 days plus citywide events.
+END:VEVENT
+BEGIN:VEVENT
+UID:242945c1-0078-4b71-bb61-54597f60628b@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260409T190000Z
+DTEND:20260409T220000Z
+SUMMARY:OKC Dodgers Home Opener
+LOCATION:Chickasaw Bricktown Ballpark, Oklahoma City, OK
+DESCRIPTION:OKC Dodgers Triple-A season home opener in Bricktown. Baseball and cold beer downtown.
+END:VEVENT
+BEGIN:VEVENT
+UID:6ed07674-816b-4d9d-8253-1032f0051583@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260426T190000Z
+DTEND:20260426T210000Z
+SUMMARY:Oklahoma City FC Match
+LOCATION:WEM Stadium, Oklahoma City, OK
+DESCRIPTION:Oklahoma City FC USL Championship home match at WEM Stadium.
+END:VEVENT
+BEGIN:VEVENT
+UID:0a3036ff-a64c-4f56-b29b-a669976bca6e@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260605T100000Z
+DTEND:20260605T200000Z
+SUMMARY:Red Earth Native American Festival
+LOCATION:Cox Convention Center, Oklahoma City, OK
+DESCRIPTION:Annual festival honoring Native American art, dance, and culture.
+END:VEVENT
+BEGIN:VEVENT
+UID:c29cc5ec-e814-468c-970a-0d500c2bdd64@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260425T100000Z
+DTEND:20260425T180000Z
+SUMMARY:OKC Riversports Kayak Festival
+LOCATION:OKC Riversports, Oklahoma City, OK
+DESCRIPTION:Annual kayak competition and community festival on the Oklahoma River. Free spectating.
+END:VEVENT
+BEGIN:VEVENT
+UID:08e254bb-cedb-4c5c-9704-40c31c3dc706@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260530T100000Z
+DTEND:20260530T180000Z
+SUMMARY:OKC Riversports Paddlefest
+LOCATION:OKC Riversports, Oklahoma City, OK
+DESCRIPTION:Community paddling festival with races, demos, and clinics on the Oklahoma River.
+END:VEVENT
+BEGIN:VEVENT
+UID:5537e172-66e3-45dc-a81c-a88e786cab7b@okcevents
+DTSTAMP:20260317T152738Z
+DTSTART:20260411T100000Z
+DTEND:20260411T190000Z
+SUMMARY:Myriad Gardens Spring Festival
+LOCATION:Myriad Botanical Gardens, Oklahoma City, OK
+DESCRIPTION:Spring flower showcase and family-friendly outdoor festival at Myriad Gardens. Free admission.
+END:VEVENT
+END:VCALENDAR
