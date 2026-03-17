@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OKC Event Radar</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f2f5;--surface:#fff;--surface2:#e8ebf0;
+  --border:rgba(60,80,120,.1);--border2:rgba(60,80,120,.18);
+  --text:#1a2035;--muted:#6b7a99;--accent:#2c5faa;
+  --art:#6c5ce7;--art-bg:rgba(108,92,231,.09);--art-bd:rgba(108,92,231,.25);
+  --music:#d44a2e;--music-bg:rgba(212,74,46,.09);--music-bd:rgba(212,74,46,.25);
+  --food:#1a9e5c;--food-bg:rgba(26,158,92,.09);--food-bd:rgba(26,158,92,.25);
+  --sports:#1a6fbf;--sports-bg:rgba(26,111,191,.09);--sports-bd:rgba(26,111,191,.25);
+  --fest:#b07d10;--fest-bg:rgba(176,125,16,.09);--fest-bd:rgba(176,125,16,.25);
+  --theater:#8b2252;--theater-bg:rgba(139,34,82,.09);--theater-bd:rgba(139,34,82,.25);
+  --comedy:#0e7a6e;--comedy-bg:rgba(14,122,110,.09);--comedy-bd:rgba(14,122,110,.25);
+  --film:#5a4a00;--film-bg:rgba(90,74,0,.09);--film-bd:rgba(90,74,0,.25);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;font-size:15px;line-height:1.5;min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(160deg,rgba(210,220,240,.35) 0%,rgba(240,242,248,0) 60%);pointer-events:none;z-index:0}
+.app{max-width:1160px;margin:0 auto;padding:0 20px 80px;position:relative;z-index:1}
+header{padding:36px 0 22px;border-bottom:1px solid var(--border2);margin-bottom:18px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;font-weight:500;margin-bottom:4px}
+.logo{font-family:"Bebas Neue",sans-serif;font-size:clamp(38px,7vw,66px);line-height:.9;letter-spacing:.02em;color:var(--text)}
+.logo span{color:var(--accent)}
+.logo-sub{font-size:13px;color:var(--muted);margin-top:8px;font-weight:300}
+.hdr-r{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.updated{font-size:11px;color:var(--muted);letter-spacing:.04em}
+.rbtn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:var(--surface);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-family:"DM Sans",sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:border-color .2s,color .2s;box-shadow:0 1px 4px rgba(60,80,120,.08)}
+.rbtn:hover{border-color:var(--accent);color:var(--accent)}
+.rbtn.spin .ri{display:inline-block;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.src-bar{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:10px 16px;margin-bottom:14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;box-shadow:0 1px 4px rgba(60,80,120,.06)}
+.src-lbl{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:500;margin-right:4px}
+.src-tag{font-size:11px;padding:3px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border2);color:var(--muted)}
+.frow{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.flbl{font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-right:4px}
+.fp{padding:4px 12px;font-size:11px;border-radius:4px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;color:var(--muted);font-family:"DM Sans",sans-serif;font-weight:500;transition:all .15s;box-shadow:0 1px 2px rgba(60,80,120,.05)}
+.fp:hover{border-color:var(--accent);color:var(--accent)}
+.fp.art.active{background:var(--art-bg);color:var(--art);border-color:var(--art-bd)}
+.fp.music.active{background:var(--music-bg);color:var(--music);border-color:var(--music-bd)}
+.fp.food.active{background:var(--food-bg);color:var(--food);border-color:var(--food-bd)}
+.fp.sports.active{background:var(--sports-bg);color:var(--sports);border-color:var(--sports-bd)}
+.fp.fest.active{background:var(--fest-bg);color:var(--fest);border-color:var(--fest-bd)}
+.fp.theater.active{background:var(--theater-bg);color:var(--theater);border-color:var(--theater-bd)}
+.fp.comedy.active{background:var(--comedy-bg);color:var(--comedy);border-color:var(--comedy-bd)}
+.fp.film.active{background:var(--film-bg);color:var(--film);border-color:var(--film-bd)}
+.leg-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.ld{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.leg-tip{margin-left:auto;font-size:11px;color:var(--muted);font-style:italic;opacity:.55}
+.cnav{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.nb{width:32px;height:32px;border:1px solid var(--border2);border-radius:4px;background:var(--surface);cursor:pointer;color:var(--muted);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;box-shadow:0 1px 3px rgba(60,80,120,.06)}
+.nb:hover{border-color:var(--accent);color:var(--accent)}
+.mlbl{font-family:"Bebas Neue",sans-serif;font-size:28px;letter-spacing:.06em;flex:1;color:var(--text)}
+.ecnt{font-size:12px;color:var(--muted)}
+.dlbls{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;margin-bottom:3px}
+.dlbl{text-align:center;font-size:10px;color:var(--muted);padding:4px 0;font-weight:500;letter-spacing:.1em}
+.cgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:6px;min-height:96px;padding:6px 5px 4px;transition:border-color .15s,box-shadow .15s;box-shadow:0 1px 3px rgba(60,80,120,.05)}
+.cell:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(60,80,120,.1)}
+.cell.dim{opacity:.22;pointer-events:none}
+.cell.today{border-color:var(--accent);background:rgba(44,95,170,.04);box-shadow:0 0 0 2px rgba(44,95,170,.12)}
+.cell.wknd{background:#f5f7fb}
+.cnum{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:500}
+.cell.today .cnum{color:var(--accent);font-weight:700}
+.ev{font-size:10px;padding:2px 5px 2px 6px;border-radius:3px;margin-bottom:2px;line-height:1.4;cursor:pointer;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:500;border-left:2px solid;transition:opacity .1s}
+.ev:hover{opacity:.72}
+.ev.art{background:var(--art-bg);color:var(--art);border-left-color:var(--art)}
+.ev.music{background:var(--music-bg);color:var(--music);border-left-color:var(--music)}
+.ev.food{background:var(--food-bg);color:var(--food);border-left-color:var(--food)}
+.ev.sports{background:var(--sports-bg);color:var(--sports);border-left-color:var(--sports)}
+.ev.fest{background:var(--fest-bg);color:var(--fest);border-left-color:var(--fest)}
+.ev.theater{background:var(--theater-bg);color:var(--theater);border-left-color:var(--theater)}
+.ev.comedy{background:var(--comedy-bg);color:var(--comedy);border-left-color:var(--comedy)}
+.ev.film{background:var(--film-bg);color:var(--film);border-left-color:var(--film)}
+.ev.conf::after{content:" ✓";opacity:.55;font-size:9px}
+.more{font-size:10px;color:var(--muted);cursor:pointer;padding:0 2px}
+.more:hover{color:var(--text)}
+.detail{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:20px 24px;margin-top:10px;display:none;animation:fu .18s ease;box-shadow:0 4px 20px rgba(60,80,120,.1)}
+@keyframes fu{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.detail.open{display:block}
+.dtop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.dcat{display:inline-flex;align-items:center;font-size:10px;padding:3px 9px;border-radius:3px;font-weight:500;letter-spacing:.05em;margin-bottom:8px}
+.dcat.art{background:var(--art-bg);color:var(--art)}.dcat.music{background:var(--music-bg);color:var(--music)}
+.dcat.food{background:var(--food-bg);color:var(--food)}.dcat.sports{background:var(--sports-bg);color:var(--sports)}
+.dcat.fest{background:var(--fest-bg);color:var(--fest)}.dcat.theater{background:var(--theater-bg);color:var(--theater)}
+.dcat.comedy{background:var(--comedy-bg);color:var(--comedy)}.dcat.film{background:var(--film-bg);color:var(--film)}
+.cbadge{font-size:10px;padding:2px 8px;border-radius:3px;background:rgba(26,158,92,.12);color:#1a9e5c;border:1px solid rgba(26,158,92,.25);font-weight:500;margin-left:6px}
+.dname{font-family:"Bebas Neue",sans-serif;font-size:26px;line-height:1;letter-spacing:.04em;color:var(--text)}
+.dmeta{font-size:13px;color:var(--muted);margin-top:5px;display:flex;flex-direction:column;gap:2px}
+.ddesc{font-size:14px;color:rgba(26,32,53,.65);margin-top:12px;line-height:1.7;font-weight:300}
+.dsrc{font-size:11px;color:var(--muted);margin-top:10px;font-style:italic;opacity:.65}
+.dactions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;align-items:center}
+.gcal-btn{display:flex;align-items:center;gap:6px;padding:9px 20px;background:var(--accent);border:none;border-radius:6px;color:#fff;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s,transform .1s}
+.gcal-btn:hover{opacity:.88}.gcal-btn:active{transform:scale(.98)}
+.tx-btn{display:flex;align-items:center;gap:5px;padding:9px 16px;background:transparent;border:1px solid var(--border2);border-radius:6px;color:var(--text);font-family:"DM Sans",sans-serif;font-size:13px;font-weight:400;cursor:pointer;transition:border-color .15s;text-decoration:none}
+.tx-btn:hover{border-color:var(--accent);color:var(--accent)}
+.cx{padding:4px 8px;background:transparent;border:none;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;transition:color .15s}
+.cx:hover{color:var(--text)}
+.sta{padding:60px 0;text-align:center}
+.si{font-size:32px;margin-bottom:14px;animation:pu 1.8s ease-in-out infinite}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.35}}
+.st{font-size:15px;color:var(--muted);font-weight:300}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--text);border-radius:8px;padding:10px 20px;font-size:13px;color:#fff;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:0 4px 16px rgba(26,32,53,.2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ft{font-size:11px;color:var(--muted);letter-spacing:.04em}
+.fs{font-size:11px;color:var(--muted);opacity:.45;font-style:italic}
+@media(max-width:640px){.cell{min-height:70px}.ev:nth-child(n+3){display:none}header{flex-direction:column;align-items:flex-start}.hdr-r{align-items:flex-start}.leg-tip{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div>
+    <div class="eyebrow">Oklahoma City &amp; Tulsa</div>
+    <div class="logo">OKC<span> Event</span><br>Radar</div>
+    <div class="logo-sub">Art &middot; Music &middot; Food &middot; Sports &middot; Theater &middot; Comedy &middot; Film &middot; Festivals</div>
+  </div>
+  <div class="hdr-r">
+    <div class="updated" id="upd"></div>
+    <button class="rbtn" id="rbtn" onclick="fetchLive()"><span class="ri">&#8635;</span> Refresh Live Events</button>
+  </div>
+</header>
+<div class="src-bar">
+  <span class="src-lbl">Sources</span>
+  <span class="src-tag">@HappyHourOKC</span><span class="src-tag">Jones Assembly</span>
+  <span class="src-tag">Paycom Center</span><span class="src-tag">Lyric Theatre</span>
+  <span class="src-tag">OKCMOA</span><span class="src-tag">Oklahoma Contemporary</span>
+  <span class="src-tag">deadCenter Film</span><span class="src-tag">Live! on the Plaza</span>
+  <span class="src-tag">Paseo Arts District</span><span class="src-tag">Cain's Ballroom &middot; Tulsa</span>
+  <span class="src-tag">OKC Farmers Markets</span><span class="src-tag">Myriad Gardens</span>
+  <span class="src-tag">OKC Riversports</span><span class="src-tag">Ralph's Rowdy Ranch</span>
+  <span class="src-tag">Luxiere Magazine</span><span class="src-tag">405 Magazine</span>
+  <span class="src-tag">OU &amp; OSU Athletics</span><span class="src-tag">OKC Thunder</span>
+</div>
+<div class="frow">
+  <span class="flbl">Filter</span>
+  <button class="fp art active"     onclick="toggleF('art')">Art &amp; Galleries</button>
+  <button class="fp music active"   onclick="toggleF('music')">Concerts &amp; Music</button>
+  <button class="fp food active"    onclick="toggleF('food')">Food &amp; Bars</button>
+  <button class="fp sports active"  onclick="toggleF('sports')">Sports</button>
+  <button class="fp fest active"    onclick="toggleF('fest')">Festivals &amp; Markets</button>
+  <button class="fp theater active" onclick="toggleF('theater')">Theater</button>
+  <button class="fp comedy active"  onclick="toggleF('comedy')">Comedy</button>
+  <button class="fp film active"    onclick="toggleF('film')">Film</button>
+</div>
+<div class="leg-row">
+  <div class="leg"><div class="ld" style="background:var(--art)"></div>Art</div>
+  <div class="leg"><div class="ld" style="background:var(--music)"></div>Music</div>
+  <div class="leg"><div class="ld" style="background:var(--food)"></div>Food/Bars</div>
+  <div class="leg"><div class="ld" style="background:var(--sports)"></div>Sports</div>
+  <div class="leg"><div class="ld" style="background:var(--fest)"></div>Festivals</div>
+  <div class="leg"><div class="ld" style="background:var(--theater)"></div>Theater</div>
+  <div class="leg"><div class="ld" style="background:var(--comedy)"></div>Comedy</div>
+  <div class="leg"><div class="ld" style="background:var(--film)"></div>Film</div>
+  <div class="leg" style="opacity:.5;font-style:italic;">&#10003; = confirmed</div>
+  <div class="leg-tip">Click any event &#8594; Add to Google Calendar</div>
+</div>
+<div id="sta" class="sta"><div class="si">&#128225;</div><div class="st">Loading events&#8230;</div></div>
+<div id="cw" style="display:none">
+  <div class="cnav">
+    <button class="nb" onclick="chM(-1)">&#8592;</button>
+    <span class="mlbl" id="mlbl"></span>
+    <button class="nb" onclick="chM(1)">&#8594;</button>
+    <span class="ecnt" id="ecnt"></span>
+  </div>
+  <div class="dlbls">
+    <div class="dlbl">SUN</div><div class="dlbl">MON</div><div class="dlbl">TUE</div>
+    <div class="dlbl">WED</div><div class="dlbl">THU</div><div class="dlbl">FRI</div><div class="dlbl">SAT</div>
+  </div>
+  <div class="cgrid" id="cg"></div>
+  <div class="detail" id="dp"></div>
+</div>
+<footer>
+  <div class="ft">OKC Event Radar &mdash; Oklahoma City &amp; Tulsa &mdash; Bookmark &amp; refresh anytime</div>
+  <div class="fs">Jones Assembly &middot; Paycom &middot; Lyric Theatre &middot; OKCMOA &middot; deadCenter &middot; Cain's Ballroom &middot; 405 Magazine &middot; Luxiere &middot; @HappyHourOKC</div>
+</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var MNTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+var CLAB={art:"Art & Gallery",music:"Concert / Music",food:"Food & Bar",sports:"Sports",fest:"Festival / Market",theater:"Theater & Performing Arts",comedy:"Comedy",film:"Film"};
+var ALL_CATS=["art","music","food","sports","fest","theater","comedy","film"];
+
+var BASE = [
+  // OKC Thunder home games
+  {name:"Thunder vs. Chicago Bulls",venue:"Paycom Center",date:"2026-03-27",desc:"OKC Thunder host the Bulls at Paycom Center. 7:00 PM.",cat:"sports",confirmed:true,source:"Paycom Center",tickets:"https://www.ticketmaster.com/oklahoma-city-thunder-tickets/artist/1250512?home_away=home"},
+  {name:"Thunder vs. New York Knicks",venue:"Paycom Center",date:"2026-03-29",desc:"OKC Thunder vs. New York Knicks at Paycom Center. 6:30 PM.",cat:"sports",confirmed:true,source:"Paycom Center",tickets:"https://www.ticketmaster.com/oklahoma-city-thunder-tickets/artist/1250512?home_away=home"},
+  {name:"Thunder vs. Detroit Pistons",venue:"Paycom Center",date:"2026-03-30",desc:"OKC Thunder vs. Detroit Pistons. 8:30 PM.",cat:"sports",confirmed:true,source:"Paycom Center",tickets:"https://www.ticketmaster.com/oklahoma-city-thunder-tickets/artist/1250512?home_away=home"},
+  {name:"Thunder vs. LA Lakers",venue:"Paycom Center",date:"2026-04-02",desc:"OKC Thunder host the LA Lakers - marquee regular season matchup. 8:30 PM.",cat:"sports",confirmed:true,source:"Paycom Center",tickets:"https://www.ticketmaster.com/oklahoma-city-thunder-tickets/artist/1250512?home_away=home"},
+  {name:"Thunder vs. Utah Jazz",venue:"Paycom Center",date:"2026-04-05",desc:"OKC Thunder final home games of the regular season. 6:00 PM.",cat:"sports",confirmed:true,source:"Paycom Center",tickets:"https://www.ticketmaster.com/oklahoma-city-thunder-tickets/artist/1250512?home_away=home"},
+  {name:"Thunder - NBA Playoffs Rd 1 (TBD)",venue:"Paycom Center",date:"2026-04-18",desc:"NBA Playoffs Round 1 at Paycom Center. Exact date and matchup TBD based on final seedings.",cat:"sports",confirmed:false,source:"NBA",tickets:"https://www.paycomcenter.com"},
+  {name:"Thunder - Western Conf Semis (TBD)",venue:"Paycom Center",date:"2026-05-06",desc:"Western Conference Semifinals at Paycom Center if Thunder advance. One of the hottest tickets in OKC.",cat:"sports",confirmed:false,source:"NBA",tickets:"https://www.paycomcenter.com"},
+  // NCAA
+  {name:"NCAA Tournament - First Rounds",venue:"Paycom Center",date:"2026-03-19",desc:"March Madness comes to OKC. First and second round games hosted at Paycom Center.",cat:"sports",confirmed:true,source:"Paycom Center",tickets:"https://www.paycomcenter.com"},
+  {name:"NCAA Tournament - Session 2",venue:"Paycom Center",date:"2026-03-21",desc:"Second session of the NCAA Tournament regional rounds at Paycom Center.",cat:"sports",confirmed:true,source:"Paycom Center",tickets:"https://www.paycomcenter.com"},
+  // Lyric Theatre 2026 season
+  {name:"Lyric: BEEHIVE - The 60s Musical",venue:"Lyric Theatre at the Plaza",date:"2026-02-11",desc:"Lyric Theatre season opener - a joyful celebration of 1960s girl group music. Runs Feb 11 - Mar 7.",cat:"theater",confirmed:true,source:"Lyric Theatre of Oklahoma",tickets:"https://lyrictheatreokc.com"},
+  {name:"Lyric: SISTER ACT",venue:"Lyric Theatre",date:"2026-04-14",desc:"Tony-nominated musical about a disco diva hiding in a convent. Gospel rhythms and show-stopping fun. Lyric Theatre 2026 season.",cat:"theater",confirmed:true,source:"Lyric Theatre of Oklahoma",tickets:"https://lyrictheatreokc.com/2026-season/"},
+  {name:"Lyric: ANNIE",venue:"Lyric Theatre at the Civic Center",date:"2026-06-16",desc:"Lyric Theatre presents the beloved classic Annie at Civic Center Music Hall. Runs June 16-21, 2026.",cat:"theater",confirmed:true,source:"Lyric Theatre of Oklahoma",tickets:"https://lyrictheatreokc.com/2026-season/"},
+  {name:"Lyric: SWEENEY TODD",venue:"Lyric Theatre at the Civic Center",date:"2026-07-28",desc:"Sondheim dark masterpiece at Lyric Theatre. The razors are sharp and the pies are questionable. Runs July 28 - Aug 2.",cat:"theater",confirmed:true,source:"Lyric Theatre of Oklahoma",tickets:"https://lyrictheatreokc.com/2026-season/"},
+  {name:"Lyric: COME FROM AWAY",venue:"Lyric Theatre at the Civic Center",date:"2026-09-16",desc:"Tony Award-winning musical about 9/11 passengers stranded in Gander, Newfoundland. Runs Sept 16 - Oct 4.",cat:"theater",confirmed:true,source:"Lyric Theatre of Oklahoma",tickets:"https://lyrictheatreokc.com/2026-season/"},
+  {name:"Lyric: A Christmas Carol",venue:"Lyric Theatre",date:"2026-11-25",desc:"Lyric Theatre holiday tradition with stunning new sets. Runs Nov 25 - Dec 26.",cat:"theater",confirmed:true,source:"Lyric Theatre of Oklahoma",tickets:"https://lyrictheatreokc.com/2026-season/"},
+  // deadCenter Film Festival
+  {name:"deadCenter Film Festival - Day 1",venue:"Oklahoma Contemporary / Harkins Bricktown",date:"2026-06-10",desc:"26th Annual deadCenter Film Festival opens. Oklahoma only Oscar-qualifying film festival. 200+ indie films over 5 days. Named one of the 20 Coolest Film Festivals by MovieMaker Magazine.",cat:"film",confirmed:true,source:"deadCenter Film / VisitOKC",tickets:"https://deadcenterfilm.org"},
+  {name:"deadCenter Film Festival - Day 2",venue:"Multiple Venues Downtown OKC",date:"2026-06-11",desc:"deadCenter Day 2 - screenings at Oklahoma Contemporary, Harkins Bricktown, OKCMOA, First Americans Museum, and Rodeo Cinema.",cat:"film",confirmed:true,source:"deadCenter Film",tickets:"https://deadcenterfilm.org"},
+  {name:"deadCenter Film Festival - Day 3",venue:"Multiple Venues Downtown OKC",date:"2026-06-12",desc:"deadCenter Day 3 - panels, filmmaker networking, education sessions, and evening parties for passholders.",cat:"film",confirmed:true,source:"deadCenter Film",tickets:"https://deadcenterfilm.org"},
+  {name:"deadCenter Film Festival - Day 4",venue:"Multiple Venues Downtown OKC",date:"2026-06-13",desc:"deadCenter Day 4 - Saturday screenings, brunch events, and legendary evening parties at Bricktown venues.",cat:"film",confirmed:true,source:"deadCenter Film",tickets:"https://deadcenterfilm.org"},
+  {name:"deadCenter - Awards Night",venue:"Oklahoma Contemporary",date:"2026-06-14",desc:"26th Annual deadCenter Film Festival closes with the Awards Ceremony at Oklahoma Contemporary.",cat:"film",confirmed:true,source:"deadCenter Film",tickets:"https://deadcenterfilm.org"},
+  // Jones Assembly
+  {name:"The Brook and The Bluff",venue:"The Jones Assembly",date:"2026-04-14",desc:"Nashville indie-folk favorites at Film Row. Doors 6:30 PM. All ages.",cat:"music",confirmed:true,source:"The Jones Assembly",tickets:"https://www.thejonesassembly.com"},
+  {name:"Max McNown",venue:"The Jones Assembly",date:"2026-04-22",desc:"Rising singer-songwriter Max McNown at The Jones Assembly. Doors 6:30 PM.",cat:"music",confirmed:true,source:"The Jones Assembly",tickets:"https://www.thejonesassembly.com"},
+  {name:"Blackberry Smoke",venue:"The Jones Assembly",date:"2026-04-30",desc:"Southern rock legends Blackberry Smoke at OKC Film Row venue. Doors 6:30 PM.",cat:"music",confirmed:true,source:"The Jones Assembly",tickets:"https://www.thejonesassembly.com"},
+  // Paycom concerts
+  {name:"Shinedown: Dance, Kid, Dance Act II",venue:"Paycom Center",date:"2026-05-23",desc:"Shinedown with Coheed and Cambria and Black Stone Cherry - massive rock triple bill. 7:00 PM. Same weekend as Paseo Arts Festival!",cat:"music",confirmed:true,source:"Paycom Center / Ticketmaster",tickets:"https://www.ticketmaster.com/shinedown-tickets/artist/880497"},
+  {name:"Jason Aldean: Songs About Us Tour",venue:"Paycom Center",date:"2026-07-24",desc:"Country superstar Jason Aldean returns for his 7th OKC headline show with Chase Matthew, Mackenzie Carpenter and Dee Jay Silver. 7:30 PM.",cat:"music",confirmed:true,source:"Paycom Center / Ticketmaster",tickets:"https://www.ticketmaster.com/jason-aldean-tickets/artist/984829"},
+  {name:"Dude Perfect: Squad Games Tour",venue:"Paycom Center",date:"2026-07-16",desc:"Dude Perfect brings their record-breaking live entertainment tour to Paycom. 7:00 PM.",cat:"music",confirmed:true,source:"Paycom Center",tickets:"https://www.paycomcenter.com"},
+  {name:"PBR: Team Series - Friday",venue:"Paycom Center",date:"2026-07-31",desc:"Professional Bull Riders Team Series at Paycom Center. 7:45 PM.",cat:"sports",confirmed:true,source:"Paycom Center",tickets:"https://www.paycomcenter.com"},
+  {name:"PBR: Team Series - Saturday",venue:"Paycom Center",date:"2026-08-01",desc:"Night 2 of PBR Team Series at Paycom Center. 6:45 PM.",cat:"sports",confirmed:true,source:"Paycom Center",tickets:"https://www.paycomcenter.com"},
+  {name:"PBR: Team Series - Sunday",venue:"Paycom Center",date:"2026-08-02",desc:"Final day of PBR Team Series at Paycom Center. 1:45 PM.",cat:"sports",confirmed:true,source:"Paycom Center",tickets:"https://www.paycomcenter.com"},
+  {name:"Brooks and Dunn with Tucker Wetmore",venue:"Paycom Center",date:"2026-10-01",desc:"Country icons Brooks and Dunn with Tucker Wetmore at Paycom Center. 7:00 PM.",cat:"music",confirmed:true,source:"Paycom Center",tickets:"https://www.paycomcenter.com"},
+  // Cain's Ballroom Tulsa
+  {name:"The Great Divide - Cain's Ballroom",venue:"Cain's Ballroom - Tulsa",date:"2026-03-21",desc:"Oklahoma roots-rock legends The Great Divide play the historic Cain's Ballroom. Doors 8:15 PM. Worth the drive.",cat:"music",confirmed:true,source:"Cain's Ballroom",tickets:"https://www.cainsballroom.com"},
+  {name:"Bingo Loco - Cain's Ballroom",venue:"Cain's Ballroom - Tulsa",date:"2026-03-28",desc:"Rave-style bingo experience at Cain's Ballroom. 21+. Doors 5:00 PM. Prizes, DJs, and chaos.",cat:"music",confirmed:true,source:"Cain's Ballroom",tickets:"https://www.cainsballroom.com"},
+  {name:"Bob Wills Texas Playboys - Cain's",venue:"Cain's Ballroom - Tulsa",date:"2026-04-17",desc:"The legendary Bob Wills Texas Playboys return to the home of Western Swing. Doors 6:30 PM.",cat:"music",confirmed:true,source:"Cain's Ballroom",tickets:"https://www.cainsballroom.com"},
+  {name:"49 Winchester - Cain's Ballroom",venue:"Cain's Ballroom - Tulsa",date:"2026-04-22",desc:"Virginia roots-rock outfit 49 Winchester plays Cain's legendary dance floor. Doors 8:00 PM.",cat:"music",confirmed:true,source:"Cain's Ballroom",tickets:"https://www.cainsballroom.com"},
+  // Paseo Arts Festival
+  {name:"Paseo Arts Festival - Day 1",venue:"Paseo Arts District",date:"2026-05-23",desc:"40+ year OKC Memorial Day tradition. 85 juried artists, 52 live performers on 3 stages, 20 food vendors, 60,000+ attendees. Free.",cat:"fest",confirmed:true,source:"Paseo Arts Association",tickets:null},
+  {name:"Paseo Arts Festival - Day 2",venue:"Paseo Arts District",date:"2026-05-24",desc:"Day 2 of Paseo Arts Festival. Live music until 10 PM across three stages. Jazz, blues, rock, and pop.",cat:"fest",confirmed:true,source:"Paseo Arts Association",tickets:null},
+  {name:"Paseo Arts Festival - Day 3",venue:"Paseo Arts District",date:"2026-05-25",desc:"Memorial Day - final day of Paseo Arts Festival. Kids activities, open galleries, restaurants, and live music all day.",cat:"fest",confirmed:true,source:"Paseo Arts Association",tickets:null},
+  // Live on the Plaza monthly
+  {name:"Live! on the Plaza",venue:"Plaza District - NW 16th St",date:"2026-03-20",desc:"Free monthly art walk in the Plaza District with live entertainment, artist markets, food, and local shopping. Free and all ages.",cat:"fest",confirmed:true,source:"Plaza District",tickets:null},
+  {name:"Live! on the Plaza",venue:"Plaza District - NW 16th St",date:"2026-04-17",desc:"Free monthly art walk in the Plaza District with live entertainment, artist markets, food, and local shopping. Free and all ages.",cat:"fest",confirmed:true,source:"Plaza District",tickets:null},
+  {name:"Live! on the Plaza",venue:"Plaza District - NW 16th St",date:"2026-05-15",desc:"Free monthly art walk in the Plaza District with live entertainment, artist markets, food, and local shopping. Free and all ages.",cat:"fest",confirmed:true,source:"Plaza District",tickets:null},
+  {name:"Live! on the Plaza",venue:"Plaza District - NW 16th St",date:"2026-06-19",desc:"Free monthly art walk in the Plaza District with live entertainment, artist markets, food, and local shopping. Free and all ages.",cat:"fest",confirmed:true,source:"Plaza District",tickets:null},
+  {name:"Live! on the Plaza",venue:"Plaza District - NW 16th St",date:"2026-07-17",desc:"Free monthly art walk in the Plaza District with live entertainment, artist markets, food, and local shopping. Free and all ages.",cat:"fest",confirmed:true,source:"Plaza District",tickets:null},
+  {name:"Live! on the Plaza",venue:"Plaza District - NW 16th St",date:"2026-08-21",desc:"Free monthly art walk in the Plaza District with live entertainment, artist markets, food, and local shopping. Free and all ages.",cat:"fest",confirmed:true,source:"Plaza District",tickets:null},
+  // Farmers Markets
+  {name:"OSU-OKC Farmers Market",venue:"OSU-OKC Campus",date:"2026-03-21",desc:"Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan jams, bread, and honey from local farmers.",cat:"food",confirmed:true,source:"OKC Farmers Market",tickets:null},
+  {name:"OSU-OKC Farmers Market",venue:"OSU-OKC Campus",date:"2026-04-04",desc:"Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan jams, bread, and honey from local farmers.",cat:"food",confirmed:true,source:"OKC Farmers Market",tickets:null},
+  {name:"OSU-OKC Farmers Market",venue:"OSU-OKC Campus",date:"2026-04-18",desc:"Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan jams, bread, and honey from local farmers.",cat:"food",confirmed:true,source:"OKC Farmers Market",tickets:null},
+  {name:"OSU-OKC Farmers Market",venue:"OSU-OKC Campus",date:"2026-05-02",desc:"Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan jams, bread, and honey from local farmers.",cat:"food",confirmed:true,source:"OKC Farmers Market",tickets:null},
+  {name:"OSU-OKC Farmers Market",venue:"OSU-OKC Campus",date:"2026-05-16",desc:"Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan jams, bread, and honey from local farmers.",cat:"food",confirmed:true,source:"OKC Farmers Market",tickets:null},
+  {name:"OSU-OKC Farmers Market",venue:"OSU-OKC Campus",date:"2026-06-06",desc:"Year-round Saturday market 8 AM to 1 PM. Fresh produce, meats, eggs, artisan jams, bread, and honey from local farmers.",cat:"food",confirmed:true,source:"OKC Farmers Market",tickets:null},
+  {name:"Paseo Farmers Market - Opens",venue:"Paseo Arts District",date:"2026-05-02",desc:"Seasonal Paseo Farmers Market opens for 2026. Saturdays 9 AM to 12 PM through October. Fresh local produce, flowers, herbs, baked goods.",cat:"food",confirmed:true,source:"Paseo Arts District",tickets:null},
+  {name:"Paseo Farmers Market",venue:"Paseo Arts District",date:"2026-05-16",desc:"Paseo Farmers Market - Saturdays 9 AM to 12 PM. Fresh local produce, flowers, herbs, baked goods, and artisan items.",cat:"food",confirmed:true,source:"Paseo Arts District",tickets:null},
+  {name:"Paseo Farmers Market",venue:"Paseo Arts District",date:"2026-06-06",desc:"Paseo Farmers Market - Saturdays 9 AM to 12 PM. Fresh local produce, flowers, herbs, baked goods, and artisan items.",cat:"food",confirmed:true,source:"Paseo Arts District",tickets:null},
+  {name:"Paseo Farmers Market",venue:"Paseo Arts District",date:"2026-07-11",desc:"Paseo Farmers Market - Saturdays 9 AM to 12 PM. Fresh local produce, flowers, herbs, baked goods, and artisan items.",cat:"food",confirmed:true,source:"Paseo Arts District",tickets:null},
+  // OKCMOA
+  {name:"OKCMOA - Spring Exhibition",venue:"Oklahoma City Museum of Art",date:"2026-04-03",desc:"New spring exhibition at the Oklahoma City Museum of Art in Midtown. Check okcmoa.com for current featured show.",cat:"art",confirmed:false,source:"Oklahoma City Museum of Art",tickets:"https://www.okcmoa.com"},
+  {name:"OKCMOA - Art After Dark",venue:"Oklahoma City Museum of Art",date:"2026-05-08",desc:"OKCMOA evening event series - gallery access, cocktails, live music, and social atmosphere. Check okcmoa.com for dates.",cat:"art",confirmed:false,source:"Oklahoma City Museum of Art",tickets:"https://www.okcmoa.com"},
+  {name:"deadCenter at OKCMOA",venue:"Oklahoma City Museum of Art",date:"2026-06-12",desc:"deadCenter Film Festival screenings hosted at OKCMOA - partnership between the art museum and Oklahoma Oscar-qualifying film festival.",cat:"film",confirmed:true,source:"deadCenter Film / OKCMOA",tickets:"https://deadcenterfilm.org"},
+  // Oklahoma Contemporary
+  {name:"Oklahoma Contemporary - Spring Show",venue:"Oklahoma Contemporary Arts Center",date:"2026-03-27",desc:"New spring exhibition at Oklahoma Contemporary - OKC premier contemporary arts space and hub of deadCenter Film Festival.",cat:"art",confirmed:false,source:"Oklahoma Contemporary",tickets:"https://oklahomacontemporary.org"},
+  {name:"Oklahoma Contemporary - Summer Show",venue:"Oklahoma Contemporary Arts Center",date:"2026-06-05",desc:"Summer exhibition opening at Oklahoma Contemporary featuring emerging and established contemporary artists.",cat:"art",confirmed:false,source:"Oklahoma Contemporary",tickets:"https://oklahomacontemporary.org"},
+  // Ralph's Rowdy Ranch
+  {name:"Ralph's Rowdy Ranch - Live Music",venue:"Ralph's Rowdy Ranch",date:"2026-03-28",desc:"Live country, Americana, and honky-tonk music at Ralph's Rowdy Ranch. Check their socials for weekly lineups.",cat:"music",confirmed:false,source:"Ralph's Rowdy Ranch",tickets:null},
+  {name:"Ralph's Rowdy Ranch - Weekend Show",venue:"Ralph's Rowdy Ranch",date:"2026-04-25",desc:"Weekend live music at Ralph's Rowdy Ranch - dancing, drinks, and authentic Oklahoma country vibes.",cat:"music",confirmed:false,source:"Ralph's Rowdy Ranch",tickets:null},
+  {name:"Ralph's Rowdy Ranch - Spring Party",venue:"Ralph's Rowdy Ranch",date:"2026-05-09",desc:"Spring party night at Ralph's Rowdy Ranch with live music and outdoor crowd. One of OKC most beloved hangouts.",cat:"music",confirmed:false,source:"Ralph's Rowdy Ranch",tickets:null},
+  // Vintage Pop-Up Markets
+  {name:"Vintage Pop-Up Market",venue:"OKC Metro",date:"2026-04-11",desc:"Seasonal vintage and antique pop-up market in OKC with curated vendors selling vintage clothing, home goods, art, and collectibles.",cat:"fest",confirmed:false,source:"OKC Vintage Community",tickets:null},
+  {name:"Vintage and Artisan Pop-Up",venue:"Film Row / Plaza District",date:"2026-05-02",desc:"Outdoor vintage pop-up and artisan market in OKC Film Row or Plaza District - great weekend browse for unique finds.",cat:"fest",confirmed:false,source:"OKC Vintage Community",tickets:null},
+  {name:"Vintage Market Day",venue:"OKC Fairgrounds / Midtown",date:"2026-05-30",desc:"Large-scale vintage market with 100+ vendors - clothing, furniture, art, records, and collectibles. Popular OKC weekend event.",cat:"fest",confirmed:false,source:"Vintage Market Day",tickets:null},
+  // Comedy
+  {name:"Bricktown Comedy Club - Show",venue:"Bricktown Comedy Club",date:"2026-03-27",desc:"Live stand-up comedy in OKC Bricktown. Check bricktowncomedyclub.com for current headliners and show times.",cat:"comedy",confirmed:false,source:"Bricktown Comedy Club",tickets:"https://www.bricktowncomedyclub.com"},
+  {name:"Bricktown Comedy Club - Weekend Show",venue:"Bricktown Comedy Club",date:"2026-04-17",desc:"Weekend comedy showcase at Bricktown Comedy Club - national and regional comics. Great date night option.",cat:"comedy",confirmed:false,source:"Bricktown Comedy Club",tickets:"https://www.bricktowncomedyclub.com"},
+  {name:"Comedy Show - Major Touring Act",venue:"Paycom Center",date:"2026-05-01",desc:"Major touring comedy act at Paycom Center. Check paycomcenter.com for current comedy tour announcements.",cat:"comedy",confirmed:false,source:"Paycom Center",tickets:"https://www.paycomcenter.com"},
+  // Luxiere and 405 Magazine
+  {name:"Luxiere Magazine - Signature Event",venue:"Upscale OKC Venue",date:"2026-04-18",desc:"Luxiere Magazine signature social event - fashion, food, and Oklahoma most stylish crowd. Follow @luxieremagazine for announcements.",cat:"food",confirmed:false,source:"Luxiere Magazine",tickets:null},
+  {name:"405 Magazine - Best of OKC Party",venue:"OKC Metro",date:"2026-05-21",desc:"405 Magazine annual Best of OKC celebration featuring the biggest names in food, arts, and culture. Follow @405magazine for details.",cat:"food",confirmed:false,source:"405 Magazine",tickets:null},
+  {name:"Luxiere Magazine - Summer Soiree",venue:"Upscale OKC Venue",date:"2026-06-20",desc:"Luxiere Magazine summer social event. Fashion, fine dining, and OKC most stylish attendees. Check luxieremagazine.com for details.",cat:"food",confirmed:false,source:"Luxiere Magazine",tickets:null},
+  {name:"405 Magazine - Featured Event",venue:"OKC Metro",date:"2026-04-09",desc:"405 Magazine event or featured listing - follow @405magazine on Instagram for the latest OKC food, art, music, and culture events.",cat:"food",confirmed:false,source:"405 Magazine",tickets:null},
+  // OU and OSU Sports
+  {name:"OU Sooners - Spring Football Game",venue:"Gaylord Family Oklahoma Memorial Stadium",date:"2026-04-18",desc:"University of Oklahoma annual spring football scrimmage - free look at the 2026 Sooners squad. A Norman tradition.",cat:"sports",confirmed:false,source:"Oklahoma Athletics",tickets:"https://soonersports.com"},
+  {name:"OU Baseball - Big 12 Series",venue:"L. Dale Mitchell Park - Norman",date:"2026-04-11",desc:"OU Sooners baseball in Big 12 conference home play. Check soonersports.com for individual matchup details.",cat:"sports",confirmed:false,source:"Oklahoma Athletics",tickets:"https://soonersports.com"},
+  {name:"OSU Cowboys Baseball - Big 12",venue:"O'Brate Stadium - Stillwater",date:"2026-04-17",desc:"OSU Cowboys baseball in Big 12 conference play at top-ranked O'Brate Stadium. Check okstate.com for schedule.",cat:"sports",confirmed:false,source:"Oklahoma State Athletics",tickets:"https://okstate.com/sports/baseball"},
+  {name:"OU Softball - Home Series",venue:"Marita Hynes Field - Norman",date:"2026-04-25",desc:"Oklahoma Sooners softball defending national champions in conference home play at Norman. Check soonersports.com.",cat:"sports",confirmed:false,source:"Oklahoma Athletics",tickets:"https://soonersports.com"},
+  // HappyHourOKC
+  {name:"@HappyHourOKC - Bricktown",venue:"Bricktown Entertainment District",date:"2026-03-27",desc:"Follow @happyhourokc on Instagram for the latest bar specials, restaurant pop-ups, and happy hour deals across Bricktown. Updated weekly.",cat:"food",confirmed:false,source:"@HappyHourOKC Instagram",tickets:null},
+  {name:"@HappyHourOKC - Midtown",venue:"Midtown OKC",date:"2026-04-10",desc:"Midtown bar and restaurant scene - @happyhourokc tracks the best deals, new openings, and pop-up events.",cat:"food",confirmed:false,source:"@HappyHourOKC Instagram",tickets:null},
+  {name:"@HappyHourOKC - Plaza and Deep Deuce",venue:"Plaza District and Deep Deuce",date:"2026-05-08",desc:"Plaza District and Deep Deuce bar specials - follow @happyhourokc for real-time updates on events and new restaurant openings.",cat:"food",confirmed:false,source:"@HappyHourOKC Instagram",tickets:null},
+  // Myriad and Riversports
+  {name:"Myriad Gardens Spring Festival",venue:"Myriad Botanical Gardens",date:"2026-04-11",desc:"Spring flower showcase and family-friendly outdoor festival at Myriad Botanical Gardens in downtown OKC. Free gardens admission.",cat:"fest",confirmed:false,source:"Myriad Botanical Gardens",tickets:null},
+  {name:"Myriad Gardens Summer Concert",venue:"Myriad Botanical Gardens",date:"2026-06-13",desc:"Free outdoor summer concert series at Myriad Botanical Gardens. Bring a blanket and enjoy live music under the stars downtown.",cat:"music",confirmed:false,source:"Myriad Botanical Gardens",tickets:null},
+  {name:"OKC Riversports Kayak Festival",venue:"OKC Riversports - Oklahoma River",date:"2026-04-25",desc:"Annual kayak competition and community festival on the Oklahoma River. Free spectating, beginner clinics, and demos.",cat:"fest",confirmed:false,source:"OKC Riversports",tickets:null},
+  {name:"OKC Riversports Paddlefest",venue:"OKC Riversports - Oklahoma River",date:"2026-05-30",desc:"Community paddling festival with races, demos, and clinics on the Oklahoma River. One of OKC best outdoor water events.",cat:"fest",confirmed:false,source:"OKC Riversports",tickets:null},
+  // Holidays
+  {name:"Independence Day - 4th of July",venue:"Scissortail Park / Bricktown / Myriad",date:"2026-07-04",desc:"OKC 4th of July celebrations with fireworks, live music, and citywide gatherings. Check @happyhourokc for bar specials.",cat:"fest",confirmed:true,source:"City of OKC",tickets:null},
+  {name:"Memorial Day Weekend",venue:"Oklahoma City",date:"2026-05-25",desc:"Memorial Day Weekend in OKC - Paseo Arts Festival runs all 3 days plus citywide bar specials. Follow @happyhourokc for the best deals.",cat:"fest",confirmed:true,source:"National Holiday",tickets:null},
+  // OKC Dodgers and FC
+  {name:"OKC Dodgers Home Opener",venue:"Chickasaw Bricktown Ballpark",date:"2026-04-09",desc:"Oklahoma City Dodgers Triple-A season home opener in Bricktown. Baseball, cold beer, and a gorgeous downtown ballpark.",cat:"sports",confirmed:false,source:"OKC Dodgers",tickets:"https://www.milb.com/oklahoma-city"},
+  {name:"Oklahoma City FC Match",venue:"WEM Stadium",date:"2026-04-26",desc:"Oklahoma City FC hosts a USL Championship rival. Passionate local soccer crowd and growing fan culture.",cat:"sports",confirmed:false,source:"Oklahoma City FC",tickets:"https://www.okcfc.com"},
+  // Red Earth
+  {name:"Red Earth Native American Festival",venue:"Cox Convention Center",date:"2026-06-05",desc:"Celebrated annual festival honoring Native American art, dance, and culture - one of the largest events of its kind nationally.",cat:"fest",confirmed:false,source:"Red Earth Inc.",tickets:null},
+  // Restaurant and bar scene
+  {name:"New Restaurant Opening - Midtown",venue:"Midtown OKC",date:"2026-04-03",desc:"OKC restaurant scene is booming. Check 405 Magazine, Luxiere Magazine, and @happyhourokc for the latest new openings across Midtown, Bricktown, and Film Row.",cat:"food",confirmed:false,source:"405 Magazine / @HappyHourOKC",tickets:null},
+  {name:"New Bar Opening - Deep Deuce",venue:"Bricktown / Deep Deuce",date:"2026-05-15",desc:"New bar openings in OKC most active nightlife corridors. Follow @happyhourokc and @405magazine for first looks at new spots.",cat:"food",confirmed:false,source:"@HappyHourOKC / 405 Magazine",tickets:null},
+  // Music
+  {name:"Scissortail Park Concert Series",venue:"Scissortail Park",date:"2026-05-22",desc:"Free outdoor concert series in OKC stunning new urban park. Bring friends, a blanket, and enjoy live music downtown.",cat:"music",confirmed:false,source:"Scissortail Park Foundation",tickets:null},
+  {name:"Zoo Amphitheatre Season Opener",venue:"Zoo Amphitheatre",date:"2026-05-01",desc:"Outdoor concert season kicks off at OKC beloved Zoo Amphitheatre - one of the great summer music traditions.",cat:"music",confirmed:false,source:"Zoo Amphitheatre",tickets:null},
+  // Fine dining
+  {name:"Nonesuch Pop-Up Dinner",venue:"Nonesuch - Automobile Alley",date:"2026-03-28",desc:"Exclusive farm-to-table tasting menu event at OKC most acclaimed fine dining destination. Book early - these sell out fast.",cat:"food",confirmed:false,source:"Nonesuch OKC",tickets:null},
+  {name:"Bricktown Food and Wine Festival",venue:"Bricktown Entertainment District",date:"2026-05-09",desc:"Annual celebration of OKC food and wine scene featuring top local chefs, regional wineries, and live entertainment.",cat:"food",confirmed:false,source:"VisitOKC",tickets:null}
+];
+
+var allEvents = BASE.slice();
+var activeF = new Set(ALL_CATS);
+var calY = new Date().getFullYear();
+var calM = new Date().getMonth();
+
+function toggleF(f){
+  if(activeF.has(f)){if(activeF.size>1)activeF.delete(f);}
+  else activeF.add(f);
+  document.querySelectorAll(".fp").forEach(function(el){
+    var c=ALL_CATS.find(function(x){return el.classList.contains(x);});
+    if(c)el.classList.toggle("active",activeF.has(c));
+  });
+  renderCal();
+}
+
+function showToast(msg){
+  var t=document.getElementById("toast");
+  t.textContent=msg;t.classList.add("show");
+  setTimeout(function(){t.classList.remove("show");},2800);
+}
+
+function addGCal(ev){
+  var fmt=function(d){return d.toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";};
+  var p=ev.date.split("-");
+  var s=new Date(+p[0],+p[1]-1,+p[2],19,0,0);
+  var e=new Date(s.getTime()+2*3600000);
+  var q=new URLSearchParams({action:"TEMPLATE",text:ev.name,
+    dates:fmt(s)+"/"+fmt(e),
+    details:ev.desc+(ev.source?"\n\nSource: "+ev.source:"")+"\n\nAdded via OKC Event Radar",
+    location:ev.venue+", Oklahoma City, OK"});
+  window.open("https://calendar.google.com/calendar/render?"+q.toString(),"_blank");
+  showToast("Opening Google Calendar...");
+}
+
+function safeEncode(ev){
+  return encodeURIComponent(JSON.stringify(ev));
+}
+
+function openD(j){
+  var ev=JSON.parse(decodeURIComponent(j));
+  var p=ev.date.split("-");
+  var ds=new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+  var dp=document.getElementById("dp");
+  dp.className="detail open";
+  var cb=ev.confirmed?"<span class=\"cbadge\">&#10003; Confirmed</span>":"";
+  var tb=ev.tickets?"<a class=\"tx-btn\" href=\""+ev.tickets+"\" target=\"_blank\">&#127903; Get Tickets</a>":"";
+  var catLabel=(CLAB[ev.cat]||ev.cat).toUpperCase();
+  dp.innerHTML="<div class=\"dtop\"><div style=\"flex:1\"><div style=\"display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px\"><div class=\"dcat "+ev.cat+"\">"+catLabel+"</div>"+cb+"</div><div class=\"dname\">"+ev.name+"</div><div class=\"dmeta\"><span>&#128205; "+ev.venue+"</span><span>&#128197; "+ds+"</span></div></div><button class=\"cx\" onclick=\"closeD()\">&#10005;</button></div><div class=\"ddesc\">"+ev.desc+"</div>"+(ev.source?"<div class=\"dsrc\">Source: "+ev.source+"</div>":"")+"<div class=\"dactions\"><button class=\"gcal-btn\" id=\"gca\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\"/><line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"6\"/><line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"6\"/><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"/></svg>Add to Google Calendar</button>"+tb+"</div>";
+  document.getElementById("gca").onclick=function(){addGCal(ev);};
+  dp.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+function closeD(){document.getElementById("dp").className="detail";}
+
+function renderCal(){
+  document.getElementById("mlbl").textContent=MNTHS[calM]+" "+calY;
+  var grid=document.getElementById("cg");
+  var today=new Date();
+  var first=new Date(calY,calM,1).getDay();
+  var dim=new Date(calY,calM+1,0).getDate();
+  var dprev=new Date(calY,calM,0).getDate();
+  var fil=allEvents.filter(function(e){return activeF.has(e.cat);});
+  var bd={};
+  fil.forEach(function(ev){
+    var p=ev.date.split("-");
+    var y=+p[0],m=+p[1]-1,d=+p[2];
+    if(y===calY&&m===calM){if(!bd[d])bd[d]=[];bd[d].push(ev);}
+  });
+  var tot=Object.values(bd).reduce(function(s,a){return s+a.length;},0);
+  document.getElementById("ecnt").textContent=tot?(tot+" event"+(tot!==1?"s":"")+" this month"):"";
+  var h="";
+  for(var i=0;i<first;i++)h+="<div class=\"cell dim\"><div class=\"cnum\">"+(dprev-first+i+1)+"</div></div>";
+  for(var d=1;d<=dim;d++){
+    var it=today.getFullYear()===calY&&today.getMonth()===calM&&today.getDate()===d;
+    var dow=new Date(calY,calM,d).getDay();
+    var evs=bd[d]||[];
+    var sh=evs.slice(0,3);
+    var ex=evs.length-3;
+    var eh=sh.map(function(ev){
+      var s=safeEncode(ev);
+      var nm=ev.name.replace(/"/g,"&quot;");
+      return "<div class=\"ev "+ev.cat+(ev.confirmed?" conf":"")+" \" title=\""+nm+"\" onclick=\"openD('"+s+"')\" >"+ev.name+"</div>";
+    }).join("");
+    var mh=ex>0?"<div class=\"more\" onclick=\"showMore("+calY+","+calM+","+d+")\"\>+"+ex+" more</div>":"";
+    h+="<div class=\"cell"+(it?" today":"")+(dow===0||dow===6?" wknd":"")+"\"><div class=\"cnum\">"+d+"</div>"+eh+mh+"</div>";
+  }
+  var tr=(7-(first+dim)%7)%7;
+  for(var i=1;i<=tr;i++)h+="<div class=\"cell dim\"><div class=\"cnum\">"+i+"</div></div>";
+  grid.innerHTML=h;
+}
+
+function showMore(y,m,d){
+  var fil=allEvents.filter(function(e){return activeF.has(e.cat);});
+  var evs=fil.filter(function(ev){var p=ev.date.split("-");return +p[0]===y&&+p[1]-1===m&&+p[2]===d;});
+  var dp=document.getElementById("dp");
+  var ds=new Date(y,m,d).toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
+  dp.className="detail open";
+  var inner="<div class=\"dtop\"><div><div class=\"dname\" style=\"font-size:22px\">"+ds+"</div><div style=\"font-size:13px;color:var(--muted);margin-top:4px\">"+evs.length+" events</div></div><button class=\"cx\" onclick=\"closeD()\">&#10005;</button></div>";
+  evs.forEach(function(ev){
+    var s=safeEncode(ev);
+    var catLabel=(CLAB[ev.cat]||ev.cat).toUpperCase();
+    inner+="<div style=\"padding:14px 0;border-top:1px solid var(--border);margin-top:12px\">"
+      +"<div style=\"display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px\">"
+      +"<div class=\"dcat "+ev.cat+" \" style=\"margin-bottom:0\">"+catLabel+"</div>"
+      +(ev.confirmed?"<span class=\"cbadge\">&#10003; Confirmed</span>":"")
+      +"</div>"
+      +"<div style=\"font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.04em;color:var(--text)\">"+ev.name+"</div>"
+      +"<div style=\"font-size:12px;color:var(--muted);margin-top:3px\">&#128205; "+ev.venue+"</div>"
+      +"<div style=\"font-size:13px;color:rgba(26,32,53,.6);margin-top:8px;font-weight:300;line-height:1.6\">"+ev.desc+"</div>"
+      +"<div style=\"display:flex;gap:8px;margin-top:10px;flex-wrap:wrap\">"
+      +"<button class=\"gcal-btn\" style=\"font-size:12px;padding:7px 14px\" onclick=\"addGCal(JSON.parse(decodeURIComponent('"+s+"')))\">+ Google Calendar</button>"
+      +(ev.tickets?"<a class=\"tx-btn\" style=\"font-size:12px;padding:7px 12px\" href=\""+ev.tickets+"\" target=\"_blank\">&#127903; Tickets</a>":"")
+      +"</div></div>";
+  });
+  dp.innerHTML=inner;
+  dp.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+function chM(d){
+  calM+=d;
+  if(calM>11){calM=0;calY++;}
+  if(calM<0){calM=11;calY--;}
+  closeD();renderCal();
+}
+
+function showCal(){
+  allEvents=allEvents.sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0;});
+  document.getElementById("sta").style.display="none";
+  document.getElementById("cw").style.display="block";
+  var n=new Date();
+  document.getElementById("upd").textContent="Updated "+n.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});
+  renderCal();
+}
+
+function fetchLive(){
+  var btn=document.getElementById("rbtn");
+  btn.classList.add("spin");btn.disabled=true;
+  showToast("Searching for new events...");
+  fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:"claude-sonnet-4-20250514",
+      max_tokens:2000,
+      system:"You supplement an OKC/Tulsa event calendar. Return ONLY a raw JSON array - no markdown, no fences, just the array. Each item must have: name, venue, date (YYYY-MM-DD), desc (one sentence), cat (art|music|food|sports|fest|theater|comedy|film), confirmed (boolean), source (string), tickets (URL string or null). Find 10-15 NEW events not already covered. Focus on: Cains Ballroom upcoming shows, Zoo Amphitheatre shows, Tower Theatre shows, OKC Criterion shows, Beer City Music Hall, additional comedy shows, additional OU/OSU sports, additional OKCMOA events, additional film screenings, and any newly announced OKC restaurant or bar openings mentioned by 405 Magazine or Luxiere Magazine. Today is "+new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})+". Cover next 120 days. Return ONLY the JSON array starting with [ and ending with ].",
+      messages:[{role:"user",content:"Find new upcoming OKC and Tulsa events not already on my calendar. Return only the JSON array."}]
+    })
+  })
+  .then(function(res){return res.json();})
+  .then(function(data){
+    if(data.error) throw new Error(data.error.message||"API error");
+    var tb=data.content&&data.content.find(function(b){return b.type==="text";});
+    if(!tb||!tb.text) throw new Error("No text");
+    var raw=tb.text.trim().replace(/^```[a-z]*\n?/,"").replace(/\n?```$/,"").trim();
+    var s=raw.indexOf("["),e=raw.lastIndexOf("]");
+    if(s===-1||e===-1) throw new Error("No array found");
+    var parsed=JSON.parse(raw.slice(s,e+1));
+    if(Array.isArray(parsed)&&parsed.length>0){
+      var ex=new Set(allEvents.map(function(ev){return ev.name+"|"+ev.date;}));
+      var nw=parsed.filter(function(ev){return !ex.has(ev.name+"|"+ev.date);});
+      allEvents=allEvents.concat(nw);
+      showToast("Added "+nw.length+" new events");
+    }
+    showCal();
+  })
+  .catch(function(err){
+    console.warn("Live fetch failed:",err.message);
+    showToast("Showing confirmed events - live search unavailable");
+    showCal();
+  })
+  .finally(function(){
+    btn.classList.remove("spin");btn.disabled=false;
+  });
+}
+
+showCal();
+fetchLive();
+</script>
+</body>
+</html>
