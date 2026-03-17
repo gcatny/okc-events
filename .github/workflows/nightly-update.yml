@@ -1,0 +1,59 @@
+name: Nightly OKC Calendar Update
+
+on:
+  schedule:
+    # Run every night at 2:00 AM Central Time (8:00 AM UTC)
+    - cron: '0 8 * * *'
+  workflow_dispatch:  # Allow manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write  # Needed to commit updated index.html back to repo
+
+jobs:
+  update-calendar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60  # 29 sources × ~2min each = ~58min max
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run event updater
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          cd ${{ github.workspace }}
+          python scripts/update_events.py
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet index.html; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No changes to index.html"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "index.html has been updated"
+          fi
+
+      - name: Commit and push updated calendar
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config user.name "OKC Calendar Bot"
+          git config user.email "actions@github.com"
+          git add index.html
+          git commit -m "🗓️ Nightly event update - $(date +'%Y-%m-%d')"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "### Nightly Update Complete" >> $GITHUB_STEP_SUMMARY
+          echo "- Date: $(date +'%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: ${{ steps.check_changes.outputs.changed == 'true' && 'Updated ✓' || 'No changes' }}" >> $GITHUB_STEP_SUMMARY
