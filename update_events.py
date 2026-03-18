@@ -625,7 +625,42 @@ SOURCES = {
     },
 
 
-    'cycling_okc': {
+    'volunteer_okc': {
+        'label': 'OKC Volunteer Events — Volunteer Central Oklahoma',
+        'system': (
+            'You find upcoming volunteer events in the Oklahoma City metro area. '
+            'Search volunteercentraloklahoma.org/calendar for dated volunteer events. '
+            'Also check okcbeautiful.com/calendar for OKC Beautiful volunteer events '
+            'such as garden work days, litter cleanups, and tree planting events. '
+            'Also check unitedwayokc.org/get-involved/volunteer for United Way events. '
+            'Only include events with a confirmed date and location in the OKC metro. '
+            'Focus on public community volunteer events — not ongoing open shifts. '
+            'Today is {today}. Return events for the next 180 days.'
+        )
+    },
+    'habitat_okc': {
+        'label': 'Habitat for Humanity OKC Build Days',
+        'system': (
+            'You find upcoming volunteer build days at Central Oklahoma Habitat for Humanity. '
+            'Check helpmyhabitat.com/need for upcoming scheduled build days and ReStore volunteer shifts. '
+            'Also check cohfh.org for any posted volunteer events or build weekends. '
+            'Include New Construction builds and Critical Home Repair volunteer days. '
+            'Only include events with a confirmed date in the OKC metro area. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    },
+    'food_bank_okc': {
+        'label': 'Regional Food Bank of Oklahoma Volunteer Shifts',
+        'system': (
+            'You find upcoming volunteer shift opportunities at the Regional Food Bank of Oklahoma. '
+            'Check rfbo.org/volunteer for upcoming volunteer dates and shift availability. '
+            'Include food sorting shifts, mobile pantry events, and special volunteer days. '
+            'Only include OKC metro locations. '
+            'Today is {today}. Return events for the next 60 days.'
+        )
+    },
+
+        'cycling_okc': {
         'label': 'OKC Cycling & MTB Events',
         'system': (
             'You find upcoming cycling and mountain bike events in the Oklahoma City metro area. '
