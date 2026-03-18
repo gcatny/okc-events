@@ -623,16 +623,32 @@ SOURCES = {
             'Today is {today}. Return all events for the next 180 days.'
         )
     },
-    'okc_farmers_market': {
-        'label': 'OKC Farmers Public Market',
+
+    'kickiniton66': {
+        'label': "Kickin' It on Route 66",
         'system': (
-            'You find upcoming events at the OKC Farmers Public Market at 311 S Klein Ave, OKC. '
-            'Search okcfarmersmarket.com/event-calendar for the weekly Saturday Farmers Market '
-            '(every Saturday 9 AM–2 PM, free), special themed market days, the Lively Running Club '
-            '(Wednesdays 6 PM at Lively Beerworks nearby), bridal shows, and special events. '
-            'Today is {today}. Return events for the next 90 days. Mark farmers market as free:true.'
+            "You find upcoming events for the Route 66 Centennial in Oklahoma City. "
+            "Check kickiniton66.com for event schedules and updates around the "
+            "Kickin' It on Route 66: OKC Centennial Celebration at Scissortail Park on May 30, 2026, "
+            "and any additional Route 66 centennial programming in OKC throughout 2026. "
+            "Today is {today}. Return events for the next 180 days."
         )
     },
+
+
+    'eventbrite_okc': {
+        'label': 'Eventbrite OKC',
+        'system': (
+            'You find quality upcoming in-person community events in Oklahoma City listed on Eventbrite. '
+            'Browse https://www.eventbrite.com/d/ok--oklahoma-city/events/ and apply strict quality filtering: '
+            'in-person OKC events only, open to the public, genuinely community-relevant (arts, music, food, '
+            'fitness, festivals, cultural, family, charity, civic). Skip events already covered by dedicated '
+            'sources (Thunder games, Tower Theatre, Civic Center Broadway, OKCMOA, Myriad Gardens). '
+            'Skip MLM, vague networking, or spammy events. Aim for 8-15 high-quality events. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    }
+
 }
 
 
