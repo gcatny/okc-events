@@ -625,7 +625,181 @@ SOURCES = {
     },
 
 
-    'volunteer_okc': {
+    'golf_okc': {
+        'label': 'OKC Amateur Golf — OGA & AmateurGolf.com',
+        'system': (
+            'You find upcoming amateur golf tournaments and events in the Oklahoma City metro area. '
+            'Search okgolf.org/all-events for Oklahoma Golf Association championships at OKC-area courses '
+            'including Lincoln Park, KickingBird, Earlywine, River Oaks, Quail Creek, Trails GC Norman, '
+            'and Oak Tree CC in Edmond. '
+            'Also search amateurgolf.com/amateur-golf-tournaments/ByCity/Oklahoma-City for OKC tournaments. '
+            'Include OGA championships, WOGA events, USGA qualifiers held in OKC metro, '
+            'and any open amateur tournaments at OKC-area courses. '
+            'Skip events more than 25 miles from downtown OKC. '
+            'Today is {today}. Return events for the next 180 days.'
+        )
+    },
+
+        'okcphil': {
+        'label': 'OKC Philharmonic',
+        'system': (
+            'You find upcoming OKC Philharmonic concerts at Civic Center Music Hall. '
+            'Search okcphil.org/events-tickets/25-26-season for Classics, Pops, and Discovery Family concerts. '
+            'Include concert titles, guest artists, dates, and times (usually 7:30 PM). '
+            'All concerts at Thelma Gaylord Theatre, Civic Center Music Hall, 201 N Walker Ave OKC. '
+            'Today is {today}. Return events for the next 180 days.'
+        )
+    },
+    'scissortail_park': {
+        'label': 'Scissortail Park Events',
+        'system': (
+            'You find upcoming events at Scissortail Park in downtown Oklahoma City (300 SW 7th St). '
+            'Search scissortailpark.org/calendar for concerts, night markets, walking club, '
+            'festivals, fitness classes, kite festivals, and special events. '
+            'Free walking club runs Thursdays and Sundays 8-8:30 AM year-round. '
+            'Night Markets run monthly May-October on Saturdays. '
+            'Free outdoor concerts on Loves Travel Stops Stage May-October. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    },
+
+        'okc_comets': {
+        'label': 'OKC Comets Baseball',
+        'system': (
+            'You find upcoming OKC Comets home games and special events at Chickasaw Bricktown Ballpark. '
+            'Search milb.com/oklahoma-city/schedule for the current month home games. '
+            'Also check milb.com/oklahoma-city/tickets/specialty-nights for theme nights and promotions. '
+            'Include regular home games, Fireworks Fridays, theme nights, Field Trip Days, '
+            'and special events like Savannah Bananas or Cosmic Baseball. '
+            'Today is {today}. Return home games for the next 45 days.'
+        )
+    },
+    'rivers_sport': {
+        'label': 'RIVERSPORT OKC Events',
+        'system': (
+            'You find upcoming special events at RIVERSPORT OKC on the Oklahoma River. '
+            'Search riversportokc.org/events for upcoming festivals, races, and special events. '
+            'Include Stars & Stripes River Festival, PaddleFest, Dragon Boat races, rowing regattas, '
+            'and any public events at RIVERSPORT OKC. '
+            'Today is {today}. Return events for the next 180 days.'
+        )
+    },
+    'pickleball_okc': {
+        'label': 'OKC Pickleball Tournaments',
+        'system': (
+            'You find upcoming pickleball tournaments in the Oklahoma City metro area. '
+            'Search allpickleballtournaments.com for Oklahoma City pickleball events. '
+            'Also check chickennpickle.com/oklahoma-city-events and okseniorgames.com for pickleball events. '
+            'Include USAPA-sanctioned tournaments, open tournaments, and charity events. '
+            'OKC metro only — within 25 miles of downtown OKC. '
+            'Today is {today}. Return events for the next 180 days.'
+        )
+    },
+    'okhistory': {
+        'label': 'Oklahoma History Center',
+        'system': (
+            'You find upcoming public events at the Oklahoma History Center (800 Nazih Zuhdi Dr, Oklahoma City). '
+            'Search okhistory.org/calendar/location/oklahoma-history-center for lectures, living history, '
+            'exhibitions, symposia, commission meetings, and special programs. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    },
+    'aia_okc': {
+        'label': 'AIA Central Oklahoma Events',
+        'system': (
+            'You find upcoming events from AIA Central Oklahoma (American Institute of Architects). '
+            'Search aiacoc.org/events-programs for Architecture After 5 networking events, luncheons, '
+            'Architecture Week, the annual Architecture Tour, golf tournament, awards, and other programs. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    },
+    'okcontemp_workshops': {
+        'label': 'Oklahoma Contemporary Workshops',
+        'system': (
+            'You find upcoming Studio School workshops and classes at Oklahoma Contemporary (11 NW 11th St, OKC). '
+            'Search oklahomacontemporary.org/course-category/workshops for single-day and multi-day workshops '
+            'in ceramics, fiber arts, jewelry, painting, drawing, printmaking, and writing. '
+            'Also check oklahomacontemporary.org/education/studio-school for new session start dates. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    },
+    'ou_football': {
+        'label': 'OU Sooners Football',
+        'system': (
+            'You find upcoming Oklahoma Sooners football game details from soonersports.com. '
+            'Search soonersports.com/sports/football/schedule/2026 for confirmed kickoff times, '
+            'TV networks, and any schedule changes for all home games at Gaylord Family Oklahoma '
+            'Memorial Stadium in Norman, OK. Also include the Red River Rivalry vs Texas in Dallas. '
+            'Today is {today}. Return games for the next 90 days.'
+        )
+    },
+    'osu_football': {
+        'label': 'OSU Cowboys Football',
+        'system': (
+            'You find upcoming Oklahoma State Cowboys football game details from okstate.com. '
+            'Search okstate.com/sports/football/schedule for confirmed kickoff times, TV networks, '
+            'and schedule changes for all home games at Boone Pickens Stadium in Stillwater, OK. '
+            'Today is {today}. Return games for the next 90 days.'
+        )
+    },
+
+        'ovac_okc': {
+        'label': 'OVAC Oklahoma Arts Calendar',
+        'system': (
+            'You find upcoming visual arts events in Oklahoma City from the OVAC Oklahoma Arts Calendar. '
+            'Search ovac-ok.org/okartscalendar for gallery shows, openings, art walks, artist talks, '
+            'deadlines, and opportunities in the OKC metro. Oklahoma City events only. '
+            'Today is {today}. Return events for the next 60 days.'
+        )
+    },
+
+        'usta_okc': {
+        'label': 'OKC Tennis Center — USTA Tournaments',
+        'system': (
+            'You find upcoming tennis tournaments at OKC Tennis Center (3400 N Portland Ave, Oklahoma City). '
+            'Search playtennis.usta.com/oklahomacitytenniscenter/Tournaments for upcoming USTA-sanctioned events. '
+            'Include USTA Oklahoma, Missouri Valley, and National level tournaments. '
+            'Also check for OSSAA State High School Championships and adult league events. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    },
+    'utr_okc': {
+        'label': 'UTR Sports — OKC Tennis Tournaments',
+        'system': (
+            'You find upcoming UTR Sports rated tennis tournaments in Oklahoma City. '
+            'Search app.utrsports.net/united-states/oklahoma/oklahoma-city/tennis-tournaments '
+            'for upcoming events at OKC Tennis Center, Hidden Trails Country Club, and Earlywine Tennis Center. '
+            'Include UTR College Circuits, Junior Circuits, and open tournaments. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    },
+
+        'oksportsfit': {
+        'label': 'OK Sports & Fitness — Running/Tri Calendar',
+        'system': (
+            'You find upcoming running races, triathlons, cycling events, and fitness events '
+            'in the Oklahoma City metro area from Oklahoma Sports & Fitness Magazine. '
+            'Search oksportsandfitness.com/event-calendar for OKC-area events. '
+            'Focus on races and events within 25 miles of downtown OKC. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    },
+
+        'okcontemp': {
+        'label': 'Oklahoma Contemporary Arts Center',
+        'system': (
+            'You find upcoming events at Oklahoma Contemporary arts center in Oklahoma City at 11 NW 11th St. '
+            'Search oklahomacontemporary.org/events/calendar for all upcoming public events including: '
+            'Second Saturday (2nd Sat monthly, 1-4 PM, free family art day), '
+            'Sensory Friendly Hour (2nd Sat 10-11 AM), '
+            'Guided Public Tours (Saturdays 1 PM, free), '
+            'gallery programs, performances, special events, and new exhibition openings. '
+            'Also check oklahomacontemporary.org/exhibitions for new or closing exhibitions. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    },
+
+        'volunteer_okc': {
         'label': 'OKC Volunteer Events — Volunteer Central Oklahoma',
         'system': (
             'You find upcoming volunteer events in the Oklahoma City metro area. '
