@@ -625,7 +625,23 @@ SOURCES = {
     },
 
 
-    'coffee_cars': {
+    'cycling_okc': {
+        'label': 'OKC Cycling & MTB Events',
+        'system': (
+            'You find upcoming cycling and mountain bike events in the Oklahoma City metro area. '
+            'Search findarace.com/us/cycling/oklahoma/oklahoma-city for OKC cycling events. '
+            'Also check bikereg.com and active.com for OKC cycling races. '
+            'Only include events physically located in the OKC metro area: '
+            'Oklahoma City, Edmond, Nichols Hills, Arcadia, Yukon, Mustang, Moore, Midwest City, Del City. '
+            'Skip events in Medicine Park, Purcell, Stillwater, Guthrie, Norman, or other cities '
+            'more than 25 miles from downtown OKC. '
+            'Include road cycling races, mountain bike races, gran fondos, charity rides, '
+            'and kids cycling events. '
+            'Today is {today}. Return events for the next 180 days.'
+        )
+    },
+
+        'coffee_cars': {
         'label': 'Coffee & Cars OKC',
         'system': (
             'You find upcoming Coffee & Cars OKC monthly car show events. '
