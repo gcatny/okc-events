@@ -3773,6 +3773,18 @@ function ssbClick(el) {
   document.querySelectorAll('.ssb-item').forEach(function(i){ i.classList.remove('ssb-active'); });
   el.classList.add('ssb-active');
   document.getElementById('src-sidebar-clear').style.display = 'block';
+  // Jump calendar to the first upcoming month with a matching event
+  var today = new Date(); today.setHours(0,0,0,0);
+  var matches = allEvents.filter(function(ev){
+    return ev.source && ev.source.toLowerCase().indexOf(key.toLowerCase()) !== -1;
+  });
+  if (matches.length) {
+    matches.sort(function(a,b){ return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+    var target = matches.find(function(ev){ return new Date(ev.date + 'T00:00:00') >= today; });
+    if (!target) target = matches[matches.length - 1];
+    var parts = target.date.split('-');
+    calY = parseInt(parts[0]); calM = parseInt(parts[1]) - 1;
+  }
   renderCal();
 }
 
