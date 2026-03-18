@@ -251,7 +251,10 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
   <button class="fp industry active" onclick="toggleF('industry')">Industry &amp; Business</button>
   <button class="fp convention active" onclick="toggleF('convention')">Conventions &amp; Expos</button>
 </div>
-<div style="font-size:11px;color:var(--muted);font-style:italic;margin-top:6px;margin-bottom:16px">Click any category to hide it from the calendar</div>
+<div style="display:flex;align-items:center;gap:10px;margin-top:8px;margin-bottom:16px">
+  <button id="toggle-all-btn" onclick="toggleAllCats()" style="font-size:11px;padding:3px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer;font-family:inherit;transition:background .15s,color .15s,border-color .15s">Deselect All</button>
+  <span style="font-size:11px;color:var(--muted);font-style:italic">Click any category to hide it from the calendar</span>
+</div>
 <div id="submit-panel" style="display:none">
   <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:24px 28px;margin-bottom:18px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
@@ -1233,6 +1236,33 @@ function toggleF(f) {
     if (c) el.classList.toggle("active", activeF.has(c));
   });
   if (searchQuery) renderSearchResults(); else renderCal();
+  updateToggleBtn();
+}
+
+function toggleAllCats() {
+  var allOn = activeF.size === ALL_CATS.length;
+  if (allOn) {
+    // Deselect all — leave just first one active so calendar isn't blank
+    activeF = new Set([ALL_CATS[0]]);
+  } else {
+    activeF = new Set(ALL_CATS);
+  }
+  document.querySelectorAll(".fp").forEach(function(el) {
+    var c = ALL_CATS.find(function(x) { return el.classList.contains(x); });
+    if (c) el.classList.toggle("active", activeF.has(c));
+  });
+  updateToggleBtn();
+  if (searchQuery) renderSearchResults(); else renderCal();
+}
+
+function updateToggleBtn() {
+  var btn = document.getElementById("toggle-all-btn");
+  if (!btn) return;
+  var allOn = activeF.size === ALL_CATS.length;
+  btn.textContent = allOn ? "Deselect All" : "Select All";
+  btn.style.background = allOn ? "var(--surface)" : "var(--accent,#2c5faa)";
+  btn.style.color      = allOn ? "var(--muted)"   : "#fff";
+  btn.style.borderColor= allOn ? "var(--border2)" : "var(--accent,#2c5faa)";
 }
 
 // ── SEARCH ──
@@ -1360,6 +1390,7 @@ function chM(d) {
   calM+=d;
   if(calM>11){calM=0;calY++;} if(calM<0){calM=11;calY--;}
   closeD(); renderCal();
+  updateToggleBtn();
 }
 
 // ── LIVE SOURCE SEARCH ──
@@ -1716,6 +1747,7 @@ function init() {
     document.getElementById("upd").textContent = "Events updated " + LIVE_EVENTS_DATE;
   }
   renderCal();
+  updateToggleBtn();
   setStatus("idle", "Events updated nightly ✓");
 }
 
