@@ -625,7 +625,19 @@ SOURCES = {
     },
 
 
-    'verge_okc': {
+    'coffee_cars': {
+        'label': 'Coffee & Cars OKC',
+        'system': (
+            'You find upcoming Coffee & Cars OKC monthly car show events. '
+            'Check coffeeandcarsokc.com/event-schedule for the full schedule. '
+            'Coffee & Cars OKC meets the first Saturday of every month, 8-11 AM, '
+            'at Life.Church OKC, 2001 NW 178th St, Edmond, OK 73012. '
+            'It is a free, all-makes/models car gathering open to the public. '
+            'Today is {today}. Return all upcoming monthly events for the next 12 months.'
+        )
+    },
+
+        'verge_okc': {
         'label': 'The Verge OKC',
         'system': (
             'You find upcoming public events at The Verge OKC, an entrepreneurship hub '
