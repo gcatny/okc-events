@@ -515,160 +515,107 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 <div id="src-sidebar-clear" style="display:none"><button onclick="ssbClear()">&#x2715; Clear filter</button></div>
 <div id="src-sidebar-list">
 <div class="ssb-group">Venues</div>
-<div class="ssb-item" id="ssbi-paycom" data-key="Paycom" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-the_national_okc" data-key="The National OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-tower_theatre" data-key="Tower Theatre" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-the_yale" data-key="The Yale" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-beer_city" data-key="Beer City" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-jones_assembly" data-key="Jones Assembly" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-civic_center" data-key="Civic Center" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-cains" data-key="Cains Ballroom" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-factory_obs" data-key="Factory Obscura" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-ponyboy" data-key="Ponyboy OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-zoo_amp" data-key="Zoo Amphitheatre" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-okcrep" data-key="OKC Rep Theatre" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
+<div class="ssb-item" id="ssbi-paycom" data-key="Paycom" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">Paycom Center</span><span class="ssb-count" id="ssbcnt-paycom">18</span></div>
+<div class="ssb-item" id="ssbi-the_national_okc" data-key="The National OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">The National OKC</span><span class="ssb-count" id="ssbcnt-the_national_okc">37</span></div>
+<div class="ssb-item" id="ssbi-tower_theatre" data-key="Tower Theatre" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">Tower Theatre</span><span class="ssb-count" id="ssbcnt-tower_theatre">22</span></div>
+<div class="ssb-item" id="ssbi-the_yale" data-key="The Yale" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">The Yale Theater</span><span class="ssb-count" id="ssbcnt-the_yale">6</span></div>
+<div class="ssb-item" id="ssbi-beer_city" data-key="Beer City" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">Beer City Music Hall</span><span class="ssb-count" id="ssbcnt-beer_city">6</span></div>
+<div class="ssb-item" id="ssbi-jones_assembly" data-key="Jones Assembly" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">Jones Assembly</span><span class="ssb-count" id="ssbcnt-jones_assembly">3</span></div>
+<div class="ssb-item" id="ssbi-civic_center" data-key="Civic Center" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">Civic Center / Broadway</span><span class="ssb-count" id="ssbcnt-civic_center">29</span></div>
+<div class="ssb-item" id="ssbi-cains" data-key="Cains Ballroom" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">Cains Ballroom</span><span class="ssb-count" id="ssbcnt-cains">3</span></div>
+<div class="ssb-item" id="ssbi-factory_obs" data-key="Factory Obscura" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">Factory Obscura</span><span class="ssb-count" id="ssbcnt-factory_obs">4</span></div>
+<div class="ssb-item" id="ssbi-ponyboy" data-key="Ponyboy OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">Ponyboy OKC</span><span class="ssb-count" id="ssbcnt-ponyboy">2</span></div>
+<div class="ssb-item" id="ssbi-zoo_amp" data-key="Zoo Amphitheatre" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">Zoo Amphitheatre</span><span class="ssb-count" id="ssbcnt-zoo_amp">1</span></div>
+<div class="ssb-item" id="ssbi-okcrep" data-key="OKC Rep Theatre" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">OKC Rep Theatre</span><span class="ssb-count" id="ssbcnt-okcrep">1</span></div>
 <div class="ssb-group">Districts</div>
-<div class="ssb-item" id="ssbi-bricktown" data-key="Bricktown" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#BA7517"></div>
-<div class="ssb-item" id="ssbi-plaza_district" data-key="Plaza District" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#BA7517"></div>
-<div class="ssb-item" id="ssbi-paseo" data-key="Paseo" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#BA7517"></div>
-<div class="ssb-item" id="ssbi-asian_district" data-key="Asian District OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-west_village" data-key="West Village OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-wheeler" data-key="Wheeler District" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
+<div class="ssb-item" id="ssbi-bricktown" data-key="Bricktown" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Bricktown / DOKC</span><span class="ssb-count" id="ssbcnt-bricktown">62</span></div>
+<div class="ssb-item" id="ssbi-plaza_district" data-key="Plaza District" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Plaza District</span><span class="ssb-count" id="ssbcnt-plaza_district">8</span></div>
+<div class="ssb-item" id="ssbi-paseo" data-key="Paseo" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Paseo Arts District</span><span class="ssb-count" id="ssbcnt-paseo">19</span></div>
+<div class="ssb-item" id="ssbi-asian_district" data-key="Asian District OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Asian District OKC</span><span class="ssb-count" id="ssbcnt-asian_district">1</span></div>
+<div class="ssb-item" id="ssbi-west_village" data-key="West Village OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">West Village OKC</span><span class="ssb-count" id="ssbcnt-west_village">1</span></div>
+<div class="ssb-item" id="ssbi-wheeler" data-key="Wheeler District" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Wheeler District</span><span class="ssb-count" id="ssbcnt-wheeler">1</span></div>
 <div class="ssb-group">Parks &amp; Gardens</div>
-<div class="ssb-item" id="ssbi-scissortail" data-key="Scissortail Park" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#3B6D11"></div>
-<div class="ssb-item" id="ssbi-myriad" data-key="Myriad" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#3B6D11"></div>
-<div class="ssb-item" id="ssbi-oak_heartwood" data-key="OAK Heartwood" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#3B6D11"></div>
-<div class="ssb-item" id="ssbi-okana" data-key="OKANA" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#3B6D11"></div>
+<div class="ssb-item" id="ssbi-scissortail" data-key="Scissortail Park" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#3B6D11"></div><span class="ssb-name">Scissortail Park</span><span class="ssb-count" id="ssbcnt-scissortail">25</span></div>
+<div class="ssb-item" id="ssbi-myriad" data-key="Myriad" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#3B6D11"></div><span class="ssb-name">Myriad Botanical Gardens</span><span class="ssb-count" id="ssbcnt-myriad">67</span></div>
+<div class="ssb-item" id="ssbi-oak_heartwood" data-key="OAK Heartwood" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#3B6D11"></div><span class="ssb-name">OAK Heartwood Park</span><span class="ssb-count" id="ssbcnt-oak_heartwood">8</span></div>
+<div class="ssb-item" id="ssbi-okana" data-key="OKANA" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#3B6D11"></div><span class="ssb-name">OKANA Resort</span><span class="ssb-count" id="ssbcnt-okana">26</span></div>
 <div class="ssb-group">Culture &amp; Arts</div>
-<div class="ssb-item" id="ssbi-ovac" data-key="OVAC / Oklahoma Arts Calendar" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-okcmoa" data-key="OKCMOA" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-allied_arts" data-key="Allied Arts" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-okcphil" data-key="OKC Philharmonic" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-okcontemp" data-key="Oklahoma Contemporary" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-deadcenter" data-key="deadCenter" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-lyric_theatre" data-key="Lyric Theatre" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-oklahoma_city_ballet" data-key="Oklahoma City Ballet" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-science_museum" data-key="Science Museum" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-arts_council" data-key="Arts Council OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-ncwhm" data-key="National Cowboy Museum" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-red_earth" data-key="Red Earth" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-galaxycon" data-key="GalaxyCon OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-okc_state_fair" data-key="Oklahoma State Fair" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-rocklahoma" data-key="Rocklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-soonercon" data-key="SoonerCon" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-norman_music" data-key="Norman Music Festival" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-okc_history" data-key="Oklahoma History Center" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#7a3b10"></div>
-<div class="ssb-item" id="ssbi-calf_fry" data-key="Calf Fry / KOSU" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-woody_fest" data-key="Woody Guthrie Folk Fest" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
-<div class="ssb-item" id="ssbi-okc_home_show" data-key="OKC Home + Outdoor Living Show" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div>
+<div class="ssb-item" id="ssbi-ovac" data-key="OVAC / Oklahoma Arts Calendar" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">OVAC Arts Calendar</span><span class="ssb-count" id="ssbcnt-ovac">9</span></div>
+<div class="ssb-item" id="ssbi-okcmoa" data-key="OKCMOA" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">OKCMOA</span><span class="ssb-count" id="ssbcnt-okcmoa">56</span></div>
+<div class="ssb-item" id="ssbi-allied_arts" data-key="Allied Arts" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Allied Arts</span><span class="ssb-count" id="ssbcnt-allied_arts">1</span></div>
+<div class="ssb-item" id="ssbi-okcphil" data-key="OKC Philharmonic" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">OKC Philharmonic</span><span class="ssb-count" id="ssbcnt-okcphil">3</span></div>
+<div class="ssb-item" id="ssbi-okcontemp" data-key="Oklahoma Contemporary" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Oklahoma Contemporary</span><span class="ssb-count" id="ssbcnt-okcontemp">50</span></div>
+<div class="ssb-item" id="ssbi-deadcenter" data-key="deadCenter" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">deadCenter Film</span><span class="ssb-count" id="ssbcnt-deadcenter">5</span></div>
+<div class="ssb-item" id="ssbi-lyric_theatre" data-key="Lyric Theatre" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Lyric Theatre</span><span class="ssb-count" id="ssbcnt-lyric_theatre">5</span></div>
+<div class="ssb-item" id="ssbi-okc_ballet" data-key="Oklahoma City Ballet" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">OKC Ballet</span><span class="ssb-count" id="ssbcnt-okc_ballet">3</span></div>
+<div class="ssb-item" id="ssbi-science_museum" data-key="Science Museum" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Science Museum OKC</span><span class="ssb-count" id="ssbcnt-science_museum">7</span></div>
+<div class="ssb-item" id="ssbi-arts_council" data-key="Arts Council OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Arts Council OKC</span><span class="ssb-count" id="ssbcnt-arts_council">4</span></div>
+<div class="ssb-item" id="ssbi-ncwhm" data-key="National Cowboy Museum" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">National Cowboy Museum</span><span class="ssb-count" id="ssbcnt-ncwhm">1</span></div>
+<div class="ssb-item" id="ssbi-red_earth" data-key="Red Earth" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Red Earth</span><span class="ssb-count" id="ssbcnt-red_earth">1</span></div>
+<div class="ssb-item" id="ssbi-galaxycon" data-key="GalaxyCon OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">GalaxyCon OKC</span><span class="ssb-count" id="ssbcnt-galaxycon">3</span></div>
+<div class="ssb-item" id="ssbi-okc_state_fair" data-key="Oklahoma State Fair" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Oklahoma State Fair</span><span class="ssb-count" id="ssbcnt-okc_state_fair">2</span></div>
+<div class="ssb-item" id="ssbi-rocklahoma" data-key="Rocklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Rocklahoma</span><span class="ssb-count" id="ssbcnt-rocklahoma">3</span></div>
+<div class="ssb-item" id="ssbi-soonercon" data-key="SoonerCon" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">SoonerCon</span><span class="ssb-count" id="ssbcnt-soonercon">3</span></div>
+<div class="ssb-item" id="ssbi-norman_music" data-key="Norman Music Festival" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Norman Music Festival</span><span class="ssb-count" id="ssbcnt-norman_music">3</span></div>
+<div class="ssb-item" id="ssbi-okc_history" data-key="Oklahoma History Center" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#7a3b10"></div><span class="ssb-name">Oklahoma History Center</span><span class="ssb-count" id="ssbcnt-okc_history">6</span></div>
+<div class="ssb-item" id="ssbi-calf_fry" data-key="Calf Fry / KOSU" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Calf Fry / KOSU</span><span class="ssb-count" id="ssbcnt-calf_fry">1</span></div>
+<div class="ssb-item" id="ssbi-woody_fest" data-key="Woody Guthrie Folk Fest" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">Woody Guthrie Folk Fest</span><span class="ssb-count" id="ssbcnt-woody_fest">1</span></div>
+<div class="ssb-item" id="ssbi-okc_home_show" data-key="OKC Home + Outdoor Living Show" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6c5ce7"></div><span class="ssb-name">OKC Home + Outdoor Show</span><span class="ssb-count" id="ssbcnt-okc_home_show">3</span></div>
 <div class="ssb-group">Markets &amp; Food</div>
-<div class="ssb-item" id="ssbi-farmers" data-key="Farmers" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#854F0B"></div>
-<div class="ssb-item" id="ssbi-sur_la_table" data-key="Sur La Table" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#854F0B"></div>
-<div class="ssb-item" id="ssbi-lively_beerworks" data-key="Lively Beerworks" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#854F0B"></div>
+<div class="ssb-item" id="ssbi-farmers" data-key="Farmers" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#b07d10"></div><span class="ssb-name">OKC Farmers Market</span><span class="ssb-count" id="ssbcnt-farmers">46</span></div>
+<div class="ssb-item" id="ssbi-sur_la_table" data-key="Sur La Table" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#b07d10"></div><span class="ssb-name">Sur La Table</span><span class="ssb-count" id="ssbcnt-sur_la_table">4</span></div>
+<div class="ssb-item" id="ssbi-lively_beerworks" data-key="Lively Beerworks" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#b07d10"></div><span class="ssb-name">Lively Beerworks</span><span class="ssb-count" id="ssbcnt-lively_beerworks">20</span></div>
 <div class="ssb-group">Volunteer</div>
-<div class="ssb-item" id="ssbi-volunteer_central_oklahoma" data-key="Volunteer Central Oklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#059669"></div>
-<div class="ssb-item" id="ssbi-food_bank" data-key="Regional Food Bank of Oklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#059669"></div>
-<div class="ssb-item" id="ssbi-ok_humane" data-key="Oklahoma Humane Society" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#059669"></div>
-<div class="ssb-item" id="ssbi-big_brothers" data-key="Big Brothers Big Sisters" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#059669"></div>
+<div class="ssb-item" id="ssbi-volunteer_central" data-key="Volunteer Central Oklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#059669"></div><span class="ssb-name">OKC Beautiful</span><span class="ssb-count" id="ssbcnt-volunteer_central">41</span></div>
+<div class="ssb-item" id="ssbi-food_bank" data-key="Regional Food Bank of Oklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#059669"></div><span class="ssb-name">Regional Food Bank OKC</span><span class="ssb-count" id="ssbcnt-food_bank">20</span></div>
+<div class="ssb-item" id="ssbi-habitat" data-key="Habitat for Humanity OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#059669"></div><span class="ssb-name">Habitat for Humanity OKC</span><span class="ssb-count" id="ssbcnt-habitat">0</span></div>
+<div class="ssb-item" id="ssbi-ok_humane" data-key="Oklahoma Humane Society" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#059669"></div><span class="ssb-name">Oklahoma Humane Society</span><span class="ssb-count" id="ssbcnt-ok_humane">1</span></div>
+<div class="ssb-item" id="ssbi-united_way" data-key="United Way OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#059669"></div><span class="ssb-name">United Way OKC</span><span class="ssb-count" id="ssbcnt-united_way">0</span></div>
+<div class="ssb-item" id="ssbi-big_brothers" data-key="Big Brothers Big Sisters" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#059669"></div><span class="ssb-name">Big Brothers Big Sisters</span><span class="ssb-count" id="ssbcnt-big_brothers">1</span></div>
 <div class="ssb-group">Sports &amp; Fitness</div>
-<div class="ssb-item" id="ssbi-okc_comets" data-key="OKC Comets" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div>
-<div class="ssb-item" id="ssbi-ou_football" data-key="OU Sooners Football" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#841617"></div>
-<div class="ssb-item" id="ssbi-osu_football" data-key="OSU Cowboys Football" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#FF6600"></div>
-<div class="ssb-item" id="ssbi-tennis" data-key="Tennis" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-riversport" data-key="RIVERSPORT OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-findarace" data-key="findarace" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-pickleball" data-key="Pickleball" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-golf_okc" data-key="Golf Association" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1e7a47"></div>
-<div class="ssb-item" id="ssbi-redbud" data-key="Redbud" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
+<div class="ssb-item" id="ssbi-okc_comets" data-key="OKC Comets" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#185FA5"></div><span class="ssb-name">OKC Comets Baseball</span><span class="ssb-count" id="ssbcnt-okc_comets">43</span></div>
+<div class="ssb-item" id="ssbi-ou_football" data-key="OU Sooners Football" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#841617"></div><span class="ssb-name">OU Sooners Football</span><span class="ssb-count" id="ssbcnt-ou_football">12</span></div>
+<div class="ssb-item" id="ssbi-osu_football" data-key="OSU Cowboys Football" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#FF6600"></div><span class="ssb-name">OSU Cowboys Football</span><span class="ssb-count" id="ssbcnt-osu_football">11</span></div>
+<div class="ssb-item" id="ssbi-tennis" data-key="Tennis" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Tennis Tournaments</span><span class="ssb-count" id="ssbcnt-tennis">11</span></div>
+<div class="ssb-item" id="ssbi-riversport" data-key="RIVERSPORT OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">RIVERSPORT OKC</span><span class="ssb-count" id="ssbcnt-riversport">4</span></div>
+<div class="ssb-item" id="ssbi-findarace" data-key="findarace" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">OKC Cycling / Races</span><span class="ssb-count" id="ssbcnt-findarace">6</span></div>
+<div class="ssb-item" id="ssbi-pickleball" data-key="Pickleball" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Pickleball Tournaments</span><span class="ssb-count" id="ssbcnt-pickleball">6</span></div>
+<div class="ssb-item" id="ssbi-golf_association" data-key="Golf Association" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">OKC Amateur Golf</span><span class="ssb-count" id="ssbcnt-golf_association">25</span></div>
+<div class="ssb-item" id="ssbi-redbud" data-key="Redbud" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Redbud Classic</span><span class="ssb-count" id="ssbcnt-redbud">2</span></div>
+<div class="ssb-item" id="ssbi-memorial_mara" data-key="OKC Memorial Marathon" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">OKC Memorial Marathon</span><span class="ssb-count" id="ssbcnt-memorial_mara">3</span></div>
+<div class="ssb-item" id="ssbi-landrunners" data-key="Landrunners OKC Running Club" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Landrunners Running Club</span><span class="ssb-count" id="ssbcnt-landrunners">2</span></div>
+<div class="ssb-item" id="ssbi-kickin66" data-key="Kickin It on Route 66" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Kickin It on Route 66</span><span class="ssb-count" id="ssbcnt-kickin66">2</span></div>
+<div class="ssb-item" id="ssbi-nrha" data-key="NRHA Futurity" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">NRHA Futurity</span><span class="ssb-count" id="ssbcnt-nrha">1</span></div>
+<div class="ssb-item" id="ssbi-ymca_okc" data-key="YMCA Greater OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">YMCA Greater OKC</span><span class="ssb-count" id="ssbcnt-ymca_okc">2</span></div>
+<div class="ssb-item" id="ssbi-okc_fc" data-key="Oklahoma City FC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div><span class="ssb-name">Oklahoma City FC</span><span class="ssb-count" id="ssbcnt-okc_fc">1</span></div>
 <div class="ssb-group">Industry &amp; Design</div>
-<div class="ssb-item" id="ssbi-aiacoc" data-key="AIA Central Oklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6b7a99"></div>
-<div class="ssb-item" id="ssbi-memorial_mara" data-key="OKC Memorial Marathon" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-landrunners" data-key="Landrunners OKC Running Club" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-kickin66" data-key="Kickin It on Route 66" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-nrha" data-key="NRHA Futurity" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-ymca_okc" data-key="YMCA Greater OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
-<div class="ssb-item" id="ssbi-okc_fc" data-key="Oklahoma City FC (Soccer)" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#1a6fbf"></div>
+<div class="ssb-item" id="ssbi-aiacoc" data-key="AIA Central Oklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#6b7a99"></div><span class="ssb-name">AIA Central Oklahoma</span><span class="ssb-count" id="ssbcnt-aiacoc">21</span></div>
 <div class="ssb-group">Community</div>
-<div class="ssb-item" id="ssbi-metropolitan_library" data-key="Metropolitan Library" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#7c3aed"></div>
-<div class="ssb-item" id="ssbi-visitokc" data-key="VisitOKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#7c3aed"></div>
-<div class="ssb-item" id="ssbi-the_verge" data-key="The Verge" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#7c3aed"></div>
-<div class="ssb-item" id="ssbi-city_of_oklahoma" data-key="City of Oklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#7c3aed"></div>
-<div class="ssb-item" id="ssbi-coffee___cars" data-key="Coffee & Cars" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#7c3aed"></div>
+<div class="ssb-item" id="ssbi-metroli" data-key="Metropolitan Library" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Metro Library</span><span class="ssb-count" id="ssbcnt-metroli">5</span></div>
+<div class="ssb-item" id="ssbi-visitokc" data-key="VisitOKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">VisitOKC</span><span class="ssb-count" id="ssbcnt-visitokc">17</span></div>
+<div class="ssb-item" id="ssbi-the_verge" data-key="The Verge" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Verge OKC</span><span class="ssb-count" id="ssbcnt-the_verge">29</span></div>
+<div class="ssb-item" id="ssbi-city_of_okc" data-key="City of Oklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">City of OKC</span><span class="ssb-count" id="ssbcnt-city_of_okc">8</span></div>
+<div class="ssb-item" id="ssbi-coffee_cars" data-key="Coffee & Cars" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Coffee &amp; Cars OKC</span><span class="ssb-count" id="ssbcnt-coffee_cars">9</span></div>
+<div class="ssb-item" id="ssbi-okc_chamber" data-key="Greater OKC Chamber" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Greater OKC Chamber</span><span class="ssb-count" id="ssbcnt-okc_chamber">4</span></div>
+<div class="ssb-item" id="ssbi-okc_innovation" data-key="OKC Innovation District" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">OKC Innovation District</span><span class="ssb-count" id="ssbcnt-okc_innovation">4</span></div>
+<div class="ssb-item" id="ssbi-tribal_health" data-key="Tribal Public Health Conf" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Tribal Public Health Conf</span><span class="ssb-count" id="ssbcnt-tribal_health">3</span></div>
+<div class="ssb-item" id="ssbi-odmhsas" data-key="OK Mental Health" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">OK Mental Health (ODMHSAS)</span><span class="ssb-count" id="ssbcnt-odmhsas">1</span></div>
+<div class="ssb-item" id="ssbi-integris" data-key="INTEGRIS Health" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">INTEGRIS Health</span><span class="ssb-count" id="ssbcnt-integris">1</span></div>
+<div class="ssb-item" id="ssbi-ok_indian_clinic" data-key="OKC Indian Clinic" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">OKC Indian Clinic</span><span class="ssb-count" id="ssbcnt-ok_indian_clinic">1</span></div>
+<div class="ssb-item" id="ssbi-oerb" data-key="OERB / Energy Education" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">OERB / Energy Education</span><span class="ssb-count" id="ssbcnt-oerb">1</span></div>
+<div class="ssb-item" id="ssbi-petroleum_all" data-key="Petroleum Alliance of OK" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Petroleum Alliance of OK</span><span class="ssb-count" id="ssbcnt-petroleum_all">3</span></div>
+<div class="ssb-item" id="ssbi-spe_okc" data-key="SPE Oklahoma City" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">SPE Oklahoma City</span><span class="ssb-count" id="ssbcnt-spe_okc">1</span></div>
+<div class="ssb-item" id="ssbi-36north" data-key="36 Degrees North" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">36 Degrees North</span><span class="ssb-count" id="ssbcnt-36north">1</span></div>
+<div class="ssb-item" id="ssbi-ocast" data-key="OCAST Oklahoma" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">OCAST Oklahoma</span><span class="ssb-count" id="ssbcnt-ocast">1</span></div>
+<div class="ssb-item" id="ssbi-okc_coders" data-key="OKC Coders" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">OKC Coders</span><span class="ssb-count" id="ssbcnt-okc_coders">1</span></div>
+<div class="ssb-item" id="ssbi-tom_love_hub" data-key="Tom Love Innovation Hub" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Tom Love Innovation Hub</span><span class="ssb-count" id="ssbcnt-tom_love_hub">1</span></div>
+<div class="ssb-item" id="ssbi-breakthrough" data-key="Breakthrough T1D OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Breakthrough T1D OKC</span><span class="ssb-count" id="ssbcnt-breakthrough">1</span></div>
+<div class="ssb-item" id="ssbi-st_jude" data-key="St. Jude OKC" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">St. Jude OKC</span><span class="ssb-count" id="ssbcnt-st_jude">1</span></div>
+<div class="ssb-item" id="ssbi-ok_zoo" data-key="Oklahoma Zoological Society" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Oklahoma Zoological Society</span><span class="ssb-count" id="ssbcnt-ok_zoo">1</span></div>
+<div class="ssb-item" id="ssbi-healthy_city" data-key="Healthy City Initiative" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Healthy City Initiative</span><span class="ssb-count" id="ssbcnt-healthy_city">1</span></div>
+<div class="ssb-item" id="ssbi-energy_prod" data-key="Energy Producers Alliance" onclick="ssbClick(this)"><div class="ssb-dot" style="background:#2c5f8a"></div><span class="ssb-name">Energy Producers Alliance</span><span class="ssb-count" id="ssbcnt-energy_prod">1</span></div>
 </div>
 </div>
-</div><!-- /cal-sidebar-wrap -->
-
-
-<!-- Source Refresh Panel -->
-<div style="display:none" aria-hidden="true">
-  <button onclick="toggleSources()" id="sources-toggle">
-    <span id="sources-toggle-icon">&#9660;</span> Show Live Sources
-  </button>
-  <button onclick="toggleTracked()" id="tracked-toggle">
-    <span id="tracked-icon">&#9660;</span> Show Tracked Sources
-  </button>
-</div>
-<div class="search-panel" id="sources-panel" style="display:none!important;visibility:hidden">
-  <div class="panel-title">&#128225; Live Sources &mdash; Updated nightly by GitHub Actions &middot; Click any source to manually refresh</div>
-  <div class="source-grid" id="source-grid">
-    <button class="src-btn" id="src-plaza"    onclick="searchSource('plaza')"><span class="src-icon">&#127970;</span><span class="src-label">Plaza District</span><span class="src-count" id="cnt-plaza"></span></button>
-    <button class="src-btn" id="src-paseo"    onclick="searchSource('paseo')"><span class="src-icon">&#127912;</span><span class="src-label">Paseo Arts District</span><span class="src-count" id="cnt-paseo"></span></button>
-    <button class="src-btn" id="src-visitokc" onclick="searchSource('visitokc')"><span class="src-icon">&#127961;</span><span class="src-label">VisitOKC</span><span class="src-count" id="cnt-visitokc"></span></button>
-    <button class="src-btn" id="src-concerts" onclick="searchSource('concerts')"><span class="src-icon">&#127925;</span><span class="src-label">OKC Live Music</span><span class="src-count" id="cnt-concerts"></span></button>
-    <button class="src-btn" id="src-library"  onclick="searchSource('library')"><span class="src-icon">&#128218;</span><span class="src-label">Metro Library OKC</span><span class="src-count" id="cnt-library"></span></button>
-    <button class="src-btn" id="src-science"  onclick="searchSource('science')"><span class="src-icon">&#128300;</span><span class="src-label">Science Museum OKC</span><span class="src-count" id="cnt-science"></span></button>
-    <button class="src-btn" id="src-free"     onclick="searchSource('free')"><span class="src-icon">&#127381;</span><span class="src-label">Free OKC Events</span><span class="src-count" id="cnt-free"></span></button>
-    <button class="src-btn" id="src-family"   onclick="searchSource('family')"><span class="src-icon">&#128106;</span><span class="src-label">Family &amp; Kids</span><span class="src-count" id="cnt-family"></span></button>
-    <button class="src-btn" id="src-galas"    onclick="searchSource('galas')"><span class="src-icon">&#127870;</span><span class="src-label">Galas &amp; Fundraisers</span><span class="src-count" id="cnt-galas"></span></button>
-    <button class="src-btn" id="src-paycom" onclick="searchSource('paycom')"><span class="src-icon">&#127926;</span><span class="src-label">Paycom Center</span><span class="src-count" id="cnt-paycom"></span></button>
-    <button class="src-btn" id="src-yale" onclick="searchSource('yale')"><span class="src-icon">&#127914;</span><span class="src-label">The Yale Theater</span><span class="src-count" id="cnt-yale"></span></button>
-    <button class="src-btn" id="src-tulsa"    onclick="searchSource('tulsa')"><span class="src-icon">&#127926;</span><span class="src-label">Cain&#39;s Ballroom Tulsa</span><span class="src-count" id="cnt-tulsa"></span></button>
-    <button class="src-btn" id="src-allied"   onclick="searchSource('allied')"><span class="src-icon">&#127874;</span><span class="src-label">Allied Arts OKC</span><span class="src-count" id="cnt-allied"></span></button>
-    <button class="src-btn" id="src-okgazette" onclick="searchSource('okgazette')"><span class="src-icon">&#128240;</span><span class="src-label">OKC Gazette &amp; News9</span><span class="src-count" id="cnt-okgazette"></span></button>
-    <button class="src-btn" id="src-downtown"  onclick="searchSource('downtown')"><span class="src-icon">&#127961;</span><span class="src-label">Downtown OKC &amp; Bricktown</span><span class="src-count" id="cnt-downtown"></span></button>
-    <button class="src-btn" id="src-surlatable" onclick="searchSource('surlatable')"><span class="src-icon">&#127859;</span><span class="src-label">Sur La Table Classes</span><span class="src-count" id="cnt-surlatable"></span></button>
-    <button class="src-btn" id="src-conventions" onclick="searchSource('conventions')"><span class="src-icon">&#127970;</span><span class="src-label">Conventions &amp; Expos</span><span class="src-count" id="cnt-conventions"></span></button>
-    <button class="src-btn" id="src-running"   onclick="searchSource('running')"><span class="src-icon">&#127939;</span><span class="src-label">Running &amp; Fitness</span><span class="src-count" id="cnt-running"></span></button>
-    <button class="src-btn" id="src-equine"    onclick="searchSource('equine')"><span class="src-icon">&#128014;</span><span class="src-label">Horse Shows &amp; Equine</span><span class="src-count" id="cnt-equine"></span></button>
-    <button class="src-btn" id="src-music_fests" onclick="searchSource('music_fests')"><span class="src-icon">&#127926;</span><span class="src-label">Music Festivals OK</span><span class="src-count" id="cnt-music_fests"></span></button>
-    <button class="src-btn" id="src-theater2"  onclick="searchSource('theater2')"><span class="src-icon">&#127914;</span><span class="src-label">OKC Rep &amp; Civic Center</span><span class="src-count" id="cnt-theater2"></span></button>
-    <button class="src-btn" id="src-tech"      onclick="searchSource('tech')"><span class="src-icon">&#128187;</span><span class="src-label">Tech &amp; Business Events</span><span class="src-count" id="cnt-tech"></span></button>
-    <button class="src-btn" id="src-film2"     onclick="searchSource('film2')"><span class="src-icon">&#127909;</span><span class="src-label">Film &amp; Factory Obscura</span><span class="src-count" id="cnt-film2"></span></button>
-    <button class="src-btn" id="src-fairs"     onclick="searchSource('fairs')"><span class="src-icon">&#127922;</span><span class="src-label">Fairs &amp; State Fair</span><span class="src-count" id="cnt-fairs"></span></button>
-    <button class="src-btn" id="src-culture"   onclick="searchSource('culture')"><span class="src-icon">&#127981;</span><span class="src-label">Cultural &amp; Heritage</span><span class="src-count" id="cnt-culture"></span></button>
-    <button class="src-btn" id="src-civic"     onclick="searchSource('civic')"><span class="src-icon">&#127963;</span><span class="src-label">Civic &amp; Government</span><span class="src-count" id="cnt-civic"></span></button>
-    <button class="src-btn" id="src-oilandgas" onclick="searchSource('oilandgas')"><span class="src-icon">&#9651;</span><span class="src-label">Oil, Gas &amp; Energy</span><span class="src-count" id="cnt-oilandgas"></span></button>
-    <button class="src-btn" id="src-realestate" onclick="searchSource('realestate')"><span class="src-icon">&#127968;</span><span class="src-label">Real Estate &amp; ULI</span><span class="src-count" id="cnt-realestate"></span></button>
-    <button class="src-btn" id="src-chamber"   onclick="searchSource('chamber')"><span class="src-icon">&#128188;</span><span class="src-label">OKC Chamber &amp; Business</span><span class="src-count" id="cnt-chamber"></span></button>
-    <button class="src-btn" id="src-national"  onclick="searchSource('national')"><span class="src-icon">&#127963;</span><span class="src-label">The National OKC</span><span class="src-count" id="cnt-national"></span></button>
-  </div>
-  <button class="refresh-all" id="refresh-all-btn" onclick="refreshAll()">&#8635; Manual Refresh (uses API credits)</button>
-</div>
-</div>
-
-<div class="src-section" id="tracked-panel" style="display:none!important;visibility:hidden">
-  <div class="src-section-title">Tracked Sources</div>
-  <div class="src-tags">
-    <span class="src-tag">Plaza District</span><span class="src-tag">Paseo Arts District</span>
-    <span class="src-tag">VisitOKC</span><span class="src-tag">Metro Library OKC</span>
-    <span class="src-tag">Science Museum OKC</span><span class="src-tag">@HappyHourOKC</span>
-    <span class="src-tag">Jones Assembly</span><span class="src-tag">Paycom Center</span>
-    <span class="src-tag">Lyric Theatre</span><span class="src-tag">OKCMOA</span>
-    <span class="src-tag">Oklahoma Contemporary</span><span class="src-tag">deadCenter Film</span>
-    <span class="src-tag">Cain&#39;s Ballroom Tulsa</span><span class="src-tag">OKC Farmers Markets</span>
-    <span class="src-tag">Myriad Gardens</span><span class="src-tag">OKC Riversports</span>
-    <span class="src-tag">Ralph&#39;s Rowdy Ranch</span><span class="src-tag">Luxiere Magazine</span>
-    <span class="src-tag">405 Magazine</span><span class="src-tag">OU &amp; OSU Athletics</span>
-    <span class="src-tag">The National OKC</span><span class="src-tag">OKC Thunder</span><span class="src-tag">Free OKC Events</span>
-    <span class="src-tag">Family &amp; Kids Events</span><span class="src-tag">Galas &amp; Fundraisers</span>
-    <span class="src-tag">Arts Council OKC</span><span class="src-tag">Allied Arts OKC</span><span class="src-tag">Redbud Classic</span>
-  </div>
-</div>
-</div>
-
-
-</div>
-<div class="toast" id="toast"></div>
 
 <script>
 var MNTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
