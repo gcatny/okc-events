@@ -83,6 +83,17 @@ SOURCES = {
             'Today is {today}. Return events for the next 90 days.'
         )
     },
+    'western_ave': {
+        'label': 'Western Avenue Association OKC',
+        'system': (
+            'You find events hosted by or along Western Avenue in Oklahoma City. '
+            'Search visitwesternavenue.com/events-list for upcoming events including '
+            'Taste of Western, Wheels on Western, Wizards on Western, and other '
+            'Western Avenue Association events. Use source string '
+            '"Western Avenue Association - visitwesternavenue.com". '
+            'Today is {today}. Return events for the next 180 days.'
+        )
+    },
 
     # MAJOR VENUES
     'paycom': {
@@ -189,14 +200,16 @@ SOURCES = {
 
     # ARTS & CULTURE
     'allied': {
-        'label': 'Allied Arts & Arts Council OKC',
+        'label': 'Allied Arts & Arts Council OKC — Art Moves',
         'system': (
             'You find upcoming arts events in Oklahoma City. Search '
             'alliedartsokc.com, artscouncilokc.com/events, and '
-            'oklahomacontemporary.org/calendar for ARTini galas, arts fundraisers, '
-            'Oklahoma Contemporary exhibitions, public art events, and all '
-            'Allied Arts and Arts Council OKC programs. '
-            'Today is {today}. Return events for the next 90 days.'
+            'artscouncilokc.com/art-moves for ARTini galas, arts fundraisers, '
+            'Art Moves free performances, Festival of the Arts (Apr 23-26 2026), '
+            'Angels & Friends (Apr 22 2026), and all Allied Arts and Arts Council '
+            'OKC programs. Use source string '
+            '"Arts Council OKC - artscouncilokc.com" for Art Moves events. '
+            'Today is {today}. Return events for the next 180 days.'
         )
     },
     'film2': {
@@ -272,10 +285,14 @@ SOURCES = {
         'label': 'Running, Fitness & Riversports OKC',
         'system': (
             'You find upcoming running races and fitness events in OKC. '
-            'Search okcmarathon.com for OKC Memorial Marathon events. '
+            'Search okcmarathon.com and okcmarathon.com/event-information/weekend-schedule '
+            'for all OKC Memorial Marathon weekend events: Expo Apr 24-25, '
+            'Kids Marathon Apr 25, and Race Day Apr 26 (Full Marathon, Half Marathon, '
+            'Quarter Marathon, 5K, Finish Line Festival). '
             'Search riversportokc.org/events for whitewater and paddle events. '
             'Search runsignup.com for Oklahoma City 5Ks, half marathons, '
             'triathlons, and cycling events. '
+            'Use source string "Oklahoma City Memorial Marathon - okcmarathon.com". '
             'Today is {today}. Return events for the next 180 days.'
         )
     },
@@ -723,7 +740,18 @@ SOURCES = {
             'Today is {today}. Return events for the next 90 days.'
         )
     },
-    'ou_football': {
+    'okc_thunder': {
+        'label': 'OKC Thunder — NBA Schedule',
+        'system': (
+            'You find upcoming OKC Thunder home games at Paycom Center (100 W Reno Ave, OKC). '
+            'Search nba.com/thunder/schedule or ticketmaster.com/oklahoma-city-thunder-tickets '
+            'for home game dates, tip-off times, opponents, and TV broadcast info. '
+            'Include playoff games if applicable. '
+            'Today is {today}. Return home games for the next 45 days.'
+        )
+    },
+
+        'ou_football': {
         'label': 'OU Sooners Football',
         'system': (
             'You find upcoming Oklahoma Sooners football game details from soonersports.com. '
@@ -740,6 +768,47 @@ SOURCES = {
             'Search okstate.com/sports/football/schedule for confirmed kickoff times, TV networks, '
             'and schedule changes for all home games at Boone Pickens Stadium in Stillwater, OK. '
             'Today is {today}. Return games for the next 90 days.'
+        )
+    },
+
+        'regional_food_bank': {
+        'label': 'Regional Food Bank of Oklahoma',
+        'system': (
+            'You find upcoming volunteer opportunities at the Regional Food Bank of Oklahoma '
+            '(3355 S Purdue Ave, Oklahoma City). '
+            'Search regionalfoodbank.org/volunteer for upcoming volunteer shifts including '
+            'food sorting, packing, warehouse shifts, and special events. '
+            'Include all regularly scheduled volunteer sessions open to the public. '
+            'Today is {today}. Return events for the next 60 days.'
+        )
+    },
+
+        'freepressokc': {
+        'label': 'OKC Free Press Events Calendar',
+        'system': (
+            'You find upcoming events listed on the Oklahoma City Free Press events calendar. '
+            'Search freepressokc.com/eventscalendar for community events, arts performances, '
+            'film screenings, music shows, literary events, and local happenings in OKC. '
+            'Also check freepressokc.com/category/press-releases for newly announced events. '
+            'Today is {today}. Return events for the next 60 days.'
+        )
+    },
+    'prsa_okc': {
+        'label': 'PRSA Oklahoma City',
+        'system': (
+            'You find upcoming events from PRSA Oklahoma City (Public Relations Society of America). '
+            'Search prsaokc.com for monthly luncheons, Professional Development Day, '
+            'Upper Case Awards, New Pros events, and special panels. '
+            'Today is {today}. Return events for the next 90 days.'
+        )
+    },
+    'okpress': {
+        'label': 'Oklahoma Press Association',
+        'system': (
+            'You find upcoming events from the Oklahoma Press Association (okpress.com). '
+            'Search okpress.com/events/event_list.asp for the Annual Convention, '
+            'Oklahoma Journalism Hall of Fame, webinars, contests, and training events. '
+            'Today is {today}. Return events for the next 180 days.'
         )
     },
 
