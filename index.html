@@ -240,31 +240,16 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 #src-sidebar-list::-webkit-scrollbar-track{background:transparent}
 #src-sidebar-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
-
-
-.ssb-cat-btn
-
-
-
-
-
-
-.ssb-district-item 
-
-
-.ssb-cat-btn
-
-
-.ssb-district-item 
-.ssb-district-item
+.ssb-cat-btn{display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;font-size:12px;border:none;background:none;color:var(--muted);font-family:'DM Sans',sans-serif;width:100%;text-align:left;transition:background .15s}
+.ssb-cat-btn:hover{background:rgba(0,0,0,.04)}
+.ssb-cat-btn.ssb-active{background:rgba(44,95,170,.08);color:var(--accent);font-weight:500}
+.ssb-district-item{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;border-bottom:0.5px solid var(--border);transition:background .15s}
+.ssb-district-item:hover{background:rgba(0,0,0,.04)}
+.ssb-district-item.ssb-active{background:rgba(44,95,170,.08);font-weight:500}
 .ssb-group-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:10px 12px 3px;font-family:'DM Sans',sans-serif}
-
+.ssb-item{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;transition:background .15s}
 .ssb-item:hover{background:rgba(0,0,0,.04)}
-.ssb-item
-.ssb-item.ssb-active 
-
-
-
+.ssb-item.ssb-active{background:rgba(44,95,170,.08);font-weight:500}
 
 
 
@@ -736,7 +721,6 @@ var HH_DATA=[
 ,
   {n:"Hall\'s Pizza Kitchen",v:"Midtown",desc:"Pizza happy hour specials",url:"https://www.hallspizza.com/"},
   {n:"Barrios",v:"Midtown",desc:"Margarita happy hour specials",url:"https://www.barriosmexican.com/"},
-  {n:"Packard\'s",v:"Midtown",desc:"Cocktail happy hour specials",url:"https://www.packardsokc.com/"},
   {n:"Empire Slice House",v:"Plaza District",desc:"Beer & pizza happy hour",url:"https://www.empireslicehouse.com/"},
   {n:"Oak & Ore",v:"Plaza District",desc:"Beer happy hour specials",url:"https://www.oakandore.com/"},
   {n:"Picasso Cafe",v:"Paseo Arts District",desc:"Drinks happy hour specials",url:"https://www.picassocafeokc.com/"},
@@ -760,14 +744,58 @@ var HH_DATA=[
 {n:"The Collective",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Multi HH happy hour Mon–Fri 4–7 PM",url:"https://www.thecollectiveokc.com/"},
 {n:"Hall's Pizza Kitchen",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Happy hour specials happy hour Mon–Fri 4–7 PM"},
 {n:"Stella",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Wine HH happy hour Mon–Fri 4–7 PM",url:"https://www.stellaokc.com/"},
-{n:"Packard's",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Happy hour specials happy hour Mon–Fri 4–7 PM"},
 {n:"The Chalkboard",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Drinks happy hour Mon–Fri 4–7 PM",url:"https://www.thechalkboardokc.com/"},
 {n:"The Mule",v:"Plaza District",d:[0,1,2,3,4],t:"4-7 PM",desc:"Drinks happy hour Mon–Fri 4–7 PM",url:"https://okc.themuleokc.com/"},
 {n:"New State Burgers",v:"Plaza District",d:[0,1,2,3,4],t:"4-7 PM",desc:"Cocktails happy hour Mon–Fri 4–7 PM",url:"https://www.newstateburgers.com/"},
 {n:"Mary Eddy's",v:"Film Row / West Village",d:[0,1,2,3,4],t:"4-7 PM",desc:"Happy hour specials happy hour Mon–Fri 4–7 PM"},
 {n:"Mickey Mantle's",v:"Bricktown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Happy hour specials happy hour Mon–Fri 4–7 PM"},
 {n:"Bricktown Brewery",v:"Bricktown",d:[0,1,2,3,4],t:"4-7 PM",desc:"3–6 happy hour Mon–Fri 4–7 PM",url:"https://bricktownbrewery.com/"},
-{n:"Yucatan Taco",v:"Bricktown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Margaritas happy hour Mon–Fri 4–7 PM",url:"https://yucatantacostand.com/"}];
+{n:"Yucatan Taco",v:"Bricktown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Margaritas happy hour Mon–Fri 4–7 PM",url:"https://yucatantacostand.com/"},
+// ── NEW: Added from OKC Restaurants All Districts spreadsheet ──
+{n:"The Boom",v:"39th Street District",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Drag brunch and event-driven drink specials. LGBTQ+ bar with rotating events.",url:"https://theboomokc.com/"},
+{n:"Henry Hudson\u2019s (Remington Park)",v:"Adventure District",d:[0,1,2,3,4],t:"Varies",desc:"Happy hour varies by day. Bar and grill specials near Remington Park.",url:"https://henryhudsons.com/"},
+{n:"VII Asian Bistro",v:"Asian District",d:[0,1,2,3,4],t:"Varies",desc:"Asian fusion bistro with happy hour specials in the Asian District.",url:"https://www.viiasianbistro.com/"},
+{n:"Abuelo\u2019s",v:"Bricktown",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant happy hour. Drink and appetizer specials vary by location.",url:"https://www.abuelos.com/"},
+{n:"Toby Keith\u2019s I Love This Bar & Grill",v:"Bricktown",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Music venue with bar specials and live music nights in Bricktown.",url:"https://www.tobykeithsbar.com/"},
+{n:"El Coyote",v:"Britton District",d:[0,1,2,3,4],t:"Varies",desc:"Bar specials at this Britton District Mexican restaurant.",url:"https://elcoyoteokc.com/"},
+{n:"Birra Birra Craft Pizzeria",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"Craft pizza and beer specials at Chisholm Creek.",url:"https://birrabirrapizzeria.com/"},
+{n:"Eddie\u2019s",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"Bar and restaurant with happy hour at Chisholm Creek.",url:"https://www.eddiesokc.com/"},
+{n:"Firebirds Wood Fired Grill",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"FIREBAR happy hour with cocktail and appetizer specials.",url:"https://firebirdsrestaurants.com/oklahoma-city"},
+{n:"Riserva Bar + Tapas",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"Wine, cocktail, and tapas happy hour at Chisholm Creek.",url:"https://www.riservatapas.com/"},
+{n:"Republic Gastropub",v:"Classen Curve",d:[0,1,2,3,4],t:"Varies",desc:"Beer-focused happy hour at Classen Curve gastropub.",url:"https://www.republicgastropub.com/"},
+{n:"Bar Cicchetti",v:"Deep Deuce",d:[0,1,2,3,4],t:"Varies",desc:"Italian wine bar with happy hour in Deep Deuce.",url:"https://barcicchettiok.com/"},
+{n:"Black Walnut",v:"Deep Deuce",d:[0,1,2,3,4],t:"Varies",desc:"Upscale dining with bar specials in Deep Deuce.",url:"https://www.blackwalnutokc.com/"},
+{n:"The Blok Bar",v:"Deep Deuce",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Cocktail specials at Deep Deuce neighborhood bar.",url:"https://www.theblokbar.com/"},
+{n:"Mahogany Prime Steakhouse",v:"Downtown / City Center",d:[0,1,2,3,4],t:"Varies",desc:"Bar and lounge-based happy hour specials at downtown steakhouse.",url:"https://mahoganyprimesteakhouse.com/locations/oklahoma-city/"},
+{n:"Perle Mesta",v:"Downtown / City Center",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail specials at this downtown OKC restaurant.",url:"https://www.perlemesta.com/"},
+{n:"Kindred Spirits",v:"East End District",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail-focused happy hour in the East End District.",url:"https://www.kindredspiritsokc.com/"},
+{n:"Polk House",v:"East End District",d:[0,1,2,3,4],t:"Varies",desc:"Bar and restaurant with happy hour in East End.",url:"https://www.polkhouseokc.com/"},
+{n:"Boulevard Steakhouse",v:"Edmond",d:[0,1,2,3,4],t:"Varies",desc:"Bar specials at this Edmond steakhouse.",url:"https://www.boulevardsteakhouse.com/"},
+{n:"Farmers Grain Kitchen + Cellar",v:"Edmond",d:[0,1,2,3,4],t:"Varies",desc:"Limited and event-driven happy hour in Edmond.",url:"https://www.farmersgrain.com/"},
+{n:"Louie\u2019s Grill & Bar \u2013 Lake Hefner",v:"Lake Hefner",d:[0,1,2,3,4,5,6],t:"3\u20136 PM",desc:"Happy hour 3–6 PM. Louie\u2019s House Wines: $5 glass or $20 bottle during social hour. Lakeside patio.",url:"https://louiesgrillandbar.com/"},
+{n:"Mama Roja Mexican Kitchen",v:"Lake Hefner",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant with drink specials near Lake Hefner.",url:"https://mamaroja.com/"},
+{n:"Cheddar\u2019s Scratch Kitchen \u2013 Midwest City",v:"Midwest City",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail specials at Cheddar\u2019s in Midwest City.",url:"https://www.cheddars.com/"},
+{n:"Los Vaqueros \u2013 Midwest City",v:"Midwest City",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant with bar specials in Midwest City.",url:"https://www.losvaquerosrestaurants.com/"},
+{n:"Hidalgo\u2019s Mexican Restaurant",v:"Moore",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant with happy hour specials in Moore.",url:"https://hidalgosmexrestaurant.com/"},
+{n:"Benvenuti\u2019s Ristorante",v:"Norman",d:[0,1,2,3,4],t:"Varies",desc:"Italian restaurant with bar specials in Norman.",url:"https://www.benvenutisristorante.com/"},
+{n:"Scratch Kitchen & Cocktails",v:"Norman",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail-focused happy hour in Norman.",url:"https://www.scratchnorman.com/"},
+{n:"Tarahumara\u2019s Mexican Cafe",v:"Norman",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant with happy hour in Norman.",url:"https://www.tarahumarasmexicancafe.com/"},
+{n:"The Capital Grille",v:"OAK / Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"Lounge-based happy hour at The Capital Grille, OAK district.",url:"https://www.thecapitalgrille.com/locations/oklahoma-city/oklahoma-city/8065"},
+{n:"Eskimo Joe\u2019s",v:"Stillwater",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Iconic Stillwater bar and restaurant with drink specials.",url:"https://www.eskimojoes.com/"},
+{n:"The Lokal (Yukon)",v:"Outside City Limits",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail and bar specials at The Lokal in Yukon.",url:"https://thelokalrestaurant.com/"},
+{n:"OSO on Paseo",v:"Paseo Arts District",d:[0,1,2,3,4],t:"Varies",desc:"Margarita and taco happy hour specials on the Paseo.",url:"https://www.osopaseo.com/"},
+{n:"Osteria",v:"Plaza District",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail and wine happy hour specials in the Plaza District.",url:"https://osteriaokc.com/"},
+{n:"McClintock Saloon & Chop House",v:"Stockyards City",d:[0,1,2,3,4],t:"Varies",desc:"Bar specials at this Stockyards City saloon.",url:"https://mcclintocksaloon.com/"},
+{n:"Two Doors Down Wine + Bistro",v:"The Village",d:[0,1,2,3,4],t:"Varies",desc:"Wine and cocktail happy hour specials in The Village.",url:"https://twodoorsdown.biz/"},
+{n:"Cheever\u2019s Cafe",v:"Uptown 23rd",d:[0,1,2,3,4],t:"Varies",desc:"Limited bar-focused happy hour on Uptown 23rd.",url:"https://cheeverscafe.com/"},
+{n:"McNellie\u2019s",v:"Uptown 23rd",d:[0,1,2,3,4],t:"Varies",desc:"Pub happy hour with beer and drink specials on 23rd.",url:"https://www.mcnelliesokc.com/"},
+{n:"Angry Scotsman Brewing",v:"West Village",d:[0,1,2,3,4],t:"Varies",desc:"Brewery happy hour with beer specials in West Village.",url:"https://www.angryscotsmanbrewing.com/"},
+{n:"FlashBack RetroPub",v:"West Village",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Retro bar with drink specials in West Village.",url:"https://www.flashbackretropub.com/"},
+{n:"Metro Wine Bar & Bistro",v:"Western Avenue",d:[0,1,2,3,4],t:"Varies",desc:"Wine and bar happy hour specials on Western Avenue.",url:"https://www.metrowinebar.com/"},
+{n:"Rococo on Western",v:"Western Avenue",d:[0,1,2,3,4],t:"Varies",desc:"Limited bar-focused happy hour on Western Avenue.",url:"https://loverococo.com/"},
+{n:"The Hutch on Avondale",v:"Western Avenue",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail and bar happy hour on Western Avenue.",url:"https://hutchokc.com/"},
+{n:"The Big Friendly Brewery & Taproom",v:"Wheeler District",d:[0,1,2,3,4],t:"Varies",desc:"Brewery happy hour specials in Wheeler District.",url:"https://www.thebigfriendly.beer/"}
+];
 
 
 var MNTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -4007,8 +4035,69 @@ var HH_DIST_MAP = {
   "West OKC": "Outside City Limits",
   "Quail Springs area": "Outside City Limits",
   "The Village / north OKC": "The Village",
-  "The Village": "The Village"
+  "The Village": "The Village",
+  "39th Street District": "39th Street District",
+  "Britton District": "Britton District",
+  "Chisholm Creek": "OAK / Chisholm Creek",
+  "OAK / Chisholm Creek": "OAK / Chisholm Creek",
+  "East End District": "East End District",
+  "Stockyards City": "Stockyards City",
+  "Capitol Hill": "Capitol Hill",
+  "Lake Hefner": "Lake Hefner",
+  "Lake Hefner / Lakeside": "Lake Hefner",
+  "Stillwater": "Stillwater"
 };
+
+// ── CONVERT HH_DATA → RECURRING CALENDAR EVENTS ──
+// Generates a happy hour event for every matching day-of-week
+// for the next 90 days, so they appear on the calendar grid.
+(function() {
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var endDate = new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000);
+  var DOW_NAMES = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  var hhExisting = new Set(allEvents.filter(function(e){return e.cat==="happyhour";}).map(function(e){return e.name+"|"+e.date;}));
+
+  HH_DATA.forEach(function(hh) {
+    var dist = HH_DIST_MAP[hh.v] || hh.v || "";
+    var days = hh.d || [0,1,2,3,4]; // default Mon-Fri
+    var timeStr = hh.t || "Varies";
+    var daysLabel = days.length >= 7 ? "Daily" :
+                    days.length === 5 && days.indexOf(5)===-1 && days.indexOf(6)===-1 ? "Mon\u2013Fri" :
+                    days.map(function(d){return DOW_NAMES[d];}).join(", ");
+
+    // Walk each day in range
+    var cur = new Date(today.getTime());
+    while (cur <= endDate) {
+      // Convert JS getDay (0=Sun) to our format (0=Mon)
+      var jsDay = cur.getDay();
+      var hhDay = jsDay === 0 ? 6 : jsDay - 1; // 0=Mon..6=Sun
+      if (days.indexOf(hhDay) !== -1) {
+        var dateStr = cur.getFullYear() + "-" +
+          String(cur.getMonth()+1).padStart(2,"0") + "-" +
+          String(cur.getDate()).padStart(2,"0");
+        var key = hh.n + "|" + dateStr;
+        if (!hhExisting.has(key)) {
+          hhExisting.add(key);
+          allEvents.push({
+            name: hh.n,
+            venue: hh.v + ", OKC",
+            date: dateStr,
+            desc: hh.desc || (hh.n + " happy hour. " + daysLabel + " " + timeStr),
+            cat: "happyhour",
+            confirmed: true,
+            source: "OKC Restaurant Happy Hours",
+            tickets: hh.url || null,
+            free: false,
+            district: dist
+          });
+        }
+      }
+      cur.setDate(cur.getDate() + 1);
+    }
+  });
+})();
+
 var activeF = new Set(ALL_CATS);
 var calY = new Date().getFullYear();
 var calM = new Date().getMonth();
@@ -4045,15 +4134,12 @@ var SOURCES = {
   civic:      { label:"Civic & Government OKC",    system:"You find upcoming civic meetings and public events in Oklahoma City. Search okc.gov/government/city-council/city-council-meetings, okc.gov/government/boards-commissions/meeting-calendar, oklahoma.gov/elections for OKC City Council meetings, planning commission, elections, and civic events. Also search scissortailpark.org/events. Today is "+TODAY_STR+". Return events for the next 60 days." },
   chamber:    { label:"OKC Chamber & Business",    system:"You find upcoming OKC Chamber of Commerce and business events. Search okcchamber.com/events for chamber luncheons, award ceremonies, Government Affairs events, State Spotlight events, and business networking programs. Today is "+TODAY_STR+". Return events for the next 90 days." },
   oilandgas:  { label:"Oil, Gas & Energy OKC",     system:"You find upcoming oil, gas, and energy industry events in Oklahoma City. Search okenergytoday.com/events, oklahomaenergy.org/events, spe.org/en/events/conferences for Oklahoma oil and gas conferences, industry mixers, and energy sector events including Petroleum Alliance of Oklahoma events. Today is "+TODAY_STR+". Return events for the next 180 days." },
-  yale:       { label:"The Yale Theater OKC",   system:"You find upcoming events at The Yale Theater at 227 SW 25th Street in OKC Capitol Hill. Search theyaleokc.com/upcoming-events for Candlelight concerts, Jazz Room shows, Jury Experience immersive theater, and art exhibitions. Today is "+TODAY_STR+". Return events for the next 90 days." },
-  allied:     { label:"Allied Arts OKC",          system:"You find upcoming Allied Arts Oklahoma City events. Search alliedartsokc.com for ARTini galas, fundraisers, and arts events. Also search for events at Myriad Botanical Gardens and OKC arts nonprofits. Today is "+TODAY_STR+". Return events for the next 90 days." },
-  paycom:     { label:"Paycom Center OKC",      system:"You find upcoming events at Paycom Center in Oklahoma City at 100 W Reno Ave. Search paycomcenter.com/events for all upcoming concerts, sports, family shows, and special events. Include OKC Thunder games, concerts, PBR, monster trucks, and touring shows. Today is "+TODAY_STR+". Return all events for the next 180 days." },
   national: { label:"The National OKC", system:"You find events listed on The National hotel event calendar at thenationalokc.com/events in Oklahoma City (120 N Robinson Ave). Search for all upcoming events including afternoon tea, live music nights, jazz brunch, wine dinners, and special dining experiences. Today is "+TODAY_STR+". Return all events for the next 90 days." },
   eventbrite: { label:"Eventbrite OKC", system:"You find notable upcoming community events in Oklahoma City listed on Eventbrite at eventbrite.com/d/ok--oklahoma-city/events/. Search for the most popular, well-attended, or community-relevant events happening in Oklahoma City — including classes, workshops, food & drink events, arts events, fitness events, cultural events, charity fundraisers, networking events, family events, and festivals. Exclude private parties, multi-level marketing events, purely commercial webinars, and low-quality spam listings. Focus on genuine community events that residents of OKC would want to know about. Today is "+TODAY_STR+". Return events for the next 60 days." },
   eventbrite_okc: { label:"Eventbrite OKC", system:"You find quality upcoming in-person community events in Oklahoma City listed on Eventbrite. Browse https://www.eventbrite.com/d/ok--oklahoma-city/events/ and apply strict quality filtering: in-person OKC events only, open to the public, genuinely community-relevant (arts, music, food, fitness, festivals, cultural, family, charity, civic). Skip events already covered by our dedicated sources (Thunder games, Tower Theatre, Civic Center Broadway, OKCMOA, Myriad Gardens). Skip MLM, vague networking, or spammy events. Aim for 8-15 high-quality events. Today is "+TODAY_STR+". Return events for the next 90 days." }
 };
 
-var JSON_INSTRUCTION = ' Search the web to find REAL current events. Return ONLY a raw JSON array with no markdown, no fences, no explanation. Each item must have: name (string), venue (string), date (YYYY-MM-DD), desc (one sentence), cat (art|music|food|sports|fest|theater|comedy|film|free|family), confirmed (boolean), source (string), tickets (URL string or null), free (boolean). Only return the JSON array starting with [ and ending with ].';
+var JSON_INSTRUCTION = ' Search the web to find REAL current events. Return ONLY a raw JSON array with no markdown, no fences, no explanation. Each item must have: name (string), venue (full venue name and address string), date (YYYY-MM-DD), desc (one sentence), cat (art|music|food|sports|fest|theater|comedy|film|free|family|culture|running|civic|industry|convention|volunteer|happyhour|fundraiser), confirmed (boolean), source (string), tickets (URL string or null), free (boolean), district (string, OKC neighborhood e.g. "Downtown / City Center", "Bricktown", "Paseo Arts District", "Plaza District", "Midtown", "Deep Deuce", "Film Row / West Village", "Automobile Alley", "Adventure District", "Boathouse District", "Uptown 23rd", "Asian District", "Wheeler District", "Outside City Limits", or best match). Only return the JSON array starting with [ and ending with ].';
 
 function setStatus(cls, txt) {
   var d = document.getElementById("sdot");
@@ -4126,7 +4212,7 @@ function openD(j) {
         +'<button class="cx" onclick="closeD()">&#10005;</button>'
       +'</div>'
       +'<div class="dname">'+ev.name+'</div>'
-      +'<div class="dmeta"><span>&#128205; '+ev.venue+'</span><span>&#128197; '+ds+'</span></div>'
+      +'<div class="dmeta"><span>&#128205; '+ev.venue+'</span><span>&#128197; '+ds+'</span>'+(ev.district?'<span>&#127463; '+ev.district+'</span>':'')+'</div>'
       +'<div class="ddesc">'+ev.desc+'</div>'
       +'<div class="dactions"><button class="gcal-btn" id="gca"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Add to Google Calendar</button>'+tb+'</div>'
     +'</div>'
@@ -4146,6 +4232,7 @@ function toggleF(f) {
   });
   if (searchQuery) renderSearchResults(); else renderCal();
   updateToggleBtn();
+  updateDistCounts();
 }
 
 function toggleAllCats() {
@@ -4160,6 +4247,7 @@ function toggleAllCats() {
     if (c) el.classList.toggle("active", activeF.has(c));
   });
   updateToggleBtn();
+  updateDistCounts();
   if (searchQuery) renderSearchResults(); else renderCal();
 }
 
@@ -4205,7 +4293,9 @@ function matchesSearch(ev, q) {
 function renderSearchResults() {
   var q = searchQuery;
   var matches = allEvents.filter(function(ev) {
-    return activeF.has(ev.cat) && matchesSearch(ev, q);
+    if (!activeF.has(ev.cat)) return false;
+    if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return false;
+    return matchesSearch(ev, q);
   }).sort(function(a,b) { return a.date < b.date ? -1 : 1; });
 
   var bar = document.getElementById("search-results-bar");
@@ -4280,6 +4370,39 @@ var DISTRICT_KEYS = {
 ,
   "OKC State Capitol": ["oklahoma history center","okhistory","800 nazih zuhdi","oklahoma state capitol","state capitol","2300 n lincoln","oklahoma historical society","oklahoma capitol"]
 };
+
+// ── AUTO-ASSIGN DISTRICTS ──
+// Uses DISTRICT_KEYS venue-keyword matching to assign a district
+// to every event that doesn't already have one set.
+function autoAssignDistricts(events) {
+  events.forEach(function(ev) {
+    if (ev.district) return; // already assigned
+    var vLow = (ev.venue || "").toLowerCase();
+    var nLow = (ev.name || "").toLowerCase();
+    var combined = vLow + " " + nLow;
+    for (var dist in DISTRICT_KEYS) {
+      var keywords = DISTRICT_KEYS[dist];
+      for (var k = 0; k < keywords.length; k++) {
+        if (combined.indexOf(keywords[k]) !== -1) {
+          ev.district = dist;
+          return;
+        }
+      }
+    }
+    // Check HH_DIST_MAP for happy hours with venue-based district hints
+    if (ev.cat === "happyhour" && ev.venue) {
+      for (var alias in HH_DIST_MAP) {
+        if (vLow.indexOf(alias.toLowerCase()) !== -1) {
+          ev.district = HH_DIST_MAP[alias];
+          return;
+        }
+      }
+    }
+  });
+}
+
+// Run auto-assign on initial BASE events
+autoAssignDistricts(allEvents);
 
 var DIST_ACTIVE = null;
 
@@ -4383,8 +4506,11 @@ function chM(d) {
 function mergeEvents(newEvs, sourceId) {
   var ex = new Set(allEvents.map(function(ev){return ev.name+"|"+ev.date;}));
   var added = newEvs.filter(function(ev){return !ex.has(ev.name+"|"+ev.date);});
+  // Auto-assign districts to newly fetched events
+  autoAssignDistricts(added);
   allEvents = allEvents.concat(added);
   allEvents.sort(function(a,b){return a.date<b.date?-1:1;});
+  updateDistCounts();
   return added.length;
 }
 
@@ -4753,7 +4879,7 @@ var MNTH_NAMES = ["January","February","March","April","May","June","July","Augu
 init();
 setTimeout(syncDistrictHeight, 150);
 setTimeout(updateDistCounts, 200);
-window.addEventListener("load", ssbCountAll);
+window.addEventListener("load", updateDistCounts);
 
 
   var fu = document.getElementById("footer-updated");
@@ -4764,7 +4890,7 @@ window.addEventListener("load", ssbCountAll);
 function updateDistCounts() {
   var counts = {};
   allEvents.forEach(function(ev) {
-    if (ev.district) counts[ev.district] = (counts[ev.district]||0) + 1;
+    if (ev.district && activeF.has(ev.cat)) counts[ev.district] = (counts[ev.district]||0) + 1;
   });
   document.querySelectorAll('.dist-item').forEach(function(el) {
     var key = el.dataset.key;
@@ -4813,15 +4939,6 @@ window.addEventListener('resize', syncDistrictHeight);
 <script>
   var fu = document.getElementById("footer-updated");
   if (fu) fu.textContent = "Last loaded: " + new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",year:"numeric"});
-
-function syncDistrictHeight() {
-  var grid = document.getElementById('cg');
-  var panel = document.getElementById('district-panel');
-  if (!grid || !panel) return;
-  var h = grid.offsetHeight;
-  if (h > 0) panel.style.height = h + 'px';
-}
-window.addEventListener('resize', syncDistrictHeight);
 </script>
 </body>
 </html>
