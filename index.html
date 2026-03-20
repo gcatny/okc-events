@@ -485,8 +485,9 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
   <button class="fp fundraiser active" onclick="toggleF('fundraiser')">Fundraiser &amp; Gala</button>
   <button class="fp fashion active" onclick="toggleF('fashion')">Fashion</button>
 </div>
-<div style="display:flex;align-items:center;gap:10px;margin-top:8px;margin-bottom:16px">
+<div style="display:flex;align-items:center;gap:10px;margin-top:8px;margin-bottom:16px;flex-wrap:wrap">
   <button id="toggle-all-btn" onclick="toggleAllCats()" style="font-size:11px;padding:3px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer;font-family:inherit;transition:background .15s,color .15s,border-color .15s">Deselect All</button>
+  <button id="reset-all-btn" onclick="resetAll()" style="font-size:11px;padding:3px 14px;border-radius:20px;border:1px solid var(--music-bd);background:var(--music-bg);color:var(--music);cursor:pointer;font-family:inherit;transition:background .15s,color .15s,border-color .15s">&#8634; Reset All Filters</button>
   <span style="font-size:11px;color:var(--muted);font-style:italic">Click any category to hide it from the calendar</span>
 </div>
 
@@ -554,6 +555,23 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
       <div id="sub-date-wrap">
         <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Date *</label>
         <input id="sub-date" type="date" style="width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box">
+        <!-- Recurring event options -->
+        <div style="margin-top:8px">
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text);cursor:pointer;margin-bottom:4px">
+            <input type="checkbox" id="sub-recurring" onchange="document.getElementById('sub-recur-opts').style.display=this.checked?'flex':'none'" style="accent-color:var(--accent);width:15px;height:15px"> This is a recurring event
+          </label>
+          <div id="sub-recur-opts" style="display:none;gap:6px;flex-wrap:wrap;margin-top:4px">
+            <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text);cursor:pointer;padding:4px 10px;border:1px solid var(--border2);border-radius:16px;background:var(--surface)">
+              <input type="radio" name="sub-recur-freq" value="daily" style="accent-color:var(--accent)"> Daily
+            </label>
+            <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text);cursor:pointer;padding:4px 10px;border:1px solid var(--border2);border-radius:16px;background:var(--surface)">
+              <input type="radio" name="sub-recur-freq" value="weekly" checked style="accent-color:var(--accent)"> Weekly
+            </label>
+            <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text);cursor:pointer;padding:4px 10px;border:1px solid var(--border2);border-radius:16px;background:var(--surface)">
+              <input type="radio" name="sub-recur-freq" value="monthly" style="accent-color:var(--accent)"> Monthly
+            </label>
+          </div>
+        </div>
       </div>
 
       <!-- HH Time (happy hour only) -->
@@ -698,6 +716,7 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
     <button class="nb" onclick="chM(-1)">&#8592;</button>
     <span class="mlbl" id="mlbl"></span>
     <button class="nb" onclick="chM(1)">&#8594;</button>
+    <button onclick="goToday()" style="font-size:11px;padding:2px 12px;border-radius:16px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;margin-left:6px;transition:background .15s,color .15s" onmouseover="this.style.background='var(--accent)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--accent)'">Today</button>
     <span class="ecnt" id="ecnt"></span>
   </div>
   <div id="mobile-event-list"></div>
@@ -4929,6 +4948,61 @@ function chM(d) {
   updateToggleBtn();
 }
 
+// Jump calendar back to today's month
+function goToday() {
+  var t = new Date();
+  calY = t.getFullYear();
+  calM = t.getMonth();
+  closeD(); renderCal();
+}
+
+// Reset everything: all categories on, clear district, clear search, jump to today
+function resetAll() {
+  // Reset categories
+  activeF = new Set(ALL_CATS);
+  document.querySelectorAll(".fp").forEach(function(el) {
+    var c = ALL_CATS.find(function(x) { return el.classList.contains(x); });
+    if (c) el.classList.add("active");
+  });
+  // Reset HH toggles
+  HH_ON = true; HH_PATIO = false; HH_ROOF = false;
+  var hhToggle = document.getElementById("hh-toggle");
+  if (hhToggle) hhToggle.checked = true;
+  var hhSection = document.getElementById("hh-section");
+  if (hhSection) hhSection.classList.remove("hh-off");
+  var pb = document.getElementById("hh-patio-btn");
+  var rb = document.getElementById("hh-roof-btn");
+  if (pb) pb.classList.remove("active");
+  if (rb) rb.classList.remove("active");
+  // Clear district
+  DIST_ACTIVE = null;
+  document.querySelectorAll('.dist-item').forEach(function(i){ i.classList.remove('dist-active'); });
+  var cb = document.getElementById('dist-clear-btn');
+  if (cb) cb.style.display = 'none';
+  // Clear search
+  var si = document.getElementById("search-input");
+  if (si) { si.value = ""; }
+  searchQuery = "";
+  var so = document.getElementById("search-overlay");
+  if (so) so.classList.remove("open");
+  var sc = document.querySelector(".search-clear");
+  if (sc) sc.style.display = "none";
+  // Jump to today
+  var t = new Date();
+  calY = t.getFullYear();
+  calM = t.getMonth();
+  // Re-render
+  updateToggleBtn();
+  updateDistCounts();
+  closeD(); renderCal();
+}
+
+// Update footer total event count
+function updateFooterCount() {
+  var el = document.getElementById("footer-event-count");
+  if (el) el.textContent = allEvents.length.toLocaleString();
+}
+
 // ── LIVE SOURCE SEARCH ──
 function mergeEvents(newEvs, sourceId) {
   var ex = new Set(allEvents.map(function(ev){return ev.name+"|"+ev.date;}));
@@ -4938,6 +5012,7 @@ function mergeEvents(newEvs, sourceId) {
   allEvents = allEvents.concat(added);
   allEvents.sort(function(a,b){return a.date<b.date?-1:1;});
   updateDistCounts();
+  updateFooterCount();
   return added.length;
 }
 
@@ -5383,7 +5458,8 @@ init();
 setTimeout(syncDistrictHeight, 150);
 setTimeout(updateDistCounts, 200);
 setTimeout(updateHHCounts, 250);
-window.addEventListener("load", function() { updateDistCounts(); updateHHCounts(); });
+setTimeout(updateFooterCount, 300);
+window.addEventListener("load", function() { updateDistCounts(); updateHHCounts(); updateFooterCount(); });
 
 // Close search overlay on click outside or Escape key
 document.addEventListener("click", function(e) {
@@ -5460,7 +5536,11 @@ window.addEventListener('resize', syncDistrictHeight);
         </p>
       </div>
     </div>
-    <div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--muted)">
+    <div id="footer-total-events" style="text-align:center;margin-top:18px;padding:12px 16px;background:var(--surface);border:1px solid var(--border2);border-radius:8px">
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.03em;color:var(--accent)" id="footer-event-count">0</span>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px">total events on the calendar</div>
+    </div>
+    <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--muted)">
       OKC Super Calendar &bull; Oklahoma City, OK &bull; Calendar data refreshed nightly &bull; Not affiliated with any venue or event organizer &bull; <span id="footer-updated"></span>
     </div>
   </div>
