@@ -154,7 +154,26 @@ header{padding:32px 0 20px;border-bottom:1px solid var(--border2);margin-bottom:
 .ev.convention{background:var(--convention-bg);color:var(--convention);border-left-color:var(--convention)}
 .ev.volunteer{background:var(--volunteer-bg);color:var(--volunteer);border-left-color:var(--volunteer)}
 .ev.happyhour{background:var(--happyhour-bg);color:var(--happyhour);border-left-color:var(--happyhour)}
-.ev.happyhour{background:var(--happyhour-bg);color:var(--happyhour);border-left-color:var(--happyhour)}
+
+/* ── Happy Hour Section ── */
+.hh-section{background:var(--surface);border:1px solid var(--happyhour-bd);border-radius:10px;padding:14px 18px;margin-bottom:16px}
+.hh-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.hh-icon{color:var(--happyhour);flex-shrink:0}
+.hh-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.05em;color:var(--happyhour)}
+.hh-count{font-size:10px;padding:1px 7px;border-radius:8px;background:rgba(196,122,30,.12);color:var(--happyhour);font-weight:600}
+.hh-toggle-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.hh-main-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text)}
+.hh-main-toggle input{display:none}
+.hh-switch{width:36px;height:20px;background:var(--happyhour);border-radius:10px;position:relative;transition:background .2s;flex-shrink:0}
+.hh-switch::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.15);transform:translateX(16px)}
+.hh-section.hh-off .hh-switch{background:var(--border2)}
+.hh-section.hh-off .hh-switch::after{transform:translateX(0)}
+.hh-section.hh-off{opacity:.6}
+.hh-divider{width:1px;height:20px;background:var(--border2)}
+.hh-sub-toggles{display:flex;gap:8px;align-items:center}
+.hh-pill{font-size:11px;padding:4px 12px;border-radius:16px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .15s;display:flex;align-items:center;gap:5px}
+.hh-pill:hover{border-color:var(--happyhour-bd)}
+.hh-pill.active{border-color:var(--happyhour-bd);color:var(--happyhour);background:var(--happyhour-bg)}
 .ev.conf::after{content:" \u2713";opacity:.55;font-size:9px}
 .ev.search-match{outline:2px solid var(--accent);outline-offset:1px;opacity:1!important}
 .more{font-size:10px;color:var(--muted);cursor:pointer;padding:0 2px}
@@ -459,12 +478,37 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
   <button class="fp convention active" onclick="toggleF('convention')">Conventions &amp; Expos</button>
   <button class="fp volunteer active" onclick="toggleF('volunteer')">Volunteer</button>
   <button class="fp fundraiser active" onclick="toggleF('fundraiser')">Fundraiser &amp; Gala</button>
-  <button class="fp happyhour active" onclick="toggleF('happyhour')">Happy Hours</button>
 </div>
 <div style="display:flex;align-items:center;gap:10px;margin-top:8px;margin-bottom:16px">
   <button id="toggle-all-btn" onclick="toggleAllCats()" style="font-size:11px;padding:3px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer;font-family:inherit;transition:background .15s,color .15s,border-color .15s">Deselect All</button>
   <span style="font-size:11px;color:var(--muted);font-style:italic">Click any category to hide it from the calendar</span>
 </div>
+
+<!-- Happy Hour Section -->
+<div class="hh-section" id="hh-section">
+  <div class="hh-header">
+    <svg class="hh-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2L16 2"/><path d="M12 14V22"/><path d="M8 22H16"/><path d="M6 2L8 10C8 13 10 14 12 14C14 14 16 13 16 10L18 2"/></svg>
+    <span class="hh-title">HAPPY HOURS</span>
+    <span class="hh-count" id="hh-venue-count">177 venues</span>
+  </div>
+  <div class="hh-toggle-row">
+    <label class="hh-main-toggle">
+      <input type="checkbox" id="hh-toggle" checked onchange="toggleHH()">
+      <span class="hh-switch"></span>
+      Show on Calendar
+    </label>
+    <span class="hh-divider"></span>
+    <div class="hh-sub-toggles">
+      <button class="hh-pill" id="hh-patio-btn" onclick="toggleHHPatio()">
+        Patio <span class="hh-count" id="hh-patio-count">0</span>
+      </button>
+      <button class="hh-pill" id="hh-roof-btn" onclick="toggleHHRoof()">
+        Rooftop <span class="hh-count" id="hh-roof-count">0</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <div id="submit-panel" style="display:none">
   <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:24px 28px;margin-bottom:18px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
@@ -634,7 +678,7 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 var HH_DATA=[
 {n:"Bricktown Brewery \u2013 Edmond (2nd Street)",v:"Edmond",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Mon\u2013Fri 3\u20136 PM; Bricktown brews $3.75 and 6-packs to go $15 (official cocktail menu PDF indexed from Bricktown Brewery)",url:"https://bricktownbrewery.com/wp-content/uploads/2025/06/Mustang-Cocktail-Menu.pdf"},
 {n:"The Lookout Kitchen \u2013 Edmond",v:"Edmond",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. $3 Coors Banquet / Pacifico / Yuengling, $5 house wine, $6 club specials, select snacks and wings specials",url:"https://www.thelookoutedmond.com/specials"},
-{n:"The Mule \u2013 Downtown Edmond",v:"Edmond",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. $3 pint any domestic draft, $5 wine & sangria, beer/cocktail of the day, bar snacks",url:"https://edmond.themuleokc.com/edmond-downtown-edmond-the-mule-edmond-happy-hour-specials"},
+{n:"The Mule \u2013 Downtown Edmond",v:"Edmond",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. $3 pint any domestic draft, $5 wine & sangria, beer/cocktail of the day, bar snacks",url:"https://edmond.themuleokc.com/edmond-downtown-edmond-the-mule-edmond-happy-hour-specials",patio:true},
 {n:"Charleston\u2019s Restaurant \u2013 Edmond",v:"Edmond",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Mon\u2013Fri social hour: premium well classic cocktails $8, wine feature $6 (6oz) / $9 (9oz), $1 off all beer, $2 off select starters",url:"https://charlestons.com/wp-content/uploads/2019/02/CHA-2025-Menu-SocialHour-All-Web.pdf"},
 {n:"Louie\u2019s Grill & Bar \u2013 Edmond",v:"Edmond",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Louie\u2019s House Wines: $5 glass or $20 bottle during social hour",url:"https://louiesgrillandbar.com/locations/edmond/"},
 {n:"Pub W \u2013 Edmond",v:"Edmond",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Drafts / featured cocktails / house wines start at $4.95 at 3 PM, $5.95 at 4 PM, $6.95 at 5 PM; $1 off Oklahoma drafts; $1 off domestics; select food \u2026",url:"https://pubdub.com/"},
@@ -652,13 +696,13 @@ var HH_DATA=[
 {n:"Bricktown Brewery \u2013 Remington Park",v:"Adventure District / Remington Park",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Mon\u2013Fri 3\u20136 PM; Bricktown brews $3.75 and 6-packs to go $15 (official cocktail menu PDF indexed from Bricktown Brewery)",url:"https://bricktownbrewery.com/wp-content/uploads/2025/06/Mustang-Cocktail-Menu.pdf"},
 {n:"Lunar Lounge",v:"Midtown",d:[1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. $3 off signature drinks, $5 beer-and-shot, $9 classic cocktails",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
 {n:"Akai Sushi",v:"Wheeler District",d:[1, 2, 3, 4, 5],t:"8\u201310 PM; 9\u201311 PM",desc:"Happy hour 8\u201310 PM; 9\u201311 PM. $6 canned beer, $8 select wines, $9 sake; select rolls and carpaccio",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
-{n:"Bar Arbolada",v:"Film Row / West Village",d:[0, 1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. $5 cocktails and $3\u2013$5 snacks",url:"https://www.thetastyescape.com/happy-hour-in-okc-our-favorites/"},
+{n:"Bar Arbolada",v:"Film Row / West Village",d:[0, 1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. $5 cocktails and $3\u2013$5 snacks",url:"https://www.thetastyescape.com/happy-hour-in-okc-our-favorites/",patio:true},
 {n:"Burger Punk",v:"Paseo Arts District",d:[0, 1, 2, 3, 4],t:"2\u20136 PM",desc:"Happy hour 2\u20136 PM. $3 off dine-in burgers, $5 drafts, $3 Coors Banquet",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
 {n:"Iguana Mexican Grill",v:"Automobile Alley",d:[1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Recurring happy hour block posted by day; drinks and specials vary by day",url:"https://www.iguanamexicangrill.com/specials"},
 {n:"The Crain",v:"Lake Hefner",d:[0, 1, 2, 3, 4],t:"2\u20136 PM",desc:"Happy hour 2\u20136 PM. $7 featured wines, $3 off all beer, discounted apps like prime rib sliders, poutine fries, and wings",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
 {n:"Symmetry",v:"The Village",d:[0, 1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. Drink specials and 1/2-price appetizers",url:"https://www.symmetryokc.com/happy-hour"},
 {n:"Charleston\u2019s Restaurant \u2013 OKC Bricktown",v:"Bricktown",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Mon\u2013Fri social hour: premium well classic cocktails $8, wine feature $6 (6oz) / $9 (9oz), $1 off all beer, $2 off select starters",url:"https://charlestons.com/wp-content/uploads/2019/02/CHA-2025-Menu-SocialHour-All-Web.pdf"},
-{n:"Crabtown",v:"Bricktown",d:[0, 1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. Cocktail specials, shareables, rotating seafood bites",url:"https://welcometobricktown.com/bricktown-guides/happy-hour-guide-of-bricktown/"},
+{n:"Crabtown",v:"Bricktown",d:[0, 1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. Cocktail specials, shareables, rotating seafood bites",url:"https://welcometobricktown.com/bricktown-guides/happy-hour-guide-of-bricktown/",patio:true},
 {n:"Fuzzy\u2019s Taco Shop \u2013 Bricktown",v:"Bricktown",d:[0, 1, 2, 3, 4],t:"2\u20135 PM",desc:"Happy hour 2\u20135 PM. Frozen swirls, $3 beers, queso",url:"https://welcometobricktown.com/bricktown-guides/happy-hour-guide-of-bricktown/"},
 {n:"Mickey Mantle\u2019s Steakhouse",v:"Bricktown",d:[0, 1, 2, 3, 4],t:"4:30\u20137 PM",desc:"Happy hour 4:30\u20137 PM. Half-price martinis / cocktail of the month",url:"https://welcometobricktown.com/bricktown-guides/happy-hour-guide-of-bricktown/"},
 {n:"Revolutions",v:"Bricktown",d:[0, 1, 2, 3],t:"4\u20138 PM",desc:"Happy hour 4\u20138 PM. Drink specials and arcade deals",url:"https://welcometobricktown.com/bricktown-guides/happy-hour-guide-of-bricktown/"},
@@ -666,16 +710,16 @@ var HH_DATA=[
 {n:"The Melting Pot",v:"Bricktown",d:[0, 1, 2, 3, 6],t:"4\u20139 PM",desc:"Happy hour 4\u20139 PM. \"Forever Fondue\" menu / fondue specials",url:"https://welcometobricktown.com/bricktown-guides/happy-hour-guide-of-bricktown/"},
 {n:"Tipsy Tiki",v:"Bricktown",d:[0, 1, 2, 3],t:"4\u20138 PM",desc:"Happy hour 4\u20138 PM. $4 well drinks, $3 domestic beers, $3 Pink Bikini",url:"https://welcometobricktown.com/bricktown-guides/happy-hour-guide-of-bricktown/"},
 {n:"Toby Keith\u2019s I Love This Bar & Grill",v:"Bricktown",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Drink specials and buckets",url:"https://welcometobricktown.com/bricktown-guides/happy-hour-guide-of-bricktown/"},
-{n:"Yucatan Taco Stand & Tequila Bar",v:"Bricktown",d:[0, 1, 2, 3, 4],t:"2\u20136 PM",desc:"Happy hour 2\u20136 PM. $6 mini margaritas and micheladas / drink specials",url:"https://welcometobricktown.com/bricktown-guides/happy-hour-guide-of-bricktown/"},
+{n:"Yucatan Taco Stand & Tequila Bar",v:"Bricktown",d:[0, 1, 2, 3, 4],t:"2\u20136 PM",desc:"Happy hour 2\u20136 PM. $6 mini margaritas and micheladas / drink specials",url:"https://welcometobricktown.com/bricktown-guides/happy-hour-guide-of-bricktown/",patio:true},
 {n:"Bricktown Brewery \u2013 Downtown OKC",v:"Bricktown / Downtown",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Mon\u2013Fri 3\u20136 PM; Bricktown brews $3.75 and 6-packs to go $15 (official cocktail menu PDF indexed from Bricktown Brewery)",url:"https://bricktownbrewery.com/wp-content/uploads/2025/06/Mustang-Cocktail-Menu.pdf"},
 {n:"JJ\u2019s Alley",v:"Bricktown / downtown edge",d:[0, 1, 2, 3, 4, 5, 6],t:"2\u20137 PM",desc:"Happy hour 2\u20137 PM. Posted happy hour block; dive-bar drink deals",url:"https://www.facebook.com/jjsalleyokc/"},
-{n:"Mesero \u2013 Oklahoma City",v:"Classen Curve / 50 Penn",d:[0, 1, 2, 3, 4],t:"2\u20136 PM",desc:"Happy hour 2\u20136 PM. $2 off all cocktails and $2 off all appetizers; Crispy Hour tacos",url:"https://www.mesero.net/events/happy-hour"},
-{n:"Deep Deuce Grill",v:"Deep Deuce",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Beer and drink specials",url:"https://deepdeucegrill.com/menus/"},
+{n:"Mesero \u2013 Oklahoma City",v:"Classen Curve / 50 Penn",d:[0, 1, 2, 3, 4],t:"2\u20136 PM",desc:"Happy hour 2\u20136 PM. $2 off all cocktails and $2 off all appetizers; Crispy Hour tacos",url:"https://www.mesero.net/events/happy-hour",patio:true},
+{n:"Deep Deuce Grill",v:"Deep Deuce",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Beer and drink specials",url:"https://deepdeucegrill.com/menus/",patio:true},
 {n:"Suite B OKC",v:"Deep Deuce / downtown",d:[0, 1, 2, 3, 4, 5, 6],t:"Check website for hours",desc:"Happy hour Check website for hours. Craft cocktails, flatbreads, dips, desserts highlighted on happy hour page section",url:"https://www.suitebokc.com/"},
 {n:"600 Kitchen & Bar",v:"Downtown",d:[0, 1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. Half-off classic cocktails",url:"https://www.instagram.com/reel/DURBR6pjq3x/"},
 {n:"Rain Restaurant & Rooftop Terrace",v:"Downtown",d:[0, 1, 2, 3, 4, 5, 6],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. Daily happy hour posted",url:"https://www.facebook.com/groups/1959641464076578/posts/34503603295920307/"},
 {n:"Upper Crust",v:"Classen Curve",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Social hour with appetizers and drinks",url:"https://www.instagram.com/reel/DTylJNSkbhz/"},
-{n:"Social Capital",v:"Film Row / downtown west",d:[1],t:"All day",desc:"Happy hour All day. 15% off all draft beers, $5 margaritas, $6 happy hour menu",url:"https://www.instagram.com/socialcapitalokc/"},
+{n:"Social Capital",v:"Film Row / downtown west",d:[1],t:"All day",desc:"Happy hour All day. 15% off all draft beers, $5 margaritas, $6 happy hour menu",url:"https://www.instagram.com/socialcapitalokc/",patio:true,rooftop:true},
 {n:"Louie\u2019s Grill & Bar \u2013 OKC Highland Park",v:"Highland Park / north OKC",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Louie\u2019s House Wines: $5 glass or $20 bottle during social hour",url:"https://louiesgrillandbar.com/locations/okc-highland-park/"},
 {n:"Louie\u2019s Grill & Bar \u2013 OKC Lakeside",v:"Lake Hefner / Lakeside",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Louie\u2019s House Wines: $5 glass or $20 bottle during social hour",url:"https://louiesgrillandbar.com/locations/okc-lakeside/"},
 {n:"Bricktown Brewery \u2013 Memorial",v:"Memorial / NW OKC",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Mon\u2013Fri 3\u20136 PM; Bricktown brews $3.75 and 6-packs to go $15 (official cocktail menu PDF indexed from Bricktown Brewery)",url:"https://bricktownbrewery.com/wp-content/uploads/2025/06/Mustang-Cocktail-Menu.pdf"},
@@ -683,11 +727,11 @@ var HH_DATA=[
 {n:"Pub W \u2013 N. OKC",v:"Memorial / north OKC",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Drafts / featured cocktails / house wines start at $4.95 at 3 PM, $5.95 at 4 PM, $6.95 at 5 PM; $1 off Oklahoma drafts; $1 off domestics; select food \u2026",url:"https://pubdub.com/"},
 {n:"The Hamilton Supperette & Lounge",v:"Memorial Square",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Various drink specials including Evan Williams Old Fashioned, sangria, select wines, beers, and bar food specials",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
 {n:"Charleston\u2019s Restaurant \u2013 OKC Meridian",v:"Meridian / airport area",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Mon\u2013Fri social hour: premium well classic cocktails $8, wine feature $6 (6oz) / $9 (9oz), $1 off all beer, $2 off select starters",url:"https://charlestons.com/wp-content/uploads/2019/02/CHA-2025-Menu-SocialHour-All-Web.pdf"},
-{n:"Bradford House",v:"Mesta Park / Midtown north",d:[1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. Happy hour posted on official social",url:"https://www.instagram.com/p/DPO3m3eiWub/"},
+{n:"Bradford House",v:"Mesta Park / Midtown north",d:[1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. Happy hour posted on official social",url:"https://www.instagram.com/p/DPO3m3eiWub/",patio:true},
 {n:"R&J Lounge and Supper Club",v:"Midtown",d:[0, 1, 2, 3, 4, 5, 6],t:"2\u20136 PM",desc:"Happy hour 2\u20136 PM. $1.65 Coors Yellow Belly, $11.50 Poor Man\u2019s Sangria, $5.70 Old Fashioned, $4.10 well drinks; $12 relish tray, $8 cocktail wieners, $12 cheesy crab toa\u2026",url:"https://midtownokc.com/happy-hours"},
 {n:"REV Mex",v:"Midtown",d:[0, 1, 2, 3, 4],t:"2\u20136 PM",desc:"Happy hour 2\u20136 PM. $5 drafts and $7 margaritas",url:"https://midtownokc.com/happy-hours"},
 {n:"Rivi\u00e8re Modern B\u00e1nh M\u00ec",v:"Midtown",d:[0, 1, 2, 3, 4],t:"2\u20136 PM",desc:"Happy hour 2\u20136 PM. $4 well drinks, wine and draft specials; $5 egg rolls and chicken karaage",url:"https://midtownokc.com/happy-hours"},
-{n:"Stella Modern Italian Cuisine",v:"Midtown",d:[1, 2, 3, 4, 5, 6],t:"4\u20136 PM; 9:30\u201311 PM",desc:"Happy hour 4\u20136 PM; 9:30\u201311 PM. $9 appetizers, $3\u20137 select beer & cocktails, $20 select bottles of wine",url:"https://midtownokc.com/happy-hours"},
+{n:"Stella Modern Italian Cuisine",v:"Midtown",d:[1, 2, 3, 4, 5, 6],t:"4\u20136 PM; 9:30\u201311 PM",desc:"Happy hour 4\u20136 PM; 9:30\u201311 PM. $9 appetizers, $3\u20137 select beer & cocktails, $20 select bottles of wine",url:"https://midtownokc.com/happy-hours",patio:true},
 {n:"The Chalkboard OKC",v:"Midtown",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Sliders, truffle fries, cocktails and other happy hour items",url:"https://www.facebook.com/TheChalkboardOKC/videos/surprise-chalkboard-okc-now-has-happy-hour-and-its-daily-36pm-gather-your-crew-a/828990696497711/"},
 {n:"The Collective Kitchens and Cocktails",v:"Midtown",d:[0, 1, 2, 3, 4, 5, 6],t:"$5 Mule Mondays all day; 3\u20136 PM; 11 AM\u20133 PM",desc:"Happy hour $5 Mule Mondays all day; 3\u20136 PM; 11 AM\u20133 PM. $3.99 well cocktails, $6 house cocktails, $2 domestic drafts, $4 premium drafts starting at 3 PM and rising hourly; Mimosa Sundays $15 bottles / $3 gl\u2026",url:"https://midtownokc.com/happy-hours"},
 {n:"The Garage Burgers & Beer \u2013 Midtown",v:"Midtown",d:[0, 1, 2, 3, 4, 5, 6],t:"11 AM\u20136 PM",desc:"Happy hour 11 AM\u20136 PM. $3 domestic beers, $4 house wines, $6 draft cocktails, $5 frozen cocktails (all day on Thunder game days until end of game)",url:"https://midtownokc.com/happy-hours"},
@@ -695,29 +739,29 @@ var HH_DATA=[
 {n:"The Hall\u2019s Pizza Kitchen",v:"Midtown",d:[0, 1, 2, 3],t:"3:30\u20135:30 PM",desc:"Happy hour 3:30\u20135:30 PM. $6 mini cocktails, $18 beer buckets, $20 bottles of wine, $5\u2013$8 snacks",url:"https://midtownokc.com/happy-hours"},
 {n:"The Manhattan OKC",v:"Midtown",d:[0, 1, 2, 3, 4, 5, 6],t:"4 PM\u2013close",desc:"Happy hour 4 PM\u2013close. Happy hour menu posted daily; cocktail-focused",url:"https://www.toasttab.com/local/order/themanhattanokc"},
 {n:"Twenty6 Lounge",v:"Midtown",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20137 PM",desc:"Happy hour 3\u20137 PM. $7 drinks and half-price shisha",url:"https://midtownokc.com/happy-hours"},
-{n:"O Bar",v:"Midtown / Downtown fringe",d:[0, 1, 2, 3, 4, 5, 6],t:"4\u20136 PM; 4 PM\u2013close Monday",desc:"Happy hour 4\u20136 PM; 4 PM\u2013close Monday. Drink specials + small bites; $10 featured martinis on Mondays",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
+{n:"O Bar",v:"Midtown / Downtown fringe",d:[0, 1, 2, 3, 4, 5, 6],t:"4\u20136 PM; 4 PM\u2013close Monday",desc:"Happy hour 4\u20136 PM; 4 PM\u2013close Monday. Drink specials + small bites; $10 featured martinis on Mondays",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/",patio:true,rooftop:true},
 {n:"Charleston\u2019s Restaurant \u2013 OKC NW",v:"NW Expressway",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Mon\u2013Fri social hour: premium well classic cocktails $8, wine feature $6 (6oz) / $9 (9oz), $1 off all beer, $2 off select starters",url:"https://charlestons.com/wp-content/uploads/2019/02/CHA-2025-Menu-SocialHour-All-Web.pdf"},
 {n:"Louie\u2019s Grill & Bar \u2013 OKC NW Expressway",v:"NW Expressway",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Louie\u2019s House Wines: $5 glass or $20 bottle during social hour",url:"https://louiesgrillandbar.com/locations/okc-nw-expressway/"},
 {n:"Brent\u2019s Cajun Seafood & Oyster Bar",v:"NW Expressway / north OKC",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. 50% off select apps and $2.50 domestics",url:"https://www.brentscajun.com/happy-hour"},
 {n:"Curveball Kitchen",v:"NW OKC",d:[0, 1, 2, 3, 4],t:"Open\u20134 PM",desc:"Happy hour Open\u20134 PM. $5 beers and 50% off sports simulators",url:"https://www.groupon.com/deals/curveball-kitchen-oklahoma-city-2"},
 {n:"Smokehouse Social",v:"NW OKC",d:[0, 1, 2, 3, 4],t:"Open\u20134 PM",desc:"Happy hour Open\u20134 PM. $5 beers and 50% off sports simulators",url:"https://www.groupon.com/deals/smokehouse-social-oklahoma-city"},
 {n:"Jimmy B\u2019s Culinary + Krafted",v:"Automobile Alley",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20135:30 PM; within 1 hour of close",desc:"Happy hour 3\u20135:30 PM; within 1 hour of close. $8 draft wine, $3 off classic cocktails and beer, $7 beer-and-shot; dumplings, ramen and bar bites",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
-{n:"New State Burgers & Spirits",v:"Nichols Hills / north central",d:[2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. $6 fried onion burger, $5 fried banana peppers, $6 Bottled-in-Bond Old Fashioned",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
-{n:"Raven",v:"Western Avenue",d:[0, 1, 2, 3, 4],t:"Check website for hours",desc:"Happy hour Check website for hours. $5 cocktails including Old Fashioned, Paloma, Gimlet, Tom Collins, Aperol Spritz",url:"https://www.ravenokc.com/happy-hour-specials"},
+{n:"New State Burgers & Spirits",v:"Plaza District",d:[2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. $6 fried onion burger, $5 fried banana peppers, $6 Bottled-in-Bond Old Fashioned",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/",patio:true},
+{n:"Raven",v:"Western Avenue",d:[0, 1, 2, 3, 4],t:"Check website for hours",desc:"Happy hour Check website for hours. $5 cocktails including Old Fashioned, Paloma, Gimlet, Tom Collins, Aperol Spritz",url:"https://www.ravenokc.com/happy-hour-specials",patio:true},
 {n:"Twin Peaks \u2013 North Oklahoma City",v:"North OKC / Quail Springs area",d:[0, 1, 2, 3, 4],t:"3\u20136 PM; 10 PM\u2013close",desc:"Happy hour 3\u20136 PM; 10 PM\u2013close. $1 off 22 oz domestic drafts, $2 off 22 oz Twin Peaks drafts, $2 mini beef tacos, $3 chips & salsa, $5 apps, $7 select shareables",url:"https://twinpeaksrestaurant.com/locations/n-oklahoma-city-ok"},
 {n:"Opus Prime Steakhouse",v:"Northwest OKC",d:[0, 1, 2, 3],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. All appetizers half off (excludes cheese flight, lobster cargot, tasting platter)",url:"https://www.opusprimesteakhouse.com/happy-hour"},
 {n:"The Mug Scratch Kitchen",v:"Northwest OKC",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. $2.50 domestic pints and $3.50 domestic tallboys / posted happy hour beer deals",url:"https://themugokc.com/"},
 {n:"Cloud Puncher",v:"OAK / Chisholm Creek area",d:[0, 1, 2, 3],t:"2\u20136 PM",desc:"Happy hour 2\u20136 PM. $4 off all shareables, $4 domestic beers, $8 glasses of wine, $4 off signature cocktails",url:"https://www.opentable.com/r/cloud-puncher-oklahoma-city"},
-{n:"Tommy Bahama Marlin Bar \u2013 OAK",v:"OAK / Chisholm Creek area",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Happy hour posted; live music also promoted on some days",url:"https://www.instagram.com/p/DCQK7c8xLrp/"},
+{n:"Tommy Bahama Marlin Bar \u2013 OAK",v:"OAK / Chisholm Creek area",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Happy hour posted; live music also promoted on some days",url:"https://www.instagram.com/p/DCQK7c8xLrp/",patio:true},
 {n:"Barseo",v:"Paseo / Uptown area",d:[0, 1, 2, 3, 4],t:"Check website for hours",desc:"Happy hour Check website for hours. $2.50 tacos, $8 nachos, $9 signature cocktails, $6 house wine, $5 well drinks",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
 {n:"Good Times",v:"Paseo / Uptown area",d:[0, 1, 2, 3, 4, 5, 6],t:"All day",desc:"Happy hour All day. $3 domestics and $6 beer-and-shot specials",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
 {n:"OSO Paseo",v:"Paseo Arts District",d:[0, 1, 2, 3, 4],t:"2\u20135 PM",desc:"Happy hour 2\u20135 PM. Happy Hour Mon\u2013Fri plus half-price tacos and beer every Tuesday",url:"https://osopaseo.com/"},
-{n:"Paseo Grill",v:"Paseo Arts District",d:[0, 1, 2, 3, 4, 5, 6],t:"Check website for hours",desc:"Happy hour Check website for hours. Daily Happy Hour posted on events page",url:"https://paseogrill.com/events/"},
+{n:"Paseo Grill",v:"Paseo Arts District",d:[0, 1, 2, 3, 4, 5, 6],t:"Check website for hours",desc:"Happy hour Check website for hours. Daily Happy Hour posted on events page",url:"https://paseogrill.com/events/",patio:true},
 {n:"Red Rooster Bar & Grill",v:"Paseo Arts District",d:[0, 1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. Recurring happy hour posted",url:"https://www.thepaseo.org/red-rooster-bar-grill"},
 {n:"Empire Billiard & Shuffleboard",v:"Plaza District",d:[0, 3, 4, 6],t:"4\u20138 PM",desc:"Happy hour 4\u20138 PM. $3 beer and $7 cocktail",url:"https://www.empireokc.com/events"},
 {n:"Ma Der Lao Kitchen",v:"Plaza District",d:[1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Happy Hour (menu page posts recurring block; exact item lineup may rotate)",url:"https://maderlaokitchen.com/menu"},
 {n:"Superfly",v:"Plaza District",d:[0, 1, 2, 3, 4],t:"4\u20135:30 PM",desc:"Happy hour 4\u20135:30 PM. Select drink specials and shareable bites",url:"https://www.superflyokc.com/"},
-{n:"The Mule \u2013 Plaza District",v:"Plaza District",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. $5 Dad Mugs of Coors, Yuengling & Pacifico; $5 sangria; beer of week; half-price bar snacks",url:"https://okc.themuleokc.com/oklahoma-city-plaza-district-the-mule-happy-hour-specials"},
+{n:"The Mule \u2013 Plaza District",v:"Plaza District",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. $5 Dad Mugs of Coors, Yuengling & Pacifico; $5 sangria; beer of week; half-price bar snacks",url:"https://okc.themuleokc.com/oklahoma-city-plaza-district-the-mule-happy-hour-specials",patio:true},
 {n:"Uncle Julio\u2019s \u2013 Oklahoma City",v:"Quail Springs area",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Specially priced happy hour appetizers and drinks at the bar",url:"https://www.facebook.com/UncleJuliosOKC/videos/happy-hour/1219672722351420/"},
 {n:"Ballers Bar & Grill",v:"South Meridian / airport area",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Happy hour posted on official social; examples include drink specials such as $3 Fireball / $4 Rumple in one post",url:"https://ballersokc.com/"},
 {n:"Bricktown Brewery \u2013 South OKC",v:"South OKC",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Mon\u2013Fri 3\u20136 PM; Bricktown brews $3.75 and 6-packs to go $15 (official cocktail menu PDF indexed from Bricktown Brewery)",url:"https://bricktownbrewery.com/wp-content/uploads/2025/06/Mustang-Cocktail-Menu.pdf"},
@@ -727,7 +771,7 @@ var HH_DATA=[
 {n:"Charleston\u2019s Restaurant \u2013 OKC I-240",v:"South OKC / I-240",d:[0, 1, 2, 3, 4],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Mon\u2013Fri social hour: premium well classic cocktails $8, wine feature $6 (6oz) / $9 (9oz), $1 off all beer, $2 off select starters",url:"https://charlestons.com/wp-content/uploads/2019/02/CHA-2025-Menu-SocialHour-All-Web.pdf"},
 {n:"Deem Laow",v:"The Village / north OKC",d:[0, 1, 2, 3, 4],t:"4\u20138 PM",desc:"Happy hour 4\u20138 PM. $5 old fashioned, $5 beer-and-shot, $4 gyoza",url:"https://www.deemlaow.com/happyhour"},
 {n:"Palo Santo",v:"Uptown 23rd",d:[1, 2, 3, 4],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. Tacos, chips & guac, black bean hummus, quesadillas, beer/wine/cocktail specials incl. Build a Spritz",url:"https://www.visitokc.com/blog/all-posts/post/best-happy-hours-in-okc/"},
-{n:"Ponyboy",v:"Uptown 23rd",d:[0, 1, 2, 3, 4, 6],t:"4\u20137 PM; all day Sunday",desc:"Happy hour 4\u20137 PM; all day Sunday. Discount cocktails and drinks",url:"https://www.thetastyescape.com/happy-hour-in-okc-our-favorites/"},
+{n:"Ponyboy",v:"Uptown 23rd",d:[0, 1, 2, 3, 4, 6],t:"4\u20137 PM; all day Sunday",desc:"Happy hour 4\u20137 PM; all day Sunday. Discount cocktails and drinks",url:"https://www.thetastyescape.com/happy-hour-in-okc-our-favorites/",patio:true},
 {n:"The Crown",v:"Uptown 23rd / Midtown edge",d:[0, 1, 2, 3, 4, 5, 6],t:"4\u20136 PM",desc:"Happy hour 4\u20136 PM. Posted happy hour block; details vary",url:"https://thecrownokc.com/"},
 {n:"Twin Peaks \u2013 West Oklahoma City",v:"West OKC",d:[0, 1, 2, 3, 4],t:"3\u20136 PM; 10 PM\u2013close",desc:"Happy hour 3\u20136 PM; 10 PM\u2013close. $1 off 22 oz domestic drafts, $2 off 22 oz Twin Peaks drafts, $2 mini beef tacos, $3 chips & salsa, $5 apps, $7 select shareables",url:"https://twinpeaksrestaurant.com/locations/west-oklahoma-city-ok"},
 {n:"The Eatery at The Union",v:"West Village / downtown west",d:[0, 1, 2, 3, 4, 5, 6],t:"4\u20137 PM",desc:"Happy hour 4\u20137 PM. $1\u2013$5 drinks; half-price flatbreads",url:"https://www.thetastyescape.com/happy-hour-in-okc-our-favorites/"},
@@ -736,81 +780,81 @@ var HH_DATA=[
 {n:"Pub W \u2013 Yukon",v:"Yukon",d:[0, 1, 2, 3, 4, 5, 6],t:"3\u20136 PM",desc:"Happy hour 3\u20136 PM. Drafts / featured cocktails / house wines start at $4.95 at 3 PM, $5.95 at 4 PM, $6.95 at 5 PM; $1 off Oklahoma drafts; $1 off domestics; select food \u2026",url:"https://pubdub.com/"}
 ,
   {n:"Hall\'s Pizza Kitchen",v:"Midtown",desc:"Pizza happy hour specials",url:"https://www.hallspizza.com/"},
-  {n:"Barrios",v:"Midtown",desc:"Margarita happy hour specials",url:"https://www.barriosmexican.com/"},
-  {n:"Empire Slice House",v:"Plaza District",desc:"Beer & pizza happy hour",url:"https://www.empireslicehouse.com/"},
-  {n:"Oak & Ore",v:"Plaza District",desc:"Beer happy hour specials",url:"https://www.oakandore.com/"},
-  {n:"Picasso Cafe",v:"Paseo Arts District",desc:"Drinks happy hour specials",url:"https://www.picassocafeokc.com/"},
-  {n:"Frida Southwest",v:"Paseo Arts District",desc:"Cocktail happy hour specials",url:"https://www.fridasouthwest.com/"},
-  {n:"Parlor OKC",v:"Automobile Alley",desc:"Food hall happy hour specials",url:"https://www.parlorokc.com/"},
+  {n:"Barrios",v:"Midtown",desc:"Margarita happy hour specials",url:"https://www.barriosmexican.com/",patio:true},
+  {n:"Empire Slice House",v:"Plaza District",desc:"Beer & pizza happy hour",url:"https://www.empireslicehouse.com/",patio:true},
+  {n:"Oak & Ore",v:"Plaza District",desc:"Beer happy hour specials",url:"https://www.oakandore.com/",patio:true},
+  {n:"Picasso Cafe",v:"Paseo Arts District",desc:"Drinks happy hour specials",url:"https://www.picassocafeokc.com/",patio:true},
+  {n:"Frida Southwest",v:"Paseo Arts District",desc:"Cocktail happy hour specials",url:"https://www.fridasouthwest.com/",patio:true},
+  {n:"Parlor OKC",v:"Automobile Alley",desc:"Food hall happy hour specials",url:"https://www.parlorokc.com/",patio:true,rooftop:true},
   {n:"Tellers",v:"Automobile Alley",desc:"Cocktail happy hour specials",url:"https://www.tellersokc.com/"},
-  {n:"Broadway 10",v:"Automobile Alley",desc:"Steakhouse happy hour specials",url:"https://www.broadway10okc.com/"},
-  {n:"Sidecar",v:"Automobile Alley",desc:"Wine happy hour specials",url:"https://www.sidecarokc.com/"},
-  {n:"The Press",v:"Automobile Alley",desc:"Happy hour drink specials",url:"https://www.thepressokc.com/"},
-  {n:"The Jones Assembly",v:"Film Row / West Village",desc:"Drink happy hour specials",url:"https://www.thejonesassembly.com/"},
+  {n:"Broadway 10",v:"Automobile Alley",desc:"Steakhouse happy hour specials",url:"https://www.broadway10okc.com/",patio:true},
+  {n:"Sidecar",v:"Automobile Alley",desc:"Wine happy hour specials",url:"https://www.sidecarokc.com/",patio:true},
+  {n:"The Press",v:"Automobile Alley",desc:"Happy hour drink specials",url:"https://www.thepressokc.com/",patio:true},
+  {n:"The Jones Assembly",v:"Film Row / West Village",desc:"Drink happy hour specials",url:"https://www.thejonesassembly.com/",patio:true},
   {n:"Mary Eddy\'s",v:"Film Row / West Village",desc:"Cocktail happy hour specials",url:"https://www.21cmuseumhotels.com/oklahomacity/restaurant/"},
-  {n:"Fewless",v:"Film Row / West Village",desc:"Wine happy hour specials",url:"https://www.fewlessokc.com/"},
+  {n:"Fewless",v:"Film Row / West Village",desc:"Wine happy hour specials",url:"https://www.fewlessokc.com/",patio:true},
   {n:"Mickey Mantle\'s Steakhouse",v:"Bricktown",desc:"Martini happy hour specials",url:"https://mickeymantlesteakhouse.com/"},
-  {n:"Bourbon Street Cafe",v:"Bricktown",desc:"Drink happy hour specials",url:"https://www.bourbonstreetokc.com/"},
+  {n:"Bourbon Street Cafe",v:"Bricktown",desc:"Drink happy hour specials",url:"https://www.bourbonstreetokc.com/",patio:true},
   {n:"Cheever\'s Cafe",v:"Uptown 23rd",desc:"Limited happy hour specials",url:"https://cheeverscafe.com/"},
-  {n:"Pizzeria Gusto",v:"Uptown 23rd",desc:"Pizza happy hour specials",url:"https://pizzeriagusto.com/"},
-  {n:"Guyutes",v:"Uptown 23rd",desc:"Drink happy hour specials",url:"https://www.guyutes.com/"},
-  {n:"FLINT",v:"Downtown / City Center",desc:"Drink happy hour specials",url:"https://www.flintokc.com/"},
-  {n:"Stock & Bond",v:"Downtown / City Center",desc:"Happy hour drink specials",url:"https://www.stockandbond.com/"},
+  {n:"Pizzeria Gusto",v:"Uptown 23rd",desc:"Pizza happy hour specials",url:"https://pizzeriagusto.com/",patio:true},
+  {n:"Guyutes",v:"Uptown 23rd",desc:"Drink happy hour specials",url:"https://www.guyutes.com/",patio:true,rooftop:true},
+  {n:"FLINT",v:"Downtown / City Center",desc:"Drink happy hour specials",url:"https://www.flintokc.com/",patio:true},
+  {n:"Stock & Bond",v:"Downtown / City Center",desc:"Happy hour drink specials",url:"https://www.stockandbond.com/",patio:true},
   {n:"Library of Distilled Spirits",v:"Downtown / City Center",desc:"Cocktail happy hour specials",url:"https://www.libraryofdistilledspirits.com/"},
-{n:"The Collective",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Multi HH happy hour Mon–Fri 4–7 PM",url:"https://www.thecollectiveokc.com/"},
-{n:"Hall's Pizza Kitchen",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Happy hour specials happy hour Mon–Fri 4–7 PM"},
-{n:"Stella",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Wine HH happy hour Mon–Fri 4–7 PM",url:"https://www.stellaokc.com/"},
-{n:"The Chalkboard",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Drinks happy hour Mon–Fri 4–7 PM",url:"https://www.thechalkboardokc.com/"},
-{n:"The Mule",v:"Plaza District",d:[0,1,2,3,4],t:"4-7 PM",desc:"Drinks happy hour Mon–Fri 4–7 PM",url:"https://okc.themuleokc.com/"},
-{n:"New State Burgers",v:"Plaza District",d:[0,1,2,3,4],t:"4-7 PM",desc:"Cocktails happy hour Mon–Fri 4–7 PM",url:"https://www.newstateburgers.com/"},
-{n:"Mary Eddy's",v:"Film Row / West Village",d:[0,1,2,3,4],t:"4-7 PM",desc:"Happy hour specials happy hour Mon–Fri 4–7 PM"},
+{n:"The Collective",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Multi HH happy hour Mon–Fri 4–7 PM",url:"https://www.thecollectiveokc.com/",patio:true,rooftop:true},
+{n:"Hall's Pizza Kitchen",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Happy hour specials happy hour Mon–Fri 4–7 PM",patio:true,rooftop:true},
+{n:"Stella",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Wine HH happy hour Mon–Fri 4–7 PM",url:"https://www.stellaokc.com/",patio:true},
+{n:"The Chalkboard",v:"Midtown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Drinks happy hour Mon–Fri 4–7 PM",url:"https://www.thechalkboardokc.com/",patio:true},
+{n:"The Mule",v:"Plaza District",d:[0,1,2,3,4],t:"4-7 PM",desc:"Drinks happy hour Mon–Fri 4–7 PM",url:"https://okc.themuleokc.com/",patio:true},
+{n:"New State Burgers",v:"Plaza District",d:[0,1,2,3,4],t:"4-7 PM",desc:"Cocktails happy hour Mon–Fri 4–7 PM",url:"https://www.newstateburgers.com/",patio:true},
+{n:"Mary Eddy's",v:"Film Row / West Village",d:[0,1,2,3,4],t:"4-7 PM",desc:"Happy hour specials happy hour Mon–Fri 4–7 PM",patio:true},
 {n:"Mickey Mantle's",v:"Bricktown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Happy hour specials happy hour Mon–Fri 4–7 PM"},
 {n:"Bricktown Brewery",v:"Bricktown",d:[0,1,2,3,4],t:"4-7 PM",desc:"3–6 happy hour Mon–Fri 4–7 PM",url:"https://bricktownbrewery.com/"},
-{n:"Yucatan Taco",v:"Bricktown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Margaritas happy hour Mon–Fri 4–7 PM",url:"https://yucatantacostand.com/"},
+{n:"Yucatan Taco",v:"Bricktown",d:[0,1,2,3,4],t:"4-7 PM",desc:"Margaritas happy hour Mon–Fri 4–7 PM",url:"https://yucatantacostand.com/",patio:true},
 // ── NEW: Added from OKC Restaurants All Districts spreadsheet ──
-{n:"The Boom",v:"39th Street District",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Drag brunch and event-driven drink specials. LGBTQ+ bar with rotating events.",url:"https://theboomokc.com/"},
+{n:"The Boom",v:"39th Street District",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Drag brunch and event-driven drink specials. LGBTQ+ bar with rotating events.",url:"https://theboomokc.com/",patio:true},
 {n:"Henry Hudson\u2019s (Remington Park)",v:"Adventure District",d:[0,1,2,3,4],t:"Varies",desc:"Happy hour varies by day. Bar and grill specials near Remington Park.",url:"https://henryhudsons.com/"},
-{n:"VII Asian Bistro",v:"Asian District",d:[0,1,2,3,4],t:"Varies",desc:"Asian fusion bistro with happy hour specials in the Asian District.",url:"https://www.viiasianbistro.com/"},
+{n:"VII Asian Bistro",v:"Asian District",d:[0,1,2,3,4],t:"Varies",desc:"Asian fusion bistro with happy hour specials in the Asian District.",url:"https://www.viiasianbistro.com/",patio:true},
 {n:"Abuelo\u2019s",v:"Bricktown",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant happy hour. Drink and appetizer specials vary by location.",url:"https://www.abuelos.com/"},
 {n:"Toby Keith\u2019s I Love This Bar & Grill",v:"Bricktown",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Music venue with bar specials and live music nights in Bricktown.",url:"https://www.tobykeithsbar.com/"},
-{n:"El Coyote",v:"Britton District",d:[0,1,2,3,4],t:"Varies",desc:"Bar specials at this Britton District Mexican restaurant.",url:"https://elcoyoteokc.com/"},
-{n:"Birra Birra Craft Pizzeria",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"Craft pizza and beer specials at Chisholm Creek.",url:"https://birrabirrapizzeria.com/"},
+{n:"El Coyote",v:"Britton District",d:[0,1,2,3,4],t:"Varies",desc:"Bar specials at this Britton District Mexican restaurant.",url:"https://elcoyoteokc.com/",patio:true},
+{n:"Birra Birra Craft Pizzeria",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"Craft pizza and beer specials at Chisholm Creek.",url:"https://birrabirrapizzeria.com/",patio:true},
 {n:"Eddie\u2019s",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"Bar and restaurant with happy hour at Chisholm Creek.",url:"https://www.eddiesokc.com/"},
-{n:"Firebirds Wood Fired Grill",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"FIREBAR happy hour with cocktail and appetizer specials.",url:"https://firebirdsrestaurants.com/oklahoma-city"},
-{n:"Riserva Bar + Tapas",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"Wine, cocktail, and tapas happy hour at Chisholm Creek.",url:"https://www.riservatapas.com/"},
-{n:"Republic Gastropub",v:"Classen Curve",d:[0,1,2,3,4],t:"Varies",desc:"Beer-focused happy hour at Classen Curve gastropub.",url:"https://www.republicgastropub.com/"},
-{n:"Bar Cicchetti",v:"Deep Deuce",d:[0,1,2,3,4],t:"Varies",desc:"Italian wine bar with happy hour in Deep Deuce.",url:"https://barcicchettiok.com/"},
-{n:"Black Walnut",v:"Deep Deuce",d:[0,1,2,3,4],t:"Varies",desc:"Upscale dining with bar specials in Deep Deuce.",url:"https://www.blackwalnutokc.com/"},
-{n:"The Blok Bar",v:"Deep Deuce",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Cocktail specials at Deep Deuce neighborhood bar.",url:"https://www.theblokbar.com/"},
+{n:"Firebirds Wood Fired Grill",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"FIREBAR happy hour with cocktail and appetizer specials.",url:"https://firebirdsrestaurants.com/oklahoma-city",patio:true},
+{n:"Riserva Bar + Tapas",v:"Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"Wine, cocktail, and tapas happy hour at Chisholm Creek.",url:"https://www.riservatapas.com/",patio:true},
+{n:"Republic Gastropub",v:"Classen Curve",d:[0,1,2,3,4],t:"Varies",desc:"Beer-focused happy hour at Classen Curve gastropub.",url:"https://www.republicgastropub.com/",patio:true},
+{n:"Bar Cicchetti",v:"Deep Deuce",d:[0,1,2,3,4],t:"Varies",desc:"Italian wine bar with happy hour in Deep Deuce.",url:"https://barcicchettiok.com/",patio:true},
+{n:"Black Walnut",v:"Deep Deuce",d:[0,1,2,3,4],t:"Varies",desc:"Upscale dining with bar specials in Deep Deuce.",url:"https://www.blackwalnutokc.com/",patio:true},
+{n:"The Blok Bar",v:"Deep Deuce",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Cocktail specials at Deep Deuce neighborhood bar.",url:"https://www.theblokbar.com/",patio:true},
 {n:"Mahogany Prime Steakhouse",v:"Downtown / City Center",d:[0,1,2,3,4],t:"Varies",desc:"Bar and lounge-based happy hour specials at downtown steakhouse.",url:"https://mahoganyprimesteakhouse.com/locations/oklahoma-city/"},
-{n:"Perle Mesta",v:"Downtown / City Center",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail specials at this downtown OKC restaurant.",url:"https://www.perlemesta.com/"},
-{n:"Kindred Spirits",v:"East End District",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail-focused happy hour in the East End District.",url:"https://www.kindredspiritsokc.com/"},
-{n:"Polk House",v:"East End District",d:[0,1,2,3,4],t:"Varies",desc:"Bar and restaurant with happy hour in East End.",url:"https://www.polkhouseokc.com/"},
+{n:"Perle Mesta",v:"Downtown / City Center",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail specials at this downtown OKC restaurant.",url:"https://www.perlemesta.com/",patio:true},
+{n:"Kindred Spirits",v:"East End District",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail-focused happy hour in the East End District.",url:"https://www.kindredspiritsokc.com/",patio:true},
+{n:"Polk House",v:"East End District",d:[0,1,2,3,4],t:"Varies",desc:"Bar and restaurant with happy hour in East End.",url:"https://www.polkhouseokc.com/",patio:true},
 {n:"Boulevard Steakhouse",v:"Edmond",d:[0,1,2,3,4],t:"Varies",desc:"Bar specials at this Edmond steakhouse.",url:"https://www.boulevardsteakhouse.com/"},
-{n:"Farmers Grain Kitchen + Cellar",v:"Edmond",d:[0,1,2,3,4],t:"Varies",desc:"Limited and event-driven happy hour in Edmond.",url:"https://www.farmersgrain.com/"},
+{n:"Farmers Grain Kitchen + Cellar",v:"Edmond",d:[0,1,2,3,4],t:"Varies",desc:"Limited and event-driven happy hour in Edmond.",url:"https://www.farmersgrain.com/",patio:true},
 {n:"Louie\u2019s Grill & Bar \u2013 Lake Hefner",v:"Lake Hefner",d:[0,1,2,3,4,5,6],t:"3\u20136 PM",desc:"Happy hour 3–6 PM. Louie\u2019s House Wines: $5 glass or $20 bottle during social hour. Lakeside patio.",url:"https://louiesgrillandbar.com/"},
-{n:"Mama Roja Mexican Kitchen",v:"Lake Hefner",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant with drink specials near Lake Hefner.",url:"https://mamaroja.com/"},
+{n:"Mama Roja Mexican Kitchen",v:"Lake Hefner",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant with drink specials near Lake Hefner.",url:"https://mamaroja.com/",patio:true},
 {n:"Cheddar\u2019s Scratch Kitchen \u2013 Midwest City",v:"Midwest City",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail specials at Cheddar\u2019s in Midwest City.",url:"https://www.cheddars.com/"},
 {n:"Los Vaqueros \u2013 Midwest City",v:"Midwest City",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant with bar specials in Midwest City.",url:"https://www.losvaquerosrestaurants.com/"},
 {n:"Hidalgo\u2019s Mexican Restaurant",v:"Moore",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant with happy hour specials in Moore.",url:"https://hidalgosmexrestaurant.com/"},
 {n:"Benvenuti\u2019s Ristorante",v:"Norman",d:[0,1,2,3,4],t:"Varies",desc:"Italian restaurant with bar specials in Norman.",url:"https://www.benvenutisristorante.com/"},
-{n:"Scratch Kitchen & Cocktails",v:"Norman",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail-focused happy hour in Norman.",url:"https://www.scratchnorman.com/"},
+{n:"Scratch Kitchen & Cocktails",v:"Norman",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail-focused happy hour in Norman.",url:"https://www.scratchnorman.com/",patio:true},
 {n:"Tarahumara\u2019s Mexican Cafe",v:"Norman",d:[0,1,2,3,4],t:"Varies",desc:"Mexican restaurant with happy hour in Norman.",url:"https://www.tarahumarasmexicancafe.com/"},
 {n:"The Capital Grille",v:"OAK / Chisholm Creek",d:[0,1,2,3,4],t:"Varies",desc:"Lounge-based happy hour at The Capital Grille, OAK district.",url:"https://www.thecapitalgrille.com/locations/oklahoma-city/oklahoma-city/8065"},
 {n:"Eskimo Joe\u2019s",v:"Stillwater",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Iconic Stillwater bar and restaurant with drink specials.",url:"https://www.eskimojoes.com/"},
-{n:"The Lokal (Yukon)",v:"Yukon",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail and bar specials at The Lokal in Yukon.",url:"https://thelokalrestaurant.com/"},
-{n:"OSO on Paseo",v:"Paseo Arts District",d:[0,1,2,3,4],t:"Varies",desc:"Margarita and taco happy hour specials on the Paseo.",url:"https://www.osopaseo.com/"},
-{n:"Osteria",v:"Plaza District",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail and wine happy hour specials in the Plaza District.",url:"https://osteriaokc.com/"},
+{n:"The Lokal (Yukon)",v:"Yukon",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail and bar specials at The Lokal in Yukon.",url:"https://thelokalrestaurant.com/",patio:true},
+{n:"OSO on Paseo",v:"Paseo Arts District",d:[0,1,2,3,4],t:"Varies",desc:"Margarita and taco happy hour specials on the Paseo.",url:"https://www.osopaseo.com/",patio:true},
+{n:"Osteria",v:"Plaza District",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail and wine happy hour specials in the Plaza District.",url:"https://osteriaokc.com/",patio:true},
 {n:"McClintock Saloon & Chop House",v:"Stockyards City",d:[0,1,2,3,4],t:"Varies",desc:"Bar specials at this Stockyards City saloon.",url:"https://mcclintocksaloon.com/"},
-{n:"Two Doors Down Wine + Bistro",v:"The Village",d:[0,1,2,3,4],t:"Varies",desc:"Wine and cocktail happy hour specials in The Village.",url:"https://twodoorsdown.biz/"},
+{n:"Two Doors Down Wine + Bistro",v:"The Village",d:[0,1,2,3,4],t:"Varies",desc:"Wine and cocktail happy hour specials in The Village.",url:"https://twodoorsdown.biz/",patio:true},
 {n:"Cheever\u2019s Cafe",v:"Uptown 23rd",d:[0,1,2,3,4],t:"Varies",desc:"Limited bar-focused happy hour on Uptown 23rd.",url:"https://cheeverscafe.com/"},
 {n:"McNellie\u2019s",v:"Uptown 23rd",d:[0,1,2,3,4],t:"Varies",desc:"Pub happy hour with beer and drink specials on 23rd.",url:"https://www.mcnelliesokc.com/"},
-{n:"Angry Scotsman Brewing",v:"West Village",d:[0,1,2,3,4],t:"Varies",desc:"Brewery happy hour with beer specials in West Village.",url:"https://www.angryscotsmanbrewing.com/"},
-{n:"FlashBack RetroPub",v:"West Village",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Retro bar with drink specials in West Village.",url:"https://www.flashbackretropub.com/"},
-{n:"Metro Wine Bar & Bistro",v:"Western Avenue",d:[0,1,2,3,4],t:"Varies",desc:"Wine and bar happy hour specials on Western Avenue.",url:"https://www.metrowinebar.com/"},
-{n:"Rococo on Western",v:"Western Avenue",d:[0,1,2,3,4],t:"Varies",desc:"Limited bar-focused happy hour on Western Avenue.",url:"https://loverococo.com/"},
-{n:"The Hutch on Avondale",v:"Western Avenue",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail and bar happy hour on Western Avenue.",url:"https://hutchokc.com/"},
-{n:"The Big Friendly Brewery & Taproom",v:"Wheeler District",d:[0,1,2,3,4],t:"Varies",desc:"Brewery happy hour specials in Wheeler District.",url:"https://www.thebigfriendly.beer/"}
+{n:"Angry Scotsman Brewing",v:"West Village",d:[0,1,2,3,4],t:"Varies",desc:"Brewery happy hour with beer specials in West Village.",url:"https://www.angryscotsmanbrewing.com/",patio:true},
+{n:"FlashBack RetroPub",v:"West Village",d:[0,1,2,3,4,5,6],t:"Varies",desc:"Retro bar with drink specials in West Village.",url:"https://www.flashbackretropub.com/",patio:true},
+{n:"Metro Wine Bar & Bistro",v:"Western Avenue",d:[0,1,2,3,4],t:"Varies",desc:"Wine and bar happy hour specials on Western Avenue.",url:"https://www.metrowinebar.com/",patio:true},
+{n:"Rococo on Western",v:"Western Avenue",d:[0,1,2,3,4],t:"Varies",desc:"Limited bar-focused happy hour on Western Avenue.",url:"https://loverococo.com/",patio:true},
+{n:"The Hutch on Avondale",v:"Western Avenue",d:[0,1,2,3,4],t:"Varies",desc:"Cocktail and bar happy hour on Western Avenue.",url:"https://hutchokc.com/",patio:true},
+{n:"The Big Friendly Brewery & Taproom",v:"Wheeler District",d:[0,1,2,3,4],t:"Varies",desc:"Brewery happy hour specials in Wheeler District.",url:"https://www.thebigfriendly.beer/",patio:true}
 ];
 
 
@@ -4107,7 +4151,9 @@ var HH_DIST_MAP = {
             source: "OKC Restaurant Happy Hours",
             tickets: hh.url || null,
             free: false,
-            district: dist
+            district: dist,
+            patio: !!hh.patio,
+            rooftop: !!hh.rooftop
           });
         }
       }
@@ -4117,6 +4163,9 @@ var HH_DIST_MAP = {
 })();
 
 var activeF = new Set(ALL_CATS);
+var HH_ON = true;       // master happy hour toggle
+var HH_PATIO = false;   // patio sub-filter
+var HH_ROOF = false;    // rooftop sub-filter
 var calY = new Date().getFullYear();
 var calM = new Date().getMonth();
 var searchQuery = "";
@@ -4241,6 +4290,70 @@ function openD(j) {
 
 function closeD() { document.getElementById("dp").className = "detail"; }
 
+// ── HAPPY HOUR TOGGLE FUNCTIONS ──
+function toggleHH() {
+  HH_ON = document.getElementById("hh-toggle").checked;
+  var section = document.getElementById("hh-section");
+  if (HH_ON) {
+    activeF.add("happyhour");
+    section.classList.remove("hh-off");
+  } else {
+    activeF.delete("happyhour");
+    section.classList.add("hh-off");
+    HH_PATIO = false; HH_ROOF = false;
+    document.getElementById("hh-patio-btn").classList.remove("active");
+    document.getElementById("hh-roof-btn").classList.remove("active");
+  }
+  if (DIST_ACTIVE || activeF.size < ALL_CATS.length) jumpToNextMatch();
+  if (searchQuery) renderSearchResults(); else renderCal();
+  updateDistCounts();
+  updateHHCounts();
+}
+
+function toggleHHPatio() {
+  if (!HH_ON) return;
+  HH_PATIO = !HH_PATIO;
+  document.getElementById("hh-patio-btn").classList.toggle("active", HH_PATIO);
+  if (DIST_ACTIVE || HH_PATIO || HH_ROOF) jumpToNextMatch();
+  if (searchQuery) renderSearchResults(); else renderCal();
+  updateDistCounts();
+}
+
+function toggleHHRoof() {
+  if (!HH_ON) return;
+  HH_ROOF = !HH_ROOF;
+  document.getElementById("hh-roof-btn").classList.toggle("active", HH_ROOF);
+  if (DIST_ACTIVE || HH_PATIO || HH_ROOF) jumpToNextMatch();
+  if (searchQuery) renderSearchResults(); else renderCal();
+  updateDistCounts();
+}
+
+// Check if an event passes the HH patio/rooftop sub-filters
+function passesHHFilter(ev) {
+  if (ev.cat !== "happyhour") return true; // non-HH events always pass
+  if (!HH_PATIO && !HH_ROOF) return true; // no sub-filter active
+  if (HH_PATIO && ev.patio) return true;
+  if (HH_ROOF && ev.rooftop) return true;
+  return false;
+}
+
+function updateHHCounts() {
+  var patioCount = 0, roofCount = 0, venueCount = 0;
+  var seenP = {}, seenR = {}, seenV = {};
+  allEvents.forEach(function(ev) {
+    if (ev.cat !== "happyhour") return;
+    if (!seenV[ev.name]) { seenV[ev.name] = true; venueCount++; }
+    if (ev.patio && !seenP[ev.name]) { seenP[ev.name] = true; patioCount++; }
+    if (ev.rooftop && !seenR[ev.name]) { seenR[ev.name] = true; roofCount++; }
+  });
+  var vc = document.getElementById("hh-venue-count");
+  var pc = document.getElementById("hh-patio-count");
+  var rc = document.getElementById("hh-roof-count");
+  if (vc) vc.textContent = venueCount + " venues";
+  if (pc) pc.textContent = patioCount;
+  if (rc) rc.textContent = roofCount;
+}
+
 function toggleF(f) {
   if (activeF.has(f)) { activeF.delete(f); }
   else activeF.add(f);
@@ -4268,6 +4381,16 @@ function toggleAllCats() {
     var c = ALL_CATS.find(function(x) { return el.classList.contains(x); });
     if (c) el.classList.toggle("active", activeF.has(c));
   });
+  // Sync HH card with Select All / Deselect All
+  HH_ON = activeF.has("happyhour");
+  var hhToggle = document.getElementById("hh-toggle");
+  var hhSection = document.getElementById("hh-section");
+  if (hhToggle) hhToggle.checked = HH_ON;
+  if (hhSection) hhSection.classList.toggle("hh-off", !HH_ON);
+  if (!HH_ON) { HH_PATIO = false; HH_ROOF = false;
+    document.getElementById("hh-patio-btn").classList.remove("active");
+    document.getElementById("hh-roof-btn").classList.remove("active");
+  }
   updateToggleBtn();
   updateDistCounts();
   if (searchQuery) renderSearchResults(); else renderCal();
@@ -4329,10 +4452,10 @@ function renderSearchResults() {
   var seen = {};
   var raw = allEvents.filter(function(ev) {
     if (!activeF.has(ev.cat)) return false;
+    if (!passesHHFilter(ev)) return false;
     if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return false;
     if (!matchesSearch(ev, q)) return false;
-    if (ev.date < todayStr) return false; // hide past events from search
-    // For happy hours, only keep the nearest future date per venue name
+    if (ev.date < todayStr) return false;
     if (ev.cat === "happyhour") {
       var key = ev.name;
       if (seen[key]) return false;
@@ -4506,9 +4629,9 @@ function jumpToNextMatch() {
   var seen = {};
   var matches = allEvents.filter(function(ev) {
     if (!activeF.has(ev.cat)) return false;
+    if (!passesHHFilter(ev)) return false;
     if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return false;
     if (ev.date < todayStr) return false;
-    // Deduplicate happy hours for jump logic
     if (ev.cat === "happyhour") {
       if (seen[ev.name]) return false;
       seen[ev.name] = true;
@@ -4534,7 +4657,7 @@ function renderCal() {
   var first = new Date(calY,calM,1).getDay();
   var dim = new Date(calY,calM+1,0).getDate();
   var dprev = new Date(calY,calM,0).getDate();
-  var fil = allEvents.filter(function(e) { return activeF.has(e.cat); });
+  var fil = allEvents.filter(function(e) { return activeF.has(e.cat) && passesHHFilter(e); });
   if (DIST_ACTIVE) {
     fil = fil.filter(function(e){ return e.district === DIST_ACTIVE; });
   }
@@ -4578,7 +4701,7 @@ function renderFilterList() {
 
   // Only show list when filters are narrowed (not all cats selected, or a district is active)
   var allCatsOn = activeF.size === ALL_CATS.length;
-  if (allCatsOn && !DIST_ACTIVE) {
+  if (allCatsOn && !DIST_ACTIVE && !HH_PATIO && !HH_ROOF) {
     wrap.style.display = "none";
     return;
   }
@@ -4592,6 +4715,7 @@ function renderFilterList() {
   var seen = {};
   var items = allEvents.filter(function(ev) {
     if (!activeF.has(ev.cat)) return false;
+    if (!passesHHFilter(ev)) return false;
     if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return false;
     if (ev.date < todayStr) return false;
     // Deduplicate happy hours: show only next occurrence per venue
@@ -4670,7 +4794,7 @@ function openFilterDetail(i) {
 }
 
 function showMore(y,m,d) {
-  var fil = allEvents.filter(function(e){return activeF.has(e.cat);});
+  var fil = allEvents.filter(function(e){return activeF.has(e.cat) && passesHHFilter(e);});
   if (DIST_ACTIVE) { fil = fil.filter(function(e){ return e.district === DIST_ACTIVE; }); }
   var evs = fil.filter(function(ev){var p=ev.date.split("-");return +p[0]===y&&+p[1]-1===m&&+p[2]===d;});
   var dp = document.getElementById("dp");
@@ -5072,7 +5196,8 @@ var MNTH_NAMES = ["January","February","March","April","May","June","July","Augu
 init();
 setTimeout(syncDistrictHeight, 150);
 setTimeout(updateDistCounts, 200);
-window.addEventListener("load", updateDistCounts);
+setTimeout(updateHHCounts, 250);
+window.addEventListener("load", function() { updateDistCounts(); updateHHCounts(); });
 
 // Close search overlay on click outside or Escape key
 document.addEventListener("click", function(e) {
