@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OKC Super Calendar</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%233b7de0'/%3E%3Cstop offset='100%25' stop-color='%232c5faa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Bebas Neue,Arial,sans-serif' font-weight='700' font-size='28' fill='white' letter-spacing='1'%3EOKC%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%233b7de0'/%3E%3Cstop offset='100%25' stop-color='%232c5faa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Bebas Neue,Arial,sans-serif' font-weight='700' font-size='28' fill='white' letter-spacing='1'%3ESC%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -946,8 +946,11 @@ var HH_DATA=[
 
 var MNTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
 var ALL_CATS=["art","music","food","sports","fest","theater","comedy","film","free","family","culture","running","civic","industry","convention","volunteer","happyhour","fundraiser","fashion"];
-var CLAB={art:"Art & Gallery",music:"Concert / Music",food:"Food & Bar",sports:"Sports",fest:"Festival / Market",theater:"Theater",comedy:"Comedy",film:"Film",free:"Free Event",family:"Family & Kids",culture:"Culture & Heritage",running:"Running & Fitness",civic:"Civic & Gov",industry:"Industry & Biz",convention:"Convention",volunteer:"Volunteer",happyhour:"Happy Hour",fundraiser:"Fundraiser & Gala"};
-var CAT_COLORS={art:"#6c5ce7",music:"#d44a2e",food:"#1a9e5c",sports:"#1a6fbf",fest:"#b07d10",theater:"#8b2252",comedy:"#0e7a6e",film:"#5a4a00",free:"#1565a0",family:"#7b3fa0",culture:"#7a3b10",running:"#1e7a47",civic:"#2c5f8a",industry:"#5a5a00",convention:"#6b2d6b",volunteer:"#059669",happyhour:"#c47a1e",fundraiser:"#9b2335"};
+var CLAB={art:"Art & Gallery",music:"Concert / Music",food:"Food & Bar",sports:"Sports",fest:"Festival / Market",theater:"Theater",comedy:"Comedy",film:"Film",free:"Free Event",family:"Family & Kids",culture:"Culture & Heritage",running:"Running & Fitness",civic:"Civic & Gov",industry:"Industry & Biz",convention:"Convention",volunteer:"Volunteer",happyhour:"Happy Hour",fundraiser:"Fundraiser & Gala",fashion:"Fashion"};
+var CAT_COLORS={art:"#6c5ce7",music:"#d44a2e",food:"#1a9e5c",sports:"#1a6fbf",fest:"#b07d10",theater:"#8b2252",comedy:"#0e7a6e",film:"#5a4a00",free:"#1565a0",family:"#7b3fa0",culture:"#7a3b10",running:"#1e7a47",civic:"#2c5f8a",industry:"#5a5a00",convention:"#6b2d6b",volunteer:"#059669",happyhour:"#c47a1e",fundraiser:"#9b2335",fashion:"#c44989"};
+
+// Helper: does event match any active category filter? Supports cat + cat2 dual tagging
+function catMatch(ev){return activeF.has(ev.cat)||(ev.cat2 && activeF.has(ev.cat2));}
 
 var BASE=[
   // The National OKC events
@@ -993,8 +996,8 @@ var BASE=[
   {name:"Art in Bloom 2026 at OKCMOA",venue:"Oklahoma City Museum of Art, OKC",date:"2026-04-11",desc:"Day 2 of Art in Bloom — floral sculptures, workshops, gallery tours. $22.95–$29.95.",cat:"art",confirmed:true,source:"OKCMOA - okcmoa.com",tickets:"https://www.okcmoa.com/visit/events/art-in-bloom-2026/",free:false,district:"Downtown / City Center"},
   {name:"Art in Bloom 2026 at OKCMOA",venue:"Oklahoma City Museum of Art, OKC",date:"2026-04-12",desc:"Final day of Art in Bloom. WanderFolk Botanical Cocktail Competition (21+) at 5:30 PM.",cat:"art",confirmed:true,source:"OKCMOA - okcmoa.com",tickets:"https://www.okcmoa.com/visit/events/art-in-bloom-2026/",free:false,district:"Downtown / City Center"},
   {name:"WanderFolk Botanical Cocktail Competition",venue:"Oklahoma City Museum of Art, OKC",date:"2026-04-12",desc:"21+ cocktail competition on OKCMOA Roof Terrace. 5:30 PM. Expert bartenders, spring cocktails, live music, city views. $35.",cat:"food",confirmed:true,source:"OKCMOA - okcmoa.com",tickets:"https://www.okcmoa.com/visit/events/wanderfolk-botanical-cocktail-competition/",free:false,district:"Downtown / City Center"},
-  {name:"50th Annual Renaissance Ball",venue:"Oklahoma City Museum of Art, OKC",date:"2026-10-02",desc:"Preeminent annual gala at OKC Golf & Country Club — dinner, Late Night after-party. Oct 2–3.",cat:"fundraiser",confirmed:true,source:"OKCMOA - okcmoa.com",tickets:"https://www.okcmoa.com/visit/events/renaissance-ball-2026/",free:false,district:"Downtown / City Center"},
-  {name:"Late Night at Renaissance Ball — OKCMOA",venue:"Oklahoma City Museum of Art, OKC",date:"2026-10-02",desc:"After-party following the 50th Renaissance Ball — cocktails, live music, light bites, dancing.",cat:"fundraiser",confirmed:true,source:"OKCMOA - okcmoa.com",tickets:"https://www.okcmoa.com/visit/events/latenight/",free:false,district:"Downtown / City Center"},
+  {name:"50th Annual Renaissance Ball",venue:"Oklahoma City Museum of Art, OKC",date:"2026-10-02",desc:"Preeminent annual gala at OKC Golf & Country Club — dinner, Late Night after-party. Oct 2–3.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"OKCMOA - okcmoa.com",tickets:"https://www.okcmoa.com/visit/events/renaissance-ball-2026/",free:false,district:"Downtown / City Center"},
+  {name:"Late Night at Renaissance Ball — OKCMOA",venue:"Oklahoma City Museum of Art, OKC",date:"2026-10-02",desc:"After-party following the 50th Renaissance Ball — cocktails, live music, light bites, dancing.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"OKCMOA - okcmoa.com",tickets:"https://www.okcmoa.com/visit/events/latenight/",free:false,district:"Downtown / City Center"},
   {name:"Paul Reed: A Retrospective — OKCMOA",venue:"Oklahoma City Museum of Art, OKC",date:"2026-03-18",desc:"Washington Color School major retrospective on view through April 12. Wed–Sun 10 AM–5 PM.",cat:"art",confirmed:true,source:"OKCMOA - okcmoa.com",tickets:"https://www.okcmoa.com/current-exhibitions/",free:false,district:"Downtown / City Center"},
   {name:"Paul Reed: A Retrospective — Closing Day",venue:"Oklahoma City Museum of Art, OKC",date:"2026-04-12",desc:"Last day to see Paul Reed: A Retrospective at OKCMOA — first major retrospective of this Washington Color School artist.",cat:"art",confirmed:true,source:"OKCMOA - okcmoa.com",tickets:"https://www.okcmoa.com/current-exhibitions/",free:false,district:"Downtown / City Center"},
   {name:"The Sense of Beauty — Opening at OKCMOA",venue:"Oklahoma City Museum of Art, OKC",date:"2026-06-20",desc:"Opening: Six Centuries of Painting from Museo de Arte de Ponce — El Greco, Rubens, Goya, Sargent. 60 paintings, through Sept 20.",cat:"art",confirmed:true,source:"OKCMOA - okcmoa.com",tickets:"https://www.okcmoa.com/upcoming-exhibitions/",free:false,district:"Downtown / City Center"},
@@ -1125,7 +1128,7 @@ var BASE=[
   {name:"Shucked — OKC Broadway",venue:"Civic Center Music Hall, OKC",date:"2026-05-17",desc:"OKC Broadway: Shucked — Tony-winning comedy musical. May 12–17. 7:30 PM.",cat:"theater",confirmed:true,source:"Civic Center Music Hall / OKC Broadway",tickets:"https://www.okcciviccenter.com/events",free:false,district:"Downtown / City Center"},
   {name:"Canterbury Voices Spring Concert",venue:"Civic Center Music Hall, OKC",date:"2026-05-14",desc:"Canterbury Voices spring choral concert. 7:00 PM.",cat:"theater",confirmed:true,source:"Civic Center Music Hall - okcciviccenter.com",tickets:"https://www.okcciviccenter.com/events",free:false,district:"Downtown / City Center"},
   {name:"Emporium Presents at Civic Center Music Hall",venue:"Civic Center Music Hall, OKC",date:"2026-04-30",desc:"Emporium Presents special event at Civic Center Music Hall. 7:30 PM.",cat:"theater",confirmed:false,source:"Civic Center Music Hall - okcciviccenter.com",tickets:"https://www.okcciviccenter.com/events",free:false,district:"Downtown / City Center"},
-  {name:"Elemental Ball 2026 — Science Museum Oklahoma",venue:"Science Museum Oklahoma, OKC",date:"2026-03-27",desc:"Annual fundraising gala benefiting Science Museum Oklahoma. 21+ adults-only evening. SOLD OUT — check website for 2027.",cat:"fundraiser",confirmed:true,source:"Science Museum Oklahoma - sciencemuseumok.org",tickets:"https://www.sciencemuseumok.org/elemental/",free:false,district:"Adventure District"},
+  {name:"Elemental Ball 2026 — Science Museum Oklahoma",venue:"Science Museum Oklahoma, OKC",date:"2026-03-27",desc:"Annual fundraising gala benefiting Science Museum Oklahoma. 21+ adults-only evening. SOLD OUT — check website for 2027.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"Science Museum Oklahoma - sciencemuseumok.org",tickets:"https://www.sciencemuseumok.org/elemental/",free:false,district:"Adventure District"},
   {name:"SMO21+: Prehistoric Party at Science Museum",venue:"Science Museum Oklahoma, OKC",date:"2026-04-24",desc:"Adults 21+ only — dinosaur-themed after-hours museum night with themed cocktails, science activities, costumes encouraged, VIP lounge. 35+ per ticket.",cat:"family",confirmed:true,source:"Science Museum Oklahoma - sciencemuseumok.org",tickets:"https://www.sciencemuseumok.org/smo21/",free:false,district:"Adventure District"},
   {name:"OKC Farmers Public Market — Saturday Market",venue:"OKC Farmers Public Market, 311 S Klein Ave, OKC",date:"2026-03-21",desc:"Weekly Saturday Farmers Market — fresh produce, eggs, artisan goods, vendors. 9 AM–2 PM.",cat:"food",confirmed:true,source:"OKC Farmers Public Market - okcfarmersmarket.com",tickets:"https://www.okcfarmersmarket.com/event-calendar/",free:true,district:"Downtown / City Center"},
   {name:"OKC Farmers Public Market — Saturday Market",venue:"OKC Farmers Public Market, 311 S Klein Ave, OKC",date:"2026-03-28",desc:"Weekly Saturday Farmers Market — fresh produce, eggs, artisan goods, vendors. 9 AM–2 PM.",cat:"food",confirmed:true,source:"OKC Farmers Public Market - okcfarmersmarket.com",tickets:"https://www.okcfarmersmarket.com/event-calendar/",free:true,district:"Downtown / City Center"},
@@ -3146,9 +3149,9 @@ var BASE=[
   {name:"Sur La Table: Date Night: Taste of Tuscany",venue:"Sur La Table, 5854 N Classen Blvd (Classen Curve), Oklahoma City",date:"2026-05-01",desc:"Sur La Table OKC cooking class: Date Night: Taste of Tuscany. 4:00 PM & 7:00 PM. Hands-on 2-hour class with professional chef instructor. $99/person. Bring wine (1 bottle per couple). 10% off in-store purchases day of class. Reserve at surlatable.com.",cat:"food",confirmed:true,source:"Sur La Table OKC - surlatable.com",tickets:"https://www.surlatable.com/locations/ok/oklahomacity/cooking-classes-160.html",free:false,district:"Classen Curve / OAK"},
   {name:"Sur La Table: Seafood Skills Mastery",venue:"Sur La Table, 5854 N Classen Blvd (Classen Curve), Oklahoma City",date:"2026-05-20",desc:"Sur La Table OKC cooking class: Seafood Skills Mastery. 7:00 PM. Hands-on 2-hour class with professional chef instructor. $89/person. Bring wine (1 bottle per couple). 10% off in-store purchases day of class. Reserve at surlatable.com.",cat:"food",confirmed:true,source:"Sur La Table OKC - surlatable.com",tickets:"https://www.surlatable.com/locations/ok/oklahomacity/cooking-classes-160.html",free:false,district:"Classen Curve / OAK"},
   {name:"Sur La Table: Seafood Skills Mastery",venue:"Sur La Table, 5854 N Classen Blvd (Classen Curve), Oklahoma City",date:"2026-05-26",desc:"Sur La Table OKC cooking class: Seafood Skills Mastery. 4:00 PM. Hands-on 2-hour class with professional chef instructor. $89/person. Bring wine (1 bottle per couple). 10% off in-store purchases day of class. Reserve at surlatable.com.",cat:"food",confirmed:true,source:"Sur La Table OKC - surlatable.com",tickets:"https://www.surlatable.com/locations/ok/oklahomacity/cooking-classes-160.html",free:false,district:"Classen Curve / OAK"},
-  {name:"Breakthrough T1D Oklahoma City Gala 2026",venue:"Omni Oklahoma City Hotel, 100 Oklahoma City Blvd, OKC",date:"2026-05-02",desc:"Breakthrough T1D Oklahoma City Gala — dinner, auction, and inspirational stories of hope at the Omni OKC. One of OKC's premiere charitable events raising funds for type 1 diabetes research. Saturday evening. breakthrought1d.org",cat:"fundraiser",confirmed:true,source:"Breakthrough T1D OKC - breakthrought1d.org",tickets:"https://www.breakthrought1d.org/oklahoma/events/breakthrough-t1d-oklahoma-city-gala-2026/",free:false,district:"Downtown / City Center"},
+  {name:"Breakthrough T1D Oklahoma City Gala 2026",venue:"Omni Oklahoma City Hotel, 100 Oklahoma City Blvd, OKC",date:"2026-05-02",desc:"Breakthrough T1D Oklahoma City Gala — dinner, auction, and inspirational stories of hope at the Omni OKC. One of OKC's premiere charitable events raising funds for type 1 diabetes research. Saturday evening. breakthrought1d.org",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"Breakthrough T1D OKC - breakthrought1d.org",tickets:"https://www.breakthrought1d.org/oklahoma/events/breakthrough-t1d-oklahoma-city-gala-2026/",free:false,district:"Downtown / City Center"},
   {name:"Breakthrough T1D Walk OKC — Scissortail Park",venue:"Love's Travel Stops Stage, Scissortail Park, 300 SW 7th St, OKC",date:"2026-11-15",desc:"Breakthrough T1D Walk at Scissortail Park — the largest global event for the type 1 diabetes community. Family-friendly walk raising funds for T1D research. Free to attend/participate, fundraising encouraged. Register at breakthrought1d.org/walk",cat:"volunteer",confirmed:true,source:"Breakthrough T1D OKC - breakthrought1d.org",tickets:"https://www2.breakthrought1d.org/site/TR?fr_id=10314&pg=entry",free:true,district:"Downtown / City Center"},
-  {name:"St. Jude Evening of Hope Gala — OKC 2026",venue:"Oklahoma City (venue TBA — contact ally.rodriguez@alsac.stjude.org)",date:"2026-05-09",desc:"St. Jude Evening of Hope Gala — Oklahoma City. Dinner, auction, and celebration of milestones for children treated at St. Jude. Attire: shades of red, orange and pink. 5:30 PM. Sponsorship/tickets: stjude.org or call 405-423-6323.",cat:"fundraiser",confirmed:true,source:"St. Jude OKC - stjude.org",tickets:"https://www.stjude.org/get-involved/find-an-event/dinners-and-galas/evening-of-hope-oklahoma-city.html",free:false,district:"Downtown / City Center"},
+  {name:"St. Jude Evening of Hope Gala — OKC 2026",venue:"Oklahoma City (venue TBA — contact ally.rodriguez@alsac.stjude.org)",date:"2026-05-09",desc:"St. Jude Evening of Hope Gala — Oklahoma City. Dinner, auction, and celebration of milestones for children treated at St. Jude. Attire: shades of red, orange and pink. 5:30 PM. Sponsorship/tickets: stjude.org or call 405-423-6323.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"St. Jude OKC - stjude.org",tickets:"https://www.stjude.org/get-involved/find-an-event/dinners-and-galas/evening-of-hope-oklahoma-city.html",free:false,district:"Downtown / City Center"},
   {name:"St. Jude Walk/Run OKC — Childhood Cancer Awareness",venue:"Oklahoma City (location TBA — see fundraising.stjude.org)",date:"2026-09-25",desc:"Annual St. Jude Walk/Run Oklahoma City during Childhood Cancer Awareness Month. Family-friendly 5K raising funds for St. Jude Children's Research Hospital. Families never receive a bill from St. Jude for treatment. Free to participate, fundraising encouraged. fundraising.stjude.org",cat:"volunteer",confirmed:true,source:"St. Jude OKC - stjude.org",tickets:"https://fundraising.stjude.org/site/TR/Walk/Walk?pg=entry&fr_id=122596",free:true,district:"Downtown / City Center"},
   {name:"ODMHSAS Momentum Conference 2026",venue:"Oklahoma City Convention Center, 100 Mick Cornett Dr, OKC",date:"2026-12-08",desc:"Annual ODMHSAS Momentum Conference — 3-day statewide behavioral health event with 50+ sessions on mental health, prevention, recovery, and criminal justice behavioral health. Open to providers, healthcare professionals, school staff, parents and community members. CEs available. oklahoma.gov/odmhsas",cat:"civic",confirmed:true,source:"OK Mental Health (ODMHSAS) - oklahoma.gov/odmhsas",tickets:"https://oklahoma.gov/odmhsas/trainings/conferences/momentum-conference.html",free:false,district:"Downtown / City Center"},
     {name:"Coffee & Cars OKC — April",venue:"Life.Church OKC, 2001 NW 178th St, Edmond (OKC metro)",date:"2026-04-04",desc:"Monthly Coffee & Cars OKC car show — April. All vehicle makes and models welcome. Free admission. 8–11 AM. Food vendors, sponsor booths, and automotive community. coffeeandcarsokc.com",cat:"free",confirmed:true,source:"Coffee & Cars OKC - coffeeandcarsokc.com",tickets:"https://coffeeandcarsokc.com/event-schedule",free:true,district:"Edmond"},
@@ -3528,7 +3531,7 @@ var BASE=[
   {name:"Dinosaur Expedition at OKC Zoo",venue:"Oklahoma City Zoo, 2000 Remington Pl, OKC",date:"2026-03-19",desc:"Walk among life-size animatronic dinosaurs at the OKC Zoo. Included with admission.",cat:"family",confirmed:true,source:"OKC Zoo - okczoo.org",district:"Adventure District",free:true},
   {name:"Breakfast with the Animals",venue:"Oklahoma City Zoo, 2000 Remington Pl, OKC",date:"2026-05-02",desc:"Special behind-the-scenes breakfast experience with zoo animals.",cat:"family",confirmed:true,source:"OKC Zoo - okczoo.org",district:"Adventure District",tickets:"https://www.okczoo.org/breakfast"},
   {name:"Sip & Stroll at OKC Zoo",venue:"Oklahoma City Zoo, 2000 Remington Pl, OKC",date:"2026-05-08",desc:"Adults-only evening stroll through the zoo with beverages. 21+.",cat:"free",confirmed:true,source:"OKC Zoo - okczoo.org",district:"Adventure District",tickets:"https://www.okczoo.org/sipandstroll"},
-  {name:"Zoo Gala 2026",venue:"Oklahoma City Zoo, 2000 Remington Pl, OKC",date:"2026-06-05",desc:"Annual OKC Zoo fundraising gala — black tie optional.",cat:"fundraiser",confirmed:true,source:"OKC Zoo - okczoo.org",district:"Adventure District",tickets:"https://www.ozsgiving.org/zoogala"},
+  {name:"Zoo Gala 2026",venue:"Oklahoma City Zoo, 2000 Remington Pl, OKC",date:"2026-06-05",desc:"Annual OKC Zoo fundraising gala — black tie optional.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"OKC Zoo - okczoo.org",district:"Adventure District",tickets:"https://www.ozsgiving.org/zoogala"},
   {name:"ZOObrew at OKC Zoo",venue:"Oklahoma City Zoo, 2000 Remington Pl, OKC",date:"2026-09-25",desc:"Craft beer tasting event at the OKC Zoo.",cat:"food",confirmed:true,source:"OKC Zoo - okczoo.org",district:"Adventure District",tickets:"https://www.ozsgiving.org/zoobrew"},
   {name:"Haunt the Zoo — Night 1",venue:"Oklahoma City Zoo, 2000 Remington Pl, OKC",date:"2026-10-10",desc:"Family-friendly Halloween event at OKC Zoo.",cat:"fest",confirmed:true,source:"OKC Zoo - okczoo.org",district:"Adventure District",tickets:"https://www.okczoo.org/htz"},
   {name:"Haunt the Zoo — Night 2",venue:"Oklahoma City Zoo, 2000 Remington Pl, OKC",date:"2026-10-17",desc:"Haunt the Zoo continues.",cat:"fest",confirmed:true,source:"OKC Zoo - okczoo.org",district:"Adventure District",tickets:"https://www.okczoo.org/htz"},
@@ -3862,10 +3865,10 @@ var BASE=[
   // Paseo specific events  
   {name:"Paseo FEAST",venue:"Paseo Arts District",date:"2026-09-12",desc:"Paseo FEAST - the Paseo Arts District annual food and art event celebrating local restaurants, artists, and the community. One of OKC best fall events.",cat:"food",confirmed:false,source:"The Paseo Arts District - thepaseo.org",tickets:"https://www.thepaseo.org",free:false,district:"Paseo Arts District"},
 
-  {name:"Breakthrough T1D Oklahoma City Gala",venue:"Omni Oklahoma City Hotel",date:"2026-05-02",desc:"Annual Breakthrough T1D Gala. Dinner, expansive auction, and inspirational stories.",cat:"fundraiser",confirmed:true,source:"Breakthrough T1D",tickets:"https://www.breakthrought1d.org/oklahoma/events/breakthrough-t1d-oklahoma-city-gala-2026/",free:false,district:"Downtown / City Center"},
-  {name:"St. Jude Evening of Hope Gala",venue:"Omni Oklahoma City Hotel",date:"2026-05-09",desc:"7th Annual St. Jude Evening of Hope Gala celebrating milestones in the fight against childhood cancer.",cat:"fundraiser",confirmed:true,source:"St. Jude",tickets:"https://www.stjude.org/get-involved/find-an-event/dinners-and-galas/evening-of-hope-oklahoma-city.html",free:false,district:"Downtown / City Center"},
-  {name:"Taste of OKC - BBBS Gala",venue:"OKC Convention Center",date:"2026-05-30",desc:"Big Brothers Big Sisters annual Taste of OKC fundraising gala supporting youth mentoring.",cat:"fundraiser",confirmed:true,source:"Big Brothers Big Sisters Oklahoma",tickets:"https://bigoklahoma.org/tasteofokc",free:false,district:"Downtown / City Center"},
-  {name:"OKC Zoo Gala: Making Tracks",venue:"Oklahoma City Zoo",date:"2026-06-05",desc:"2026 OKC Zoo Gala presented by Expand Energy. Supports free Zoo field trips for every Oklahoma third grader.",cat:"fundraiser",confirmed:true,source:"Oklahoma Zoological Society",tickets:"https://www.ozsgiving.org/zoogala",free:false,district:"Adventure District"},
+  {name:"Breakthrough T1D Oklahoma City Gala",venue:"Omni Oklahoma City Hotel",date:"2026-05-02",desc:"Annual Breakthrough T1D Gala. Dinner, expansive auction, and inspirational stories.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"Breakthrough T1D",tickets:"https://www.breakthrought1d.org/oklahoma/events/breakthrough-t1d-oklahoma-city-gala-2026/",free:false,district:"Downtown / City Center"},
+  {name:"St. Jude Evening of Hope Gala",venue:"Omni Oklahoma City Hotel",date:"2026-05-09",desc:"7th Annual St. Jude Evening of Hope Gala celebrating milestones in the fight against childhood cancer.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"St. Jude",tickets:"https://www.stjude.org/get-involved/find-an-event/dinners-and-galas/evening-of-hope-oklahoma-city.html",free:false,district:"Downtown / City Center"},
+  {name:"Taste of OKC - BBBS Gala",venue:"OKC Convention Center",date:"2026-05-30",desc:"Big Brothers Big Sisters annual Taste of OKC fundraising gala supporting youth mentoring.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"Big Brothers Big Sisters Oklahoma",tickets:"https://bigoklahoma.org/tasteofokc",free:false,district:"Downtown / City Center"},
+  {name:"OKC Zoo Gala: Making Tracks",venue:"Oklahoma City Zoo",date:"2026-06-05",desc:"2026 OKC Zoo Gala presented by Expand Energy. Supports free Zoo field trips for every Oklahoma third grader.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"Oklahoma Zoological Society",tickets:"https://www.ozsgiving.org/zoogala",free:false,district:"Adventure District"},
   {name:"Independence Day - 4th of July",venue:"Scissortail Park / Bricktown",date:"2026-07-04",desc:"OKC 4th of July with fireworks and live music at Scissortail Park, Bricktown, and Myriad Gardens.",cat:"fest",confirmed:true,source:"City of OKC",tickets:null,free:true,district:"Downtown / City Center"},
   {name:"Memorial Day Weekend",venue:"Oklahoma City",date:"2026-05-25",desc:"Memorial Day in OKC. Paseo Arts Festival runs all 3 days plus citywide events.",cat:"fest",confirmed:true,source:"National Holiday",tickets:null,free:true,district:"Downtown / City Center"},
   
@@ -4038,7 +4041,7 @@ var BASE=[
   {name:"Aries Spears - Comedy Weekend",venue:"Bricktown Comedy Club, OKC",date:"2026-12-04",desc:"Aries Spears comedy Fri-Sun at Bricktown Comedy Club.",cat:"comedy",confirmed:true,source:"Bricktown OKC / DOKC - bricktownokc.com",tickets:"https://www.bricktowncomedy.com/events/122547",free:false,district:"Bricktown"},
   {name:"Matt Rife - Live Comedy",venue:"Paycom Center, OKC",date:"2026-12-29",desc:"Matt Rife live at Paycom Center. 7 PM.",cat:"comedy",confirmed:true,source:"Bricktown OKC / DOKC - bricktownokc.com",tickets:"https://www.paycomcenter.com/events/detail/matt-rife",free:false,district:"Downtown / City Center"},
   {name:"USA Gymnastics Development Program Nationals",venue:"OKC Convention Center",date:"2026-05-06",desc:"2026 USA Gymnastics Men\'s and Women\'s Development Program National Championships at OKC Convention Center. Level 10 and Junior Elite athletes from across the country. May 6-10.",cat:"sports",confirmed:true,source:"Bricktown OKC / DOKC - bricktownokc.com",tickets:"https://okcconventioncenter.com/events/",free:false,district:"Downtown / City Center"},
-  {name:"OKC Ballet Ball - Annual Gala",venue:"OKC Convention Center",date:"2026-04-11",desc:"OKC Ballet Ball - Oklahoma City Ballet\'s signature annual gala with dinner, live entertainment, and special performances by OKC Ballet dancers.",cat:"fundraiser",confirmed:true,source:"Oklahoma City Ballet",tickets:"https://okcconventioncenter.com/events/",free:false,district:"Downtown / City Center"},
+  {name:"OKC Ballet Ball - Annual Gala",venue:"OKC Convention Center",date:"2026-04-11",desc:"OKC Ballet Ball - Oklahoma City Ballet\'s signature annual gala with dinner, live entertainment, and special performances by OKC Ballet dancers.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"Oklahoma City Ballet",tickets:"https://okcconventioncenter.com/events/",free:false,district:"Downtown / City Center"},
   {name:"OIGA Conference and Trade Show 2026",venue:"OKC Convention Center",date:"2026-07-14",desc:"Oklahoma Indian Gaming Association Conference and Trade Show - nearly 3,000 vendors, visitors and speakers celebrating Indian Gaming industry. July 14.",cat:"industry",confirmed:true,source:"Bricktown OKC / DOKC - bricktownokc.com",tickets:"https://okcconventioncenter.com/events/",free:false,district:"Downtown / City Center"},
   {name:"Lone Star Classic Volleyball National Qualifier",venue:"OKC Convention Center",date:"2026-04-04",desc:"Lone Star Classic Girls National Qualifier volleyball tournament at OKC Convention Center. Multiple age divisions across three April weekends.",cat:"sports",confirmed:true,source:"Bricktown OKC / DOKC - bricktownokc.com",tickets:"https://okcconventioncenter.com/events/",free:false,district:"Downtown / City Center"},
   {name:"International School of Hydrocarbon Measurement",venue:"OKC Convention Center",date:"2026-05-12",desc:"ISHM - premier training event for oil and gas measurement professionals. May 12-14 at OKC Convention Center.",cat:"industry",confirmed:true,source:"Bricktown OKC / DOKC - bricktownokc.com",tickets:"https://okcconventioncenter.com/events/",free:false,district:"Downtown / City Center"},
@@ -4117,6 +4120,20 @@ var BASE=[
   {name:"Scissortail Park Concert Series",venue:"Scissortail Park",date:"2026-05-22",desc:"Free outdoor concert series in OKC stunning new urban park.",cat:"music",confirmed:false,source:"Scissortail Park - scissortailpark.org",tickets:null,free:true,district:"Downtown / City Center"},
   {name:"Zoo Amphitheatre Season Opener",venue:"Zoo Amphitheatre",date:"2026-05-01",desc:"Outdoor concert season opens at OKC beloved Zoo Amphitheatre.",cat:"music",confirmed:false,source:"Zoo Amphitheatre",tickets:null,free:false,district:"Adventure District"},
   {name:"Paseo Arts Awards Dinner and Auction",venue:"Paseo Arts District",date:"2026-10-10",desc:"Annual Paseo Arts Association Awards Dinner honoring artists. Silent auction and fundraiser.",cat:"fundraiser",confirmed:false,source:"Paseo Arts Association",tickets:"https://www.thepaseo.org",free:false,district:"Paseo Arts District"},
+  // Fashion Events
+  {name:"Work the Runway — Goodwill Fashion Show",venue:"Downtown OKC (venue varies)",date:"2026-08-15",desc:"Annual sustainable fashion runway show by Goodwill Industries of Central Oklahoma. Evening event showcasing upcycled and thrifted fashion.",cat:"fashion",confirmed:false,source:"Goodwill Central OK - okgoodwill.org",tickets:"https://okgoodwill.org/work-the-runway-fashion-show/",free:false,district:"Downtown / City Center"},
+  {name:"Uniqu3ly 21 Fashion Show",venue:"Downtown OKC (venue varies)",date:"2026-01-24",desc:"Annual charity runway fashion show benefiting the Down Syndrome Association of Central Oklahoma. Evening event celebrating inclusion and style.",cat:"fashion",confirmed:false,source:"DSACO - dsaco.org",tickets:"https://www.dsaco.org/fashionshow",free:false,district:"Downtown / City Center"},
+  {name:"Oklahoma Black Fashion Week",venue:"Oklahoma City Convention Center, 100 Mick Cornett Dr, OKC",date:"2026-09-18",desc:"Recurring multi-day fashion week celebrating Black designers, models, and fashion culture in Oklahoma City.",cat:"fashion",confirmed:false,source:"Oklahoma Black Fashion Week - okcconventioncenter.com",tickets:"https://okcconventioncenter.com/events/oklahoma-black-fashion-week/",free:false,district:"Downtown / City Center"},
+  {name:"Girls Day Out OKC — Spring",venue:"OKC (rotating venue)",date:"2026-04-18",desc:"Boutique market pop-up featuring local fashion vendors, beauty brands, and artisan goods. Daytime shopping event by Revolve Productions.",cat:"fashion",confirmed:false,source:"Revolve Productions - revolve-productions.com",tickets:"https://www.revolve-productions.com/upcoming-events",free:false,district:"Various"},
+  {name:"Girls Day Out OKC — Fall",venue:"OKC (rotating venue)",date:"2026-10-17",desc:"Boutique market pop-up featuring local fashion vendors, beauty brands, and artisan goods. Daytime shopping event by Revolve Productions.",cat:"fashion",confirmed:false,source:"Revolve Productions - revolve-productions.com",tickets:"https://www.revolve-productions.com/upcoming-events",free:false,district:"Various"},
+  {name:"Wanderlust Pop-Up Shops",venue:"Wheeler District, OKC",date:"2026-10-03",desc:"Annual fall boutique pop-up market in Wheeler District featuring local fashion, vintage, and handmade goods.",cat:"fashion",confirmed:false,source:"Revolve Productions - revolve-productions.com",tickets:"https://www.revolve-productions.com/upcoming-events",free:false,district:"Wheeler District"},
+  {name:"Sleigh Bells Market",venue:"OKC (rotating venue)",date:"2026-12-05",desc:"Annual holiday boutique market featuring local fashion, gifts, and seasonal goods. Daytime shopping event by Revolve Productions.",cat:"fashion",confirmed:false,source:"Revolve Productions - revolve-productions.com",tickets:"https://www.revolve-productions.com/upcoming-events",free:false,district:"Various"},
+  {name:"Vintage Market Days OKC — Spring",venue:"State Fair Park / OKC (varies)",date:"2026-04-24",desc:"Multi-day upscale vintage-inspired market featuring fashion, antiques, home décor, and handmade goods. One of the largest vintage markets in the region.",cat:"fashion",confirmed:false,source:"Vintage Market Days - vintagemarketdays.com",tickets:"https://vintagemarketdays.com/market/oklahoma-city/",free:false,district:"State Fair Park"},
+  {name:"Vintage Market Days OKC — Fall",venue:"State Fair Park / OKC (varies)",date:"2026-09-25",desc:"Multi-day upscale vintage-inspired market featuring fashion, antiques, home décor, and handmade goods. One of the largest vintage markets in the region.",cat:"fashion",confirmed:false,source:"Vintage Market Days - vintagemarketdays.com",tickets:"https://vintagemarketdays.com/market/oklahoma-city/",free:false,district:"State Fair Park"},
+  {name:"Affair of the Heart — Spring",venue:"Oklahoma State Fair Park, OKC",date:"2026-04-03",desc:"Large-scale boutique shopping market with 350+ vendors — fashion, jewelry, home, artisan goods. Multi-day event, one of OKC's most beloved shopping traditions.",cat:"fashion",confirmed:false,source:"Affair of the Heart - visitokc.com",tickets:"https://www.visitokc.com/events/annual-events/an-affair-of-the-heart/",free:false,district:"State Fair Park"},
+  {name:"Affair of the Heart — Summer",venue:"Oklahoma State Fair Park, OKC",date:"2026-07-10",desc:"Large-scale boutique shopping market with 350+ vendors — fashion, jewelry, home, artisan goods. Multi-day event.",cat:"fashion",confirmed:false,source:"Affair of the Heart - visitokc.com",tickets:"https://www.visitokc.com/events/annual-events/an-affair-of-the-heart/",free:false,district:"State Fair Park"},
+  {name:"Affair of the Heart — Fall",venue:"Oklahoma State Fair Park, OKC",date:"2026-10-09",desc:"Large-scale boutique shopping market with 350+ vendors — fashion, jewelry, home, artisan goods. Multi-day event.",cat:"fashion",confirmed:false,source:"Affair of the Heart - visitokc.com",tickets:"https://www.visitokc.com/events/annual-events/an-affair-of-the-heart/",free:false,district:"State Fair Park"},
+  {name:"Asian Night Market Festival",venue:"Asian District, OKC",date:"2026-10-10",desc:"Annual festival celebrating Asian culture in OKC with food, performances, and fashion. Evening event in the Asian District.",cat:"fest",cat2:"fashion",confirmed:false,source:"Visit OKC - visitokc.com",tickets:"https://www.visitokc.com/events/annual-events/asian-night-market-festival/",free:true,district:"Asian District"},
 ];
 
 var LIVE_EVENTS_DATE = (typeof LIVE_EVENTS_DATE !== "undefined") ? LIVE_EVENTS_DATE : null;
@@ -4342,7 +4359,7 @@ function openIdx(i) {
   var ev = allEvents[i];
   if (!ev) return;
   // Respect active category and district filters
-  if (!activeF.has(ev.cat)) return;
+  if (!catMatch(ev)) return;
   if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return;
   openD(encodeURIComponent(JSON.stringify(ev)));
 }
@@ -4363,7 +4380,7 @@ function openD(j) {
     +'<div style="flex:1;padding:20px 24px">'
       +'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px">'
         +'<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">'
-          +'<div class="dcat '+ev.cat+'">'+(CLAB[ev.cat]||ev.cat).toUpperCase()+'</div>'+cb+fb
+          +'<div class="dcat '+ev.cat+'">'+(CLAB[ev.cat]||ev.cat).toUpperCase()+'</div>'+(ev.cat2?'<div class="dcat '+ev.cat2+'">'+(CLAB[ev.cat2]||ev.cat2).toUpperCase()+'</div>':'')+cb+fb
         +'</div>'
         +'<button class="cx" onclick="closeD()">&#10005;</button>'
       +'</div>'
@@ -4523,7 +4540,7 @@ function clearSearch() {
 }
 
 function matchesSearch(ev, q) {
-  return (ev.name+ev.venue+ev.desc+(ev.source||"")+(ev.cat||"")).toLowerCase().indexOf(q) !== -1;
+  return (ev.name+ev.venue+ev.desc+(ev.source||"")+(ev.cat||"")+(ev.cat2||"")).toLowerCase().indexOf(q) !== -1;
 }
 
 var SEARCH_LIMIT = 50;
@@ -4540,7 +4557,7 @@ function renderSearchResults() {
   // Filter, deduplicate happy hours (show only next upcoming occurrence), remove past events
   var seen = {};
   var raw = allEvents.filter(function(ev) {
-    if (!activeF.has(ev.cat)) return false;
+    if (!catMatch(ev)) return false;
     if (!passesHHFilter(ev)) return false;
     if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return false;
     if (!matchesSearch(ev, q)) return false;
@@ -4587,7 +4604,7 @@ function showMoreSearchResults() {
     var hhBadge = ev.cat === "happyhour" ? '<span style="font-size:10px;padding:2px 6px;border-radius:3px;background:var(--happyhour-bg);color:var(--happyhour);border:1px solid var(--happyhour-bd);margin-left:4px;font-weight:500">HAPPY HOUR</span>' : "";
     var distBadge = ev.district ? '<span style="font-size:10px;color:var(--muted);margin-left:4px">\u00B7 '+ev.district+'</span>' : "";
     var sidx = allEvents.indexOf(ev);
-    html += '<div class="search-list-item" onclick="openSearchDetail('+sidx+')"><div class="sli-date" style="background:'+col+'18;color:'+col+'"><div class="sli-month">'+mon+'</div><div class="sli-day">'+day+'</div></div><div class="sli-info"><div class="sli-name">'+ev.name+fb+hhBadge+'</div><div class="sli-venue">&#128205; '+ev.venue+distBadge+'</div><div class="sli-desc">'+ev.desc+'</div><span class="sli-tag" style="background:'+col+'15;color:'+col+'">'+( CLAB[ev.cat]||ev.cat)+'</span></div><div class="sli-actions"><button class="sli-gcal" onclick="event.stopPropagation();addGCal(allEvents['+sidx+'])">+ Cal</button></div></div>';
+    html += '<div class="search-list-item" onclick="openSearchDetail('+sidx+')"><div class="sli-date" style="background:'+col+'18;color:'+col+'"><div class="sli-month">'+mon+'</div><div class="sli-day">'+day+'</div></div><div class="sli-info"><div class="sli-name">'+ev.name+fb+hhBadge+'</div><div class="sli-venue">&#128205; '+ev.venue+distBadge+'</div><div class="sli-desc">'+ev.desc+'</div><span class="sli-tag" style="background:'+col+'15;color:'+col+'">'+( CLAB[ev.cat]||ev.cat)+'</span>'+(ev.cat2?'<span class="sli-tag" style="background:'+(CAT_COLORS[ev.cat2]||"#888")+'15;color:'+(CAT_COLORS[ev.cat2]||"#888")+';margin-left:4px">'+(CLAB[ev.cat2]||ev.cat2)+'</span>':'')+'</div><div class="sli-actions"><button class="sli-gcal" onclick="event.stopPropagation();addGCal(allEvents['+sidx+'])">+ Cal</button></div></div>';
   }
   searchShown = end;
 
@@ -4719,7 +4736,7 @@ function jumpToNextMatch() {
   var todayStr = today.getFullYear()+"-"+String(today.getMonth()+1).padStart(2,"0")+"-"+String(today.getDate()).padStart(2,"0");
   var seen = {};
   var matches = allEvents.filter(function(ev) {
-    if (!activeF.has(ev.cat)) return false;
+    if (!catMatch(ev)) return false;
     if (!passesHHFilter(ev)) return false;
     if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return false;
     if (ev.date < todayStr) return false;
@@ -4748,7 +4765,7 @@ function renderCal() {
   var first = new Date(calY,calM,1).getDay();
   var dim = new Date(calY,calM+1,0).getDate();
   var dprev = new Date(calY,calM,0).getDate();
-  var fil = allEvents.filter(function(e) { return activeF.has(e.cat) && passesHHFilter(e); });
+  var fil = allEvents.filter(function(e) { return catMatch(e) && passesHHFilter(e); });
   if (DIST_ACTIVE) {
     fil = fil.filter(function(e){ return e.district === DIST_ACTIVE; });
   }
@@ -4805,7 +4822,7 @@ function renderFilterList() {
   // Build deduplicated, future-only list
   var seen = {};
   var items = allEvents.filter(function(ev) {
-    if (!activeF.has(ev.cat)) return false;
+    if (!catMatch(ev)) return false;
     if (!passesHHFilter(ev)) return false;
     if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return false;
     if (ev.date < todayStr) return false;
@@ -4885,7 +4902,7 @@ function openFilterDetail(i) {
 }
 
 function showMore(y,m,d) {
-  var fil = allEvents.filter(function(e){return activeF.has(e.cat) && passesHHFilter(e);});
+  var fil = allEvents.filter(function(e){return catMatch(e) && passesHHFilter(e);});
   if (DIST_ACTIVE) { fil = fil.filter(function(e){ return e.district === DIST_ACTIVE; }); }
   var evs = fil.filter(function(ev){var p=ev.date.split("-");return +p[0]===y&&+p[1]-1===m&&+p[2]===d;});
   var dp = document.getElementById("dp");
@@ -5400,7 +5417,7 @@ if (fu) fu.textContent = "Last loaded: " + new Date().toLocaleDateString("en-US"
 function updateDistCounts() {
   var counts = {};
   allEvents.forEach(function(ev) {
-    if (ev.district && activeF.has(ev.cat)) counts[ev.district] = (counts[ev.district]||0) + 1;
+    if (ev.district && catMatch(ev)) counts[ev.district] = (counts[ev.district]||0) + 1;
   });
   document.querySelectorAll('.dist-item').forEach(function(el) {
     var key = el.dataset.key;
