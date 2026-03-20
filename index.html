@@ -512,26 +512,58 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 <div id="submit-panel" style="display:none">
   <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:24px 28px;margin-bottom:18px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.05em;color:var(--text)">SUBMIT AN EVENT</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.05em;color:var(--text)">SUBMIT TO THE CALENDAR</div>
       <button onclick="toggleSubmit()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted);padding:0 4px">&#10005;</button>
     </div>
-    <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px">
-      Know about an OKC event we're missing? Submit it below. All submissions are reviewed and verified against the official event source before being added to the calendar. Please include a link to the official event page or ticketing site so we can confirm the details.
+
+    <!-- Type Switcher -->
+    <div style="display:flex;gap:0;margin-bottom:20px;border:1px solid var(--border2);border-radius:8px;overflow:hidden">
+      <button id="sub-type-event" onclick="switchSubType('event')" style="flex:1;padding:10px 16px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:600;border:none;cursor:pointer;transition:all .15s;background:var(--accent);color:#fff">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Event
+      </button>
+      <button id="sub-type-hh" onclick="switchSubType('hh')" style="flex:1;padding:10px 16px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:600;border:none;cursor:pointer;transition:all .15s;background:var(--surface);color:var(--muted)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><path d="M8 2L16 2"/><path d="M12 14V22"/><path d="M8 22H16"/><path d="M6 2L8 10C8 13 10 14 12 14C14 14 16 13 16 10L18 2"/></svg>
+        Happy Hour
+      </button>
+    </div>
+
+    <!-- Event subtitle -->
+    <p id="sub-desc-event" style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px">
+      Know about an OKC event we're missing? Submit it below with a link to the official source so we can verify and add it.
     </p>
+    <!-- HH subtitle -->
+    <p id="sub-desc-hh" style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px;display:none">
+      Know a bar or restaurant with a great happy hour? Submit it below and we'll add it to the Happy Hours section.
+    </p>
+
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+      <!-- Name (shared) -->
       <div>
-        <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Event Name *</label>
+        <label id="sub-name-label" style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Event Name *</label>
         <input id="sub-name" type="text" placeholder="e.g. Jones Assembly: Blackberry Smoke" style="width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box">
       </div>
-      <div>
+
+      <!-- Date (event only) -->
+      <div id="sub-date-wrap">
         <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Date *</label>
         <input id="sub-date" type="date" style="width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box">
       </div>
+
+      <!-- HH Time (happy hour only) -->
+      <div id="sub-hh-time-wrap" style="display:none">
+        <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Happy Hour Time *</label>
+        <input id="sub-hh-time" type="text" placeholder="e.g. 3-6 PM Mon-Fri" style="width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box">
+      </div>
+
+      <!-- Venue (shared) -->
       <div>
-        <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Venue / Location *</label>
+        <label id="sub-venue-label" style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Venue / Location *</label>
         <input id="sub-venue" type="text" placeholder="e.g. Jones Assembly, OKC" style="width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box">
       </div>
-      <div>
+
+      <!-- Category (event only) -->
+      <div id="sub-cat-wrap">
         <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Category</label>
         <select id="sub-cat" style="width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box">
           <option value="music">Concert / Music</option>
@@ -549,50 +581,97 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
           <option value="civic">Civic &amp; Gov</option>
           <option value="industry">Industry</option>
           <option value="convention">Convention</option>
-        <option value="volunteer">Volunteer</option>
+          <option value="volunteer">Volunteer</option>
+          <option value="fundraiser">Fundraiser &amp; Gala</option>
         </select>
       </div>
+
+      <!-- HH Days (happy hour only) -->
+      <div id="sub-hh-days-wrap" style="display:none">
+        <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Days Available *</label>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:2px">
+          <label style="display:flex;align-items:center;gap:3px;font-size:12px;color:var(--text);cursor:pointer"><input type="checkbox" class="sub-hh-day" value="0" checked style="accent-color:var(--happyhour)"> Mon</label>
+          <label style="display:flex;align-items:center;gap:3px;font-size:12px;color:var(--text);cursor:pointer"><input type="checkbox" class="sub-hh-day" value="1" checked style="accent-color:var(--happyhour)"> Tue</label>
+          <label style="display:flex;align-items:center;gap:3px;font-size:12px;color:var(--text);cursor:pointer"><input type="checkbox" class="sub-hh-day" value="2" checked style="accent-color:var(--happyhour)"> Wed</label>
+          <label style="display:flex;align-items:center;gap:3px;font-size:12px;color:var(--text);cursor:pointer"><input type="checkbox" class="sub-hh-day" value="3" checked style="accent-color:var(--happyhour)"> Thu</label>
+          <label style="display:flex;align-items:center;gap:3px;font-size:12px;color:var(--text);cursor:pointer"><input type="checkbox" class="sub-hh-day" value="4" checked style="accent-color:var(--happyhour)"> Fri</label>
+          <label style="display:flex;align-items:center;gap:3px;font-size:12px;color:var(--text);cursor:pointer"><input type="checkbox" class="sub-hh-day" value="5" style="accent-color:var(--happyhour)"> Sat</label>
+          <label style="display:flex;align-items:center;gap:3px;font-size:12px;color:var(--text);cursor:pointer"><input type="checkbox" class="sub-hh-day" value="6" style="accent-color:var(--happyhour)"> Sun</label>
+        </div>
+      </div>
+
+      <!-- District (shared) -->
       <div>
         <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">District</label>
         <select id="sub-district" style="width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box">
-          <option value="Downtown / City Center">Downtown / City Center</option>
-          <option value="Uptown 23rd">Uptown 23rd</option>
-          <option value="Film Row / West Village">Film Row / West Village</option>
-          <option value="Bricktown">Bricktown</option>
+          <option value="">-- Select District --</option>
+          <option value="39th Street District">39th Street District</option>
+          <option value="Adventure District">Adventure District</option>
+          <option value="Asian District">Asian District</option>
           <option value="Automobile Alley">Automobile Alley</option>
-          <option value="Midtown">Midtown</option>
+          <option value="Boathouse District">Boathouse District</option>
+          <option value="Bricktown">Bricktown</option>
+          <option value="Britton District">Britton District</option>
+          <option value="Capitol Hill">Capitol Hill</option>
+          <option value="Classen Curve">Classen Curve</option>
           <option value="Deep Deuce">Deep Deuce</option>
+          <option value="Downtown / City Center">Downtown / City Center</option>
+          <option value="East End District">East End District</option>
+          <option value="Edmond">Edmond</option>
+          <option value="Film Row / West Village">Film Row / West Village</option>
+          <option value="Lake Hefner">Lake Hefner</option>
+          <option value="Midtown">Midtown</option>
+          <option value="Midwest City">Midwest City</option>
+          <option value="Moore">Moore</option>
+          <option value="Norman">Norman</option>
+          <option value="NW OKC">NW OKC</option>
+          <option value="OAK / Chisholm Creek">OAK / Chisholm Creek</option>
           <option value="Paseo Arts District">Paseo Arts District</option>
           <option value="Plaza District">Plaza District</option>
-          <option value="Asian District">Asian District</option>
-          <option value="Western Avenue">Western Avenue</option>
-          <option value="Classen Curve">Classen Curve</option>
-          <option value="Boathouse District">Boathouse District</option>
-          <option value="Adventure District">Adventure District</option>
-          <option value="OAK / Chisholm Creek">OAK / Chisholm Creek</option>
-          <option value="Wheeler District">Wheeler District</option>
-          <option value="Capitol Hill">Capitol Hill</option>
+          <option value="South OKC">South OKC</option>
+          <option value="Stillwater">Stillwater</option>
           <option value="Stockyards City">Stockyards City</option>
-          <option value="East End District">East End District</option>
-          <option value="39th Street District">39th Street District</option>
-          <option value="Britton District">Britton District</option>
+          <option value="The Village">The Village</option>
+          <option value="Uptown 23rd">Uptown 23rd</option>
           <option value="West Village">West Village</option>
-          <option value="NW OKC">NW OKC</option>
+          <option value="Western Avenue">Western Avenue</option>
+          <option value="Wheeler District">Wheeler District</option>
+          <option value="Yukon">Yukon</option>
         </select>
       </div>
+
+      <!-- HH Patio/Rooftop toggles (happy hour only) -->
+      <div id="sub-hh-features-wrap" style="display:none">
+        <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Features</label>
+        <div style="display:flex;gap:12px;margin-top:4px">
+          <label style="display:flex;align-items:center;gap:5px;font-size:13px;color:var(--text);cursor:pointer">
+            <input type="checkbox" id="sub-hh-patio" style="accent-color:var(--happyhour);width:16px;height:16px"> Patio
+          </label>
+          <label style="display:flex;align-items:center;gap:5px;font-size:13px;color:var(--text);cursor:pointer">
+            <input type="checkbox" id="sub-hh-rooftop" style="accent-color:var(--happyhour);width:16px;height:16px"> Rooftop
+          </label>
+        </div>
+      </div>
     </div>
+
+    <!-- URL (shared) -->
     <div style="margin-bottom:14px">
-      <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Official Event URL / Ticketing Link * <span style="font-weight:400;text-transform:none;font-size:11px">(required for verification)</span></label>
+      <label id="sub-url-label" style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Official Event URL / Ticketing Link * <span style="font-weight:400;text-transform:none;font-size:11px">(required for verification)</span></label>
       <input id="sub-url" type="url" placeholder="https://tickets.example.com/event" style="width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box">
     </div>
+
+    <!-- Description (shared) -->
     <div style="margin-bottom:14px">
-      <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Description</label>
+      <label id="sub-desc-label" style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Description</label>
       <textarea id="sub-desc" rows="2" placeholder="Brief description of the event..." style="width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box;resize:vertical"></textarea>
     </div>
+
+    <!-- Contact (shared) -->
     <div style="margin-bottom:18px">
       <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Your Name &amp; Email <span style="font-weight:400;text-transform:none;font-size:11px">(optional — only used if we need to follow up)</span></label>
       <input id="sub-contact" type="text" placeholder="Jane Smith — jane@example.com" style="width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box">
     </div>
+
     <div style="display:flex;align-items:center;gap:12px">
       <button onclick="submitEvent()" id="sub-btn" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer">Submit for Review</button>
       <div id="sub-status" style="font-size:12px;color:var(--muted)"></div>
@@ -4963,6 +5042,8 @@ function toggleSources() {
 }
 
 // ── INIT ──
+var SUB_TYPE = "event"; // "event" or "hh"
+
 function toggleSubmit() {
   var p = document.getElementById("submit-panel");
   p.style.display = p.style.display === "none" ? "block" : "none";
@@ -4971,21 +5052,81 @@ function toggleSubmit() {
   }
 }
 
+function switchSubType(type) {
+  SUB_TYPE = type;
+  var isHH = type === "hh";
+  var evBtn = document.getElementById("sub-type-event");
+  var hhBtn = document.getElementById("sub-type-hh");
+
+  // Button styling
+  evBtn.style.background = isHH ? "var(--surface)" : "var(--accent)";
+  evBtn.style.color = isHH ? "var(--muted)" : "#fff";
+  hhBtn.style.background = isHH ? "var(--happyhour)" : "var(--surface)";
+  hhBtn.style.color = isHH ? "#fff" : "var(--muted)";
+
+  // Toggle field visibility
+  document.getElementById("sub-desc-event").style.display = isHH ? "none" : "block";
+  document.getElementById("sub-desc-hh").style.display = isHH ? "block" : "none";
+  document.getElementById("sub-date-wrap").style.display = isHH ? "none" : "block";
+  document.getElementById("sub-cat-wrap").style.display = isHH ? "none" : "block";
+  document.getElementById("sub-hh-time-wrap").style.display = isHH ? "block" : "none";
+  document.getElementById("sub-hh-days-wrap").style.display = isHH ? "block" : "none";
+  document.getElementById("sub-hh-features-wrap").style.display = isHH ? "block" : "none";
+
+  // Update labels and placeholders
+  document.getElementById("sub-name-label").textContent = isHH ? "Restaurant / Bar Name *" : "Event Name *";
+  document.getElementById("sub-name").placeholder = isHH ? "e.g. Hall's Pizza Kitchen" : "e.g. Jones Assembly: Blackberry Smoke";
+  document.getElementById("sub-venue-label").textContent = isHH ? "Address / Neighborhood *" : "Venue / Location *";
+  document.getElementById("sub-venue").placeholder = isHH ? "e.g. 1004 N Hudson Ave, Midtown" : "e.g. Jones Assembly, OKC";
+  document.getElementById("sub-url-label").innerHTML = isHH
+    ? 'Website or Happy Hour Page * <span style="font-weight:400;text-transform:none;font-size:11px">(required for verification)</span>'
+    : 'Official Event URL / Ticketing Link * <span style="font-weight:400;text-transform:none;font-size:11px">(required for verification)</span>';
+  document.getElementById("sub-url").placeholder = isHH ? "https://www.hallspizza.com/" : "https://tickets.example.com/event";
+  document.getElementById("sub-desc-label").textContent = isHH ? "Happy Hour Details" : "Description";
+  document.getElementById("sub-desc").placeholder = isHH ? "e.g. $5 cocktails, half-price apps, Mon-Fri 3-6 PM" : "Brief description of the event...";
+  document.getElementById("sub-btn").style.background = isHH ? "var(--happyhour)" : "var(--accent)";
+
+  // Clear status
+  document.getElementById("sub-status").textContent = "";
+}
+
 function submitEvent() {
   var name = document.getElementById("sub-name").value.trim();
-  var date = document.getElementById("sub-date").value;
   var venue = document.getElementById("sub-venue").value.trim();
   var url = document.getElementById("sub-url").value.trim();
-  var cat = document.getElementById("sub-cat").value;
   var desc = document.getElementById("sub-desc").value.trim();
   var contact = document.getElementById("sub-contact").value.trim();
+  var district = document.getElementById("sub-district").value;
   var status = document.getElementById("sub-status");
   var btn = document.getElementById("sub-btn");
 
-  if (!name || !date || !venue || !url) {
-    status.style.color = "#c0392b";
-    status.textContent = "Please fill in Event Name, Date, Venue, and URL.";
-    return;
+  if (SUB_TYPE === "hh") {
+    // Happy Hour submission
+    var hhTime = document.getElementById("sub-hh-time").value.trim();
+    var hhDays = [];
+    document.querySelectorAll(".sub-hh-day:checked").forEach(function(cb) { hhDays.push(+cb.value); });
+    var hasPatio = document.getElementById("sub-hh-patio").checked;
+    var hasRooftop = document.getElementById("sub-hh-rooftop").checked;
+
+    if (!name || !venue || !hhTime || !url) {
+      status.style.color = "#c0392b";
+      status.textContent = "Please fill in Name, Address, Happy Hour Time, and Website URL.";
+      return;
+    }
+    if (hhDays.length === 0) {
+      status.style.color = "#c0392b";
+      status.textContent = "Please select at least one day.";
+      return;
+    }
+  } else {
+    // Event submission
+    var date = document.getElementById("sub-date").value;
+    var cat = document.getElementById("sub-cat").value;
+    if (!name || !date || !venue || !url) {
+      status.style.color = "#c0392b";
+      status.textContent = "Please fill in Event Name, Date, Venue, and URL.";
+      return;
+    }
   }
   if (!url.startsWith("http")) {
     status.style.color = "#c0392b";
@@ -5000,10 +5141,22 @@ function submitEvent() {
 
   // Build the submission payload
   var submission = {
-    name: name, date: date, venue: venue,
-    cat: cat, desc: desc, url: url, contact: contact,
+    type: SUB_TYPE,
+    name: name, venue: venue, desc: desc, url: url, contact: contact,
+    district: district,
     submitted: new Date().toISOString()
   };
+  if (SUB_TYPE === "hh") {
+    submission.cat = "happyhour";
+    submission.hhTime = hhTime;
+    submission.hhDays = hhDays;
+    submission.patio = hasPatio;
+    submission.rooftop = hasRooftop;
+    submission.date = new Date().toISOString().split("T")[0]; // today as placeholder
+  } else {
+    submission.cat = cat;
+    submission.date = date;
+  }
 
   // Use Claude API to verify the submission against the provided URL
   fetch("https://api.anthropic.com/v1/messages", {
@@ -5043,7 +5196,7 @@ function submitEvent() {
       btn.textContent = "Submitted ✓";
       showSubmitPopup(true);
       // Clear fields
-      ["sub-name","sub-date","sub-venue","sub-url","sub-desc","sub-contact"].forEach(function(id) {
+      ["sub-name","sub-date","sub-venue","sub-url","sub-desc","sub-contact","sub-hh-time"].forEach(function(id) {
         document.getElementById(id).value = "";
       });
     } else {
@@ -5181,6 +5334,8 @@ function init() {
   }
   renderCal();
   updateToggleBtn();
+  updateHHCounts();
+  updateDistCounts();
   setStatus("idle", "Events updated nightly ✓");}
 
 // ── MOBILE SOURCES ──────────────────────────────────────────────────────────
