@@ -23,7 +23,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Need previous commit for diff
+          fetch-depth: 2
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -59,21 +59,44 @@ jobs:
             echo "ERROR: index.html not found after agent run"
             exit 1
           fi
+
           SIZE=$(wc -c < index.html)
           echo "index.html size: $SIZE bytes"
+
           if [ "$SIZE" -lt 100000 ]; then
             echo "ERROR: index.html seems too small ($SIZE bytes) — possible corruption"
             exit 1
           fi
-          # Check for duplicate body tags (the duplication bug we found)
+
+          # Check for duplicate body tags (duplication bug guard)
           BODY_COUNT=$(grep -c "<body" index.html || true)
           if [ "$BODY_COUNT" -gt 1 ]; then
             echo "ERROR: index.html has $BODY_COUNT <body> tags — file is duplicated"
             exit 1
           fi
+
+          # Basic JS syntax check on the event arrays
+          node -e "
+            const fs = require('fs');
+            const html = fs.readFileSync('index.html', 'utf8');
+            // Check that LIVE_EVENTS block is valid JS
+            const match = html.match(/var LIVE_EVENTS = (\[[\s\S]*?\]);/);
+            if (match) {
+              try {
+                eval('(' + match[1] + ')');
+                console.log('✓ LIVE_EVENTS JS syntax OK');
+              } catch(e) {
+                console.error('ERROR: LIVE_EVENTS has invalid JS:', e.message);
+                process.exit(1);
+              }
+            } else {
+              console.log('No LIVE_EVENTS block found (might be first run with no new events)');
+            }
+          "
+
           echo "✓ index.html looks healthy ($SIZE bytes, $BODY_COUNT body tag)"
 
-      - name: Check if index.html changed
+      - name: Check if files changed
         id: diff
         run: |
           if git diff --quiet index.html agent_log.json 2>/dev/null || \
@@ -94,7 +117,9 @@ jobs:
         run: |
           git config user.name  "OKC Calendar Agent"
           git config user.email "agent@okc-calendar.github.io"
+
           git add index.html agent_log.json
+
           # Build commit message
           DATE=$(date "+%B %d, %Y")
           if [ "$IS_MONDAY" = "true" ]; then
@@ -102,6 +127,7 @@ jobs:
           else
             git commit -m "🗓️ Nightly update — $DATE"
           fi
+
           git push
 
       - name: No changes — still log
@@ -114,6 +140,7 @@ jobs:
         run: |
           echo "## OKC Calendar Agent Run — $(date '+%B %d, %Y')" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+
           if [ -f agent_log.json ]; then
             LAST_RUN=$(python3 -c "
           import json
@@ -121,11 +148,12 @@ jobs:
               logs = json.load(open('agent_log.json'))
               last = logs[-1] if logs else {}
               diff = last.get('diff', {})
-              print(f\"- Events: {diff.get('new_count','?')} total\")
-              print(f\"- Added: +{diff.get('added',0)}\")
-              print(f\"- Removed: -{diff.get('removed',0)}\")
               print(f\"- Sources run: {last.get('sources_run','?')}\")
+              print(f\"- New events added: +{diff.get('added',0)}\")
               print(f\"- Failed sources: {len(last.get('failed_sources', []))}\")
+              if last.get('failed_sources'):
+                  for s in last['failed_sources']:
+                      print(f\"  - {s}\")
               val = last.get('validation', {})
               status = 'PASSED' if val.get('passed', True) else 'FAILED'
               print(f\"- Validation: {status}\")
