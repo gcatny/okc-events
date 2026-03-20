@@ -4774,14 +4774,16 @@ function renderCal() {
     var pts = ev.date.split("-"), y=+pts[0], m=+pts[1]-1, d=+pts[2];
     if (y===calY && m===calM) { if (!bd[d]) bd[d]=[]; bd[d].push(ev); }
   });
-  var tot = Object.values(bd).reduce(function(s,a){return s+a.length;},0);
+  var todayD = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+  var tot = Object.keys(bd).reduce(function(s,k){return s+(new Date(calY,calM,+k)>=todayD?bd[k].length:0);},0);
   document.getElementById("ecnt").textContent = tot ? (tot+" event"+(tot!==1?"s":"")+" this month") : "";
   var h = "";
   for (var i=0;i<first;i++) h+='<div class="cell dim"><div class="cnum">'+(dprev-first+i+1)+'</div></div>';
   for (var d=1;d<=dim;d++) {
     var it = today.getFullYear()===calY && today.getMonth()===calM && today.getDate()===d;
     var dow = new Date(calY,calM,d).getDay();
-    var evs = bd[d]||[];
+    var isPast = new Date(calY,calM,d)<new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    var evs = isPast ? [] : (bd[d]||[]);
     var sh = evs.slice(0,4), ex = evs.length-4;
     var eh = sh.map(function(ev) {
       var idx = allEvents.indexOf(ev);
