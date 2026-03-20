@@ -576,6 +576,14 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
   </div>
   <div class="cgrid" id="cg"></div>
   <div class="detail" id="dp"></div>
+  <div id="filter-list-wrap" style="display:none">
+    <div id="filter-list-header" style="display:flex;align-items:center;justify-content:space-between;padding:14px 0 8px;border-top:1px solid var(--border);margin-top:12px">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.05em;color:var(--text)">UPCOMING MATCHES</div>
+      <span id="filter-list-count" style="font-size:12px;color:var(--muted)"></span>
+    </div>
+    <div id="filter-list" style="display:flex;flex-direction:column;gap:6px;padding-bottom:16px"></div>
+    <div id="filter-list-more" style="text-align:center;padding-bottom:16px"></div>
+  </div>
 </div>
 <div id="district-panel">
 <div id="district-panel-header">Districts<button id="dist-clear-btn" onclick="distClear()" style="display:none;float:right;background:none;border:none;font-size:11px;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;line-height:1">&#x2715; clear</button></div>
@@ -4235,6 +4243,10 @@ function toggleF(f) {
     var c = ALL_CATS.find(function(x) { return el.classList.contains(x); });
     if (c) el.classList.toggle("active", activeF.has(c));
   });
+  // Auto-jump to nearest matching month when filters are narrowed
+  if (DIST_ACTIVE || activeF.size < ALL_CATS.length) {
+    jumpToNextMatch();
+  }
   if (searchQuery) renderSearchResults(); else renderCal();
   updateToggleBtn();
   updateDistCounts();
@@ -4458,14 +4470,6 @@ autoAssignDistricts(allEvents);
 
 var DIST_ACTIVE = null;
 
-function distClear() {
-  DIST_ACTIVE = null;
-  document.querySelectorAll('.dist-item').forEach(function(i){ i.classList.remove('dist-active'); });
-  var cb = document.getElementById('dist-clear-btn');
-  if (cb) cb.style.display = 'none';
-  renderCal();
-}
-
 function distClick(el) {
   var key = el.dataset.key;
   if (DIST_ACTIVE === key) { distClear(); return; }
@@ -4474,20 +4478,46 @@ function distClick(el) {
   el.classList.add('dist-active');
   var cb = document.getElementById('dist-clear-btn');
   if (cb) cb.style.display = 'inline';
-  var today = new Date(); today.setHours(0,0,0,0);
-  var matches = allEvents.filter(function(ev){
-    return ev.district === key;
-  });
-  if (matches.length) {
-    matches.sort(function(a,b){ return a.date<b.date?-1:1; });
-    var target = matches.find(function(ev){ return new Date(ev.date+'T00:00:00') >= today; });
-    if (!target) target = matches[matches.length-1];
-    var p = target.date.split('-');
-    calY = parseInt(p[0]); calM = parseInt(p[1])-1;
-  }
+  jumpToNextMatch();
   renderCal();
 }
 
+function distClear() {
+  DIST_ACTIVE = null;
+  document.querySelectorAll('.dist-item').forEach(function(i){ i.classList.remove('dist-active'); });
+  var cb = document.getElementById('dist-clear-btn');
+  if (cb) cb.style.display = 'none';
+  renderCal();
+}
+
+// Jump calendar to the month of the next matching event
+// respecting BOTH category filters and district filter
+function jumpToNextMatch() {
+  var today = new Date(); today.setHours(0,0,0,0);
+  var todayStr = today.getFullYear()+"-"+String(today.getMonth()+1).padStart(2,"0")+"-"+String(today.getDate()).padStart(2,"0");
+  var seen = {};
+  var matches = allEvents.filter(function(ev) {
+    if (!activeF.has(ev.cat)) return false;
+    if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return false;
+    if (ev.date < todayStr) return false;
+    // Deduplicate happy hours for jump logic
+    if (ev.cat === "happyhour") {
+      if (seen[ev.name]) return false;
+      seen[ev.name] = true;
+    }
+    return true;
+  });
+  if (matches.length) {
+    matches.sort(function(a,b){ return a.date<b.date?-1:1; });
+    var p = matches[0].date.split('-');
+    calY = parseInt(p[0]); calM = parseInt(p[1])-1;
+  }
+}
+
+
+var FILTER_LIST_LIMIT = 30;
+var filterListAll = [];
+var filterListShown = 0;
 
 function renderCal() {
   document.getElementById("mlbl").textContent = MNTHS[calM] + " " + calY;
@@ -4526,6 +4556,109 @@ function renderCal() {
   for (var i=1;i<=tr;i++) h+='<div class="cell dim"><div class="cnum">'+i+'</div></div>';
   grid.innerHTML = h;
   syncDistrictHeight();
+  renderFilterList();
+}
+
+// ── FILTERED EVENT LIST (below calendar) ──
+// Shows upcoming events matching current filter + district combo.
+// Deduplicates recurring happy hours (one entry per venue).
+function renderFilterList() {
+  var wrap = document.getElementById("filter-list-wrap");
+  var listEl = document.getElementById("filter-list");
+  var countEl = document.getElementById("filter-list-count");
+  var moreEl = document.getElementById("filter-list-more");
+
+  // Only show list when filters are narrowed (not all cats selected, or a district is active)
+  var allCatsOn = activeF.size === ALL_CATS.length;
+  if (allCatsOn && !DIST_ACTIVE) {
+    wrap.style.display = "none";
+    return;
+  }
+
+  var todayStr = (function() {
+    var t = new Date();
+    return t.getFullYear() + "-" + String(t.getMonth()+1).padStart(2,"0") + "-" + String(t.getDate()).padStart(2,"0");
+  })();
+
+  // Build deduplicated, future-only list
+  var seen = {};
+  var items = allEvents.filter(function(ev) {
+    if (!activeF.has(ev.cat)) return false;
+    if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return false;
+    if (ev.date < todayStr) return false;
+    // Deduplicate happy hours: show only next occurrence per venue
+    if (ev.cat === "happyhour") {
+      var key = ev.name;
+      if (seen[key]) return false;
+      seen[key] = true;
+    }
+    return true;
+  });
+  items.sort(function(a,b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : a.name < b.name ? -1 : 1; });
+
+  if (!items.length) {
+    wrap.style.display = "block";
+    countEl.textContent = "0 upcoming events";
+    listEl.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">No upcoming events match the current filter'+(DIST_ACTIVE?' + district':'')+'.</div>';
+    moreEl.innerHTML = "";
+    return;
+  }
+
+  wrap.style.display = "block";
+  countEl.textContent = items.length + " upcoming event" + (items.length !== 1 ? "s" : "");
+  filterListAll = items;
+  filterListShown = 0;
+  listEl.innerHTML = "";
+  moreEl.innerHTML = "";
+  showMoreFilterList();
+}
+
+function showMoreFilterList() {
+  var listEl = document.getElementById("filter-list");
+  var moreEl = document.getElementById("filter-list-more");
+  var end = Math.min(filterListShown + FILTER_LIST_LIMIT, filterListAll.length);
+  var html = "";
+  for (var i = filterListShown; i < end; i++) {
+    var ev = filterListAll[i];
+    var p = ev.date.split("-");
+    var d = new Date(+p[0],+p[1]-1,+p[2]);
+    var mon = MNTHS[d.getMonth()].substring(0,3).toUpperCase();
+    var day = d.getDate();
+    var wday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d.getDay()];
+    var col = CAT_COLORS[ev.cat] || "#888";
+    var fb = ev.free ? '<span style="font-size:10px;padding:2px 5px;border-radius:3px;background:var(--free-bg);color:var(--free);border:1px solid var(--free-bd);margin-left:4px;font-weight:500">FREE</span>' : "";
+    var db = ev.district ? '<span style="font-size:10px;color:var(--muted);margin-left:6px">\u00B7 '+ev.district+'</span>' : "";
+    var sidx = allEvents.indexOf(ev);
+    html += '<div onclick="openFilterDetail('+sidx+')" style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.borderColor=\'var(--border)\'">'
+      + '<div style="min-width:44px;text-align:center;padding:6px 4px;border-radius:6px;background:'+col+'12;color:'+col+'"><div style="font-size:10px;font-weight:600;letter-spacing:.05em">'+wday.toUpperCase()+'</div><div style="font-size:10px;font-weight:600;opacity:.7">'+mon+'</div><div style="font-size:18px;font-weight:700;line-height:1.1">'+day+'</div></div>'
+      + '<div style="flex:1;min-width:0"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:15px;letter-spacing:.03em;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+ev.name+fb+'</div>'
+      + '<div style="font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">\u{1F4CD} '+ev.venue+db+'</div>'
+      + '<div style="font-size:11px;color:rgba(26,32,53,.55);margin-top:3px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">'+ev.desc+'</div>'
+      + '<span style="display:inline-block;margin-top:4px;font-size:10px;padding:2px 8px;border-radius:3px;background:'+col+'12;color:'+col+';font-weight:500">'+(CLAB[ev.cat]||ev.cat)+'</span>'
+      + '</div>'
+      + '<button onclick="event.stopPropagation();addGCal(allEvents['+sidx+'])" style="flex-shrink:0;padding:5px 8px;border:1px solid var(--border2);border-radius:5px;background:var(--surface);color:var(--muted);font-size:11px;cursor:pointer;white-space:nowrap;font-family:\'DM Sans\',sans-serif">+ Cal</button>'
+      + '</div>';
+  }
+  filterListShown = end;
+
+  var oldBtn = moreEl.querySelector('button');
+  if (oldBtn) oldBtn.remove();
+  listEl.insertAdjacentHTML("beforeend", html);
+
+  if (filterListShown < filterListAll.length) {
+    var remaining = filterListAll.length - filterListShown;
+    moreEl.innerHTML = '<button onclick="showMoreFilterList()" style="padding:10px 24px;border:1px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--accent);font-family:DM Sans,sans-serif;font-size:13px;font-weight:500;cursor:pointer">Show '+Math.min(remaining,FILTER_LIST_LIMIT)+' more of '+remaining+' remaining</button>';
+  } else {
+    moreEl.innerHTML = "";
+  }
+}
+
+function openFilterDetail(i) {
+  var ev = allEvents[i]; if (!ev) return;
+  var p = ev.date.split("-");
+  calY = +p[0]; calM = +p[1]-1;
+  renderCal();
+  setTimeout(function() { openD(encodeURIComponent(JSON.stringify(ev))); }, 100);
 }
 
 function showMore(y,m,d) {
