@@ -736,7 +736,8 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
   </div>
 </div>
 <div id="district-panel">
-<div id="district-panel-header">Districts<button id="dist-clear-btn" onclick="distClear()" style="display:none;float:right;background:none;border:none;font-size:11px;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;line-height:1">&#x2715; clear</button></div>
+<div id="district-panel-header">Districts</div>
+<div style="margin-bottom:6px"><button id="dist-clear-btn" onclick="distClear()" style="display:none;background:none;border:1px solid var(--border2);border-radius:4px;font-size:11px;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;padding:3px 8px;line-height:1">&#x2715; Clear District</button></div>
 <div id="district-panel-list">
   <div class="dist-item" id="disti-39th_street" data-key="39th Street District" onclick="distClick(this)"><span class="dist-name">39th Street District</span><span class="dist-count" id="distcnt-39th_street">1</span></div>
   <div class="dist-item" id="disti-adventure" data-key="Adventure District" onclick="distClick(this)"><span class="dist-name">Adventure District</span><span class="dist-count" id="distcnt-adventure">603</span></div>
@@ -5548,6 +5549,9 @@ window.addEventListener('resize', syncDistrictHeight);
 <script>
   var fu = document.getElementById("footer-updated");
   if (fu) fu.textContent = "Last loaded: " + new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",year:"numeric"});
+  // Update footer total — runs here because the footer DOM is now guaranteed to exist
+  var ftc = document.getElementById("footer-event-count");
+  if (ftc && typeof allEvents !== "undefined") ftc.textContent = allEvents.length.toLocaleString();
 </script>
 </body>
 </html>
