@@ -52,15 +52,21 @@ header{padding:32px 0 20px;border-bottom:1px solid var(--border2);margin-bottom:
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* Search bar */
-.search-wrap{position:relative;margin-bottom:14px}
+.search-wrap{position:relative;margin-bottom:14px;z-index:100}
 .search-input{width:100%;padding:11px 44px 11px 16px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;font-family:"DM Sans",sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;box-shadow:0 1px 4px rgba(60,80,120,.06)}
 .search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(44,95,170,.1)}
 .search-input::placeholder{color:var(--muted)}
 .search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
 .search-clear{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;padding:0;display:none}
 .search-clear:hover{color:var(--text)}
-.search-results-bar{font-size:12px;color:var(--muted);margin-top:-8px;margin-bottom:10px;min-height:18px}
+.search-overlay{display:none;position:absolute;top:100%;left:0;right:0;z-index:999;background:var(--bg);border:1px solid var(--border2);border-radius:0 0 12px 12px;box-shadow:0 12px 40px rgba(30,40,80,.18),0 2px 8px rgba(0,0,0,.08);max-height:60vh;overflow-y:auto;margin-top:-1px}
+.search-overlay.open{display:block}
+.search-overlay::-webkit-scrollbar{width:6px}
+.search-overlay::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+.search-results-bar{font-size:12px;color:var(--muted);padding:12px 16px 6px;min-height:18px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:1}
 .search-results-bar span{color:var(--accent);font-weight:500}
+.search-overlay .search-list{padding:8px 12px 12px}
+.search-overlay .search-list-item{margin-bottom:6px;font-size:13px}
 
 /* Source panel */
 .search-panel{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(60,80,120,.06)}
@@ -427,8 +433,11 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 <div class="search-wrap">
   <input class="search-input" id="search-input" type="text" placeholder="&#128269; Search events, venues, artists, categories&hellip;" oninput="onSearch(this.value)" />
   <button class="search-clear" id="search-clear" onclick="clearSearch()">&#10005;</button>
+  <div class="search-overlay" id="search-overlay">
+    <div class="search-results-bar" id="search-results-bar"></div>
+    <div id="search-list" class="search-list"></div>
+  </div>
 </div>
-<div class="search-results-bar" id="search-results-bar"></div>
 
 <!-- Category Filters -->
 <div class="frow">
@@ -609,10 +618,6 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 </div>
 </div>
 
-<!-- Search Results List View (shown when searching) -->
-<div id="search-view" style="display:none">
-  <div id="search-list" class="search-list"></div>
-</div>
 
 <script>
 var HH_DATA=[
@@ -4266,67 +4271,114 @@ function updateToggleBtn() {
 function onSearch(val) {
   searchQuery = val.trim().toLowerCase();
   var clr = document.getElementById("search-clear");
+  var overlay = document.getElementById("search-overlay");
   clr.style.display = searchQuery ? "block" : "none";
   document.querySelector(".search-icon") && (document.querySelector(".search-icon").style.display = searchQuery ? "none" : "block");
   if (searchQuery) {
-    document.getElementById("cal-view").style.display = "none";
-    document.getElementById("search-view").style.display = "block";
+    overlay.classList.add("open");
     renderSearchResults();
   } else {
-    document.getElementById("cal-view").style.display = "block";
-    document.getElementById("search-view").style.display = "none";
+    overlay.classList.remove("open");
     document.getElementById("search-results-bar").innerHTML = "";
-    closeD();
-    renderCal();
+    document.getElementById("search-list").innerHTML = "";
   }
 }
 
 function clearSearch() {
   document.getElementById("search-input").value = "";
-  onSearch("");
+  searchQuery = "";
+  document.getElementById("search-overlay").classList.remove("open");
+  document.getElementById("search-clear").style.display = "none";
+  document.getElementById("search-results-bar").innerHTML = "";
+  document.getElementById("search-list").innerHTML = "";
 }
 
 function matchesSearch(ev, q) {
   return (ev.name+ev.venue+ev.desc+(ev.source||"")+(ev.cat||"")).toLowerCase().indexOf(q) !== -1;
 }
 
+var SEARCH_LIMIT = 50;
+var searchMatches = [];
+var searchShown = 0;
+
 function renderSearchResults() {
   var q = searchQuery;
-  var matches = allEvents.filter(function(ev) {
+  var todayStr = (function() {
+    var t = new Date();
+    return t.getFullYear() + "-" + String(t.getMonth()+1).padStart(2,"0") + "-" + String(t.getDate()).padStart(2,"0");
+  })();
+
+  // Filter, deduplicate happy hours (show only next upcoming occurrence), remove past events
+  var seen = {};
+  var raw = allEvents.filter(function(ev) {
     if (!activeF.has(ev.cat)) return false;
     if (DIST_ACTIVE && ev.district !== DIST_ACTIVE) return false;
-    return matchesSearch(ev, q);
-  }).sort(function(a,b) { return a.date < b.date ? -1 : 1; });
+    if (!matchesSearch(ev, q)) return false;
+    if (ev.date < todayStr) return false; // hide past events from search
+    // For happy hours, only keep the nearest future date per venue name
+    if (ev.cat === "happyhour") {
+      var key = ev.name;
+      if (seen[key]) return false;
+      seen[key] = true;
+    }
+    return true;
+  });
+
+  // Sort by nearest date first (closest upcoming → furthest)
+  raw.sort(function(a,b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : a.name < b.name ? -1 : 1; });
+
+  searchMatches = raw;
+  searchShown = 0;
 
   var bar = document.getElementById("search-results-bar");
-  bar.innerHTML = matches.length ? '<span>'+matches.length+'</span> result'+(matches.length!==1?'s':'') + ' for "'+document.getElementById("search-input").value+'"' : 'No results for "'+document.getElementById("search-input").value+'"';
+  var inputVal = document.getElementById("search-input").value;
+  bar.innerHTML = raw.length ? '<span>'+raw.length+'</span> result'+(raw.length!==1?'s':'') + ' for "'+inputVal+'"' : 'No results for "'+inputVal+'"';
 
   var list = document.getElementById("search-list");
-  if (!matches.length) {
-    list.innerHTML = '<div class="no-results">No events found matching "'+document.getElementById("search-input").value+'".<br>Try a different keyword, venue, or category.</div>';
+  if (!raw.length) {
+    list.innerHTML = '<div class="no-results">No events found matching "'+inputVal+'".<br>Try a different keyword, venue, or category.</div>';
     return;
   }
-  list.innerHTML = matches.map(function(ev) {
+  list.innerHTML = "";
+  showMoreSearchResults();
+}
+
+function showMoreSearchResults() {
+  var list = document.getElementById("search-list");
+  var end = Math.min(searchShown + SEARCH_LIMIT, searchMatches.length);
+  var html = "";
+  for (var i = searchShown; i < end; i++) {
+    var ev = searchMatches[i];
     var p = ev.date.split("-");
     var d = new Date(+p[0],+p[1]-1,+p[2]);
     var mon = MNTHS[d.getMonth()].substring(0,3).toUpperCase();
     var day = d.getDate();
     var col = CAT_COLORS[ev.cat] || "#888";
     var fb = ev.free ? '<span style="font-size:10px;padding:2px 6px;border-radius:3px;background:var(--free-bg);color:var(--free);border:1px solid var(--free-bd);margin-left:4px;font-weight:500">FREE</span>' : "";
+    var hhBadge = ev.cat === "happyhour" ? '<span style="font-size:10px;padding:2px 6px;border-radius:3px;background:var(--happyhour-bg);color:var(--happyhour);border:1px solid var(--happyhour-bd);margin-left:4px;font-weight:500">HAPPY HOUR</span>' : "";
+    var distBadge = ev.district ? '<span style="font-size:10px;color:var(--muted);margin-left:4px">\u00B7 '+ev.district+'</span>' : "";
     var sidx = allEvents.indexOf(ev);
-    return '<div class="search-list-item" onclick="openSearchDetail('+sidx+')"><div class="sli-date" style="background:'+col+'18;color:'+col+'"><div class="sli-month">'+mon+'</div><div class="sli-day">'+day+'</div></div><div class="sli-info"><div class="sli-name">'+ev.name+fb+'</div><div class="sli-venue">&#128205; '+ev.venue+'</div><div class="sli-desc">'+ev.desc+'</div><span class="sli-tag" style="background:'+col+'15;color:'+col+'">'+( CLAB[ev.cat]||ev.cat)+'</span></div><div class="sli-actions"><button class="sli-gcal" onclick="event.stopPropagation();addGCal(allEvents['+sidx+'])">+ Cal</button></div></div>';
-  }).join("");
+    html += '<div class="search-list-item" onclick="openSearchDetail('+sidx+')"><div class="sli-date" style="background:'+col+'18;color:'+col+'"><div class="sli-month">'+mon+'</div><div class="sli-day">'+day+'</div></div><div class="sli-info"><div class="sli-name">'+ev.name+fb+hhBadge+'</div><div class="sli-venue">&#128205; '+ev.venue+distBadge+'</div><div class="sli-desc">'+ev.desc+'</div><span class="sli-tag" style="background:'+col+'15;color:'+col+'">'+( CLAB[ev.cat]||ev.cat)+'</span></div><div class="sli-actions"><button class="sli-gcal" onclick="event.stopPropagation();addGCal(allEvents['+sidx+'])">+ Cal</button></div></div>';
+  }
+  searchShown = end;
+
+  // Remove old "show more" button if present
+  var oldBtn = list.querySelector('.search-show-more');
+  if (oldBtn) oldBtn.remove();
+
+  list.insertAdjacentHTML("beforeend", html);
+
+  // Add "show more" button if there are more results
+  if (searchShown < searchMatches.length) {
+    var remaining = searchMatches.length - searchShown;
+    list.insertAdjacentHTML("beforeend", '<div class="search-show-more" style="text-align:center;padding:16px"><button onclick="showMoreSearchResults()" style="padding:10px 24px;border:1px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--accent);font-family:DM Sans,sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background .15s">Show '+Math.min(remaining, SEARCH_LIMIT)+' more of '+remaining+' remaining</button></div>');
+  }
 }
 
 function openSearchDetail(i) {
   var ev = allEvents[i]; if (!ev) return;
-  // Switch to calendar view on the right month and open detail
-  searchQuery = "";
-  document.getElementById("search-input").value = "";
-  document.getElementById("search-clear").style.display = "none";
-  document.getElementById("search-results-bar").innerHTML = "";
-  document.getElementById("cal-view").style.display = "block";
-  document.getElementById("search-view").style.display = "none";
+  // Close overlay and navigate calendar to the event's month
+  clearSearch();
   var p = ev.date.split("-");
   calY = +p[0]; calM = +p[1]-1;
   renderCal();
@@ -4881,9 +4933,34 @@ setTimeout(syncDistrictHeight, 150);
 setTimeout(updateDistCounts, 200);
 window.addEventListener("load", updateDistCounts);
 
+// Close search overlay on click outside or Escape key
+document.addEventListener("click", function(e) {
+  var wrap = document.querySelector(".search-wrap");
+  if (wrap && !wrap.contains(e.target)) {
+    var overlay = document.getElementById("search-overlay");
+    if (overlay && overlay.classList.contains("open")) {
+      overlay.classList.remove("open");
+    }
+  }
+});
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    var overlay = document.getElementById("search-overlay");
+    if (overlay && overlay.classList.contains("open")) {
+      clearSearch();
+      document.getElementById("search-input").blur();
+    }
+  }
+});
+// Reopen overlay when clicking back into search input with text
+document.getElementById("search-input").addEventListener("focus", function() {
+  if (this.value.trim()) {
+    document.getElementById("search-overlay").classList.add("open");
+  }
+});
 
-  var fu = document.getElementById("footer-updated");
-  if (fu) fu.textContent = "Last loaded: " + new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",year:"numeric"});
+var fu = document.getElementById("footer-updated");
+if (fu) fu.textContent = "Last loaded: " + new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",year:"numeric"});
 
 
 
