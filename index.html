@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OKC Super Calendar</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='12' width='56' height='48' rx='6' fill='%232c5faa'/%3E%3Crect x='4' y='12' width='56' height='14' rx='6' fill='%231a2035'/%3E%3Crect x='4' y='20' width='56' height='6' fill='%231a2035'/%3E%3Crect x='16' y='4' width='4' height='16' rx='2' fill='%231a2035'/%3E%3Crect x='44' y='4' width='4' height='16' rx='2' fill='%231a2035'/%3E%3Ctext x='32' y='50' text-anchor='middle' font-family='Arial,sans-serif' font-weight='bold' font-size='24' fill='white'%3EOKC%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%233b7de0'/%3E%3Cstop offset='100%25' stop-color='%232c5faa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Bebas Neue,Arial,sans-serif' font-weight='700' font-size='28' fill='white' letter-spacing='1'%3EOKC%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -30,6 +30,7 @@
   --volunteer:#059669;--volunteer-bg:rgba(5,150,105,.09);--volunteer-bd:rgba(5,150,105,.25);
 --happyhour:#c47a1e;--happyhour-bg:rgba(196,122,30,.09);--happyhour-bd:rgba(196,122,30,.25);
   --fundraiser:#9b2335;--fundraiser-bg:rgba(155,35,53,.09);--fundraiser-bd:rgba(155,35,53,.25);
+  --fashion:#c44989;--fashion-bg:rgba(196,73,137,.09);--fashion-bd:rgba(196,73,137,.25);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;font-size:15px;line-height:1.5;min-height:100vh;overflow-x:hidden}
@@ -110,6 +111,7 @@ header{padding:32px 0 20px;border-bottom:1px solid var(--border2);margin-bottom:
 .fp.happyhour.active{background:var(--happyhour-bg);color:var(--happyhour);border-color:var(--happyhour-bd)}
 .ev.fundraiser,.dcat.fundraiser{background:var(--fundraiser-bg);color:var(--fundraiser);border-left-color:var(--fundraiser)}
 .fp.fundraiser.active{background:var(--fundraiser-bg);color:var(--fundraiser);border-color:var(--fundraiser-bd)}
+.fp.fashion.active{background:var(--fashion-bg);color:var(--fashion);border-color:var(--fashion-bd)}
 
 .leg{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)}
 .ld{width:8px;height:8px;border-radius:2px;flex-shrink:0}
@@ -155,6 +157,7 @@ header{padding:32px 0 20px;border-bottom:1px solid var(--border2);margin-bottom:
 .ev.convention{background:var(--convention-bg);color:var(--convention);border-left-color:var(--convention)}
 .ev.volunteer{background:var(--volunteer-bg);color:var(--volunteer);border-left-color:var(--volunteer)}
 .ev.happyhour{background:var(--happyhour-bg);color:var(--happyhour);border-left-color:var(--happyhour)}
+.ev.fashion{background:var(--fashion-bg);color:var(--fashion);border-left-color:var(--fashion)}
 
 /* ── Happy Hour Section ── */
 .hh-section{background:var(--surface);border:1px solid var(--happyhour-bd);border-radius:10px;padding:14px 18px;margin-bottom:16px}
@@ -214,6 +217,7 @@ header{padding:32px 0 20px;border-bottom:1px solid var(--border2);margin-bottom:
 .dcat.convention{background:var(--convention-bg);color:var(--convention)}
 .dcat.volunteer{background:var(--volunteer-bg);color:var(--volunteer)}
 .ev.happyhour,.dcat.happyhour{background:var(--happyhour-bg);color:var(--happyhour)}
+.dcat.fashion{background:var(--fashion-bg);color:var(--fashion)}
 
 .freebadge{font-size:10px;padding:2px 8px;border-radius:3px;background:var(--free-bg);color:var(--free);border:1px solid var(--free-bd);font-weight:500;margin-left:6px}
 .dname{font-family:"Bebas Neue",sans-serif;font-size:26px;line-height:1;letter-spacing:.04em;color:var(--text)}
@@ -479,6 +483,7 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
   <button class="fp convention active" onclick="toggleF('convention')">Conventions &amp; Expos</button>
   <button class="fp volunteer active" onclick="toggleF('volunteer')">Volunteer</button>
   <button class="fp fundraiser active" onclick="toggleF('fundraiser')">Fundraiser &amp; Gala</button>
+  <button class="fp fashion active" onclick="toggleF('fashion')">Fashion</button>
 </div>
 <div style="display:flex;align-items:center;gap:10px;margin-top:8px;margin-bottom:16px">
   <button id="toggle-all-btn" onclick="toggleAllCats()" style="font-size:11px;padding:3px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer;font-family:inherit;transition:background .15s,color .15s,border-color .15s">Deselect All</button>
@@ -584,6 +589,7 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
           <option value="convention">Convention</option>
           <option value="volunteer">Volunteer</option>
           <option value="fundraiser">Fundraiser &amp; Gala</option>
+          <option value="fashion">Fashion</option>
         </select>
       </div>
 
@@ -939,7 +945,7 @@ var HH_DATA=[
 
 
 var MNTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
-var ALL_CATS=["art","music","food","sports","fest","theater","comedy","film","free","family","culture","running","civic","industry","convention","volunteer","happyhour","fundraiser"];
+var ALL_CATS=["art","music","food","sports","fest","theater","comedy","film","free","family","culture","running","civic","industry","convention","volunteer","happyhour","fundraiser","fashion"];
 var CLAB={art:"Art & Gallery",music:"Concert / Music",food:"Food & Bar",sports:"Sports",fest:"Festival / Market",theater:"Theater",comedy:"Comedy",film:"Film",free:"Free Event",family:"Family & Kids",culture:"Culture & Heritage",running:"Running & Fitness",civic:"Civic & Gov",industry:"Industry & Biz",convention:"Convention",volunteer:"Volunteer",happyhour:"Happy Hour",fundraiser:"Fundraiser & Gala"};
 var CAT_COLORS={art:"#6c5ce7",music:"#d44a2e",food:"#1a9e5c",sports:"#1a6fbf",fest:"#b07d10",theater:"#8b2252",comedy:"#0e7a6e",film:"#5a4a00",free:"#1565a0",family:"#7b3fa0",culture:"#7a3b10",running:"#1e7a47",civic:"#2c5f8a",industry:"#5a5a00",convention:"#6b2d6b",volunteer:"#059669",happyhour:"#c47a1e",fundraiser:"#9b2335"};
 
