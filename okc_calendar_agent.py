@@ -276,10 +276,12 @@ SOURCES = {
         'label': 'Oklahoma Contemporary Arts Center',
         'system': (
             'You find upcoming events at Oklahoma Contemporary arts center at 11 NW 11th St, OKC. '
-            'Search oklahomacontemporary.org/events/calendar for all upcoming public events including '
+            'Search oklahomacontemporary.org/events/calendar AND oklahomacontemporary.org/events/special-events/ '
+            'for all upcoming public events including '
             'Second Saturday (2nd Sat monthly, 1-4 PM, free family art day), '
             'Sensory Friendly Hour, Guided Public Tours (Saturdays 1 PM, free), '
-            'gallery programs, performances, workshops, and new exhibition openings. '
+            'gallery programs, performances, workshops, new exhibition openings, '
+            'and special events such as Founders Day, Industry Night, and any galas or fundraisers. '
             'Today is {today}. Return events for the next 90 days.'
         )
     },
@@ -1025,6 +1027,45 @@ def events_to_js(events):
 
 
 # ── MAIN ──────────────────────────────────────────────────────────────────────
+# ── GOOGLE SHEET APPROVED SUBMISSIONS ─────────────────────────────────────────
+# Replace with your deployed Apps Script URL (same one used in index.html)
+GOOGLE_SHEET_URL = os.environ.get("GOOGLE_SHEET_URL", "")
+
+def fetch_approved_submissions():
+    """Fetch user-submitted events marked as Approved in Google Sheet."""
+    if not GOOGLE_SHEET_URL:
+        print("GOOGLE_SHEET_URL not set — skipping user submissions")
+        return []
+    try:
+        url = GOOGLE_SHEET_URL + "?action=approved"
+        req = urllib.request.Request(url, method="GET")
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        events = []
+        for item in data:
+            if not item.get("name") or not item.get("date"):
+                continue
+            ev = {
+                "name": item["name"],
+                "venue": item.get("venue", ""),
+                "date": item["date"] if isinstance(item["date"], str) else str(item["date"]),
+                "desc": item.get("desc", ""),
+                "cat": item.get("cat", "culture"),
+                "confirmed": False,
+                "source": "User Submission",
+                "free": False,
+                "district": item.get("district", "")
+            }
+            if item.get("url"):
+                ev["tickets"] = item["url"]
+            events.append(ev)
+        print(f"Fetched {len(events)} approved user submissions from Google Sheet")
+        return events
+    except Exception as e:
+        print(f"Warning: Could not fetch approved submissions: {e}")
+        return []
+
+
 def main():
     html_path = "index.html"
     if not os.path.exists(html_path):
@@ -1095,6 +1136,13 @@ def main():
     logs = logs[-90:]
     with open(log_path, "w") as f:
         json.dump(logs, f, indent=2)
+
+    # Fetch approved user submissions from Google Sheet
+    approved = fetch_approved_submissions()
+    approved_new = dedup_events(approved, base_keys)
+    if approved_new:
+        print(f"Adding {len(approved_new)} approved user submissions")
+        all_new_events.extend(approved_new)
 
     if not all_new_events:
         print("No new events — skipping HTML update")
