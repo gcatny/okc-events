@@ -439,15 +439,6 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 @media(max-width:640px){}
 </style>
 </head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2PBS9G4V3R"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2PBS9G4V3R');
-</script>
 <body>
 <div class="app">
 
@@ -675,6 +666,23 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
           <option value="Wheeler District">Wheeler District</option>
           <option value="Yukon">Yukon</option>
         </select>
+      </div>
+
+      <!-- HH Recurrence (happy hour only) -->
+      <div id="sub-hh-recur-wrap" style="display:none">
+        <label style="display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Happy Hour Recurrence *</label>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text);cursor:pointer;padding:5px 12px;border:1px solid var(--border2);border-radius:16px;background:var(--surface);transition:all .15s">
+            <input type="radio" name="sub-hh-recur" value="daily" style="accent-color:var(--happyhour)"> Daily
+          </label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text);cursor:pointer;padding:5px 12px;border:1px solid var(--border2);border-radius:16px;background:var(--surface);transition:all .15s">
+            <input type="radio" name="sub-hh-recur" value="weekly" checked style="accent-color:var(--happyhour)"> Weekly
+          </label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text);cursor:pointer;padding:5px 12px;border:1px solid var(--border2);border-radius:16px;background:var(--surface);transition:all .15s">
+            <input type="radio" name="sub-hh-recur" value="monthly" style="accent-color:var(--happyhour)"> Monthly
+          </label>
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4">How often does this happy hour repeat? Most happy hours are weekly on selected days.</p>
       </div>
 
       <!-- HH Patio/Rooftop toggles (happy hour only) -->
@@ -5220,6 +5228,7 @@ function switchSubType(type) {
   document.getElementById("sub-hh-time-wrap").style.display = isHH ? "block" : "none";
   document.getElementById("sub-hh-days-wrap").style.display = isHH ? "block" : "none";
   document.getElementById("sub-hh-features-wrap").style.display = isHH ? "block" : "none";
+  document.getElementById("sub-hh-recur-wrap").style.display = isHH ? "block" : "none";
 
   // Update labels and placeholders
   document.getElementById("sub-name-label").textContent = isHH ? "Restaurant / Bar Name *" : "Event Name *";
@@ -5298,6 +5307,7 @@ function submitEvent() {
     submission.cat = "happyhour";
     submission.hhTime = hhTime;
     submission.hhDays = hhDays;
+    submission.hhRecurrence = document.querySelector('input[name="sub-hh-recur"]:checked').value;
     submission.patio = hasPatio;
     submission.rooftop = hasRooftop;
     submission.date = new Date().toISOString().split("T")[0]; // today as placeholder
