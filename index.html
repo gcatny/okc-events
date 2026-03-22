@@ -5344,21 +5344,10 @@ function submitEvent() {
       // Apply any corrections from verification
       if (result.corrected_date) submission.date = result.corrected_date;
       if (result.corrected_venue) submission.venue = result.corrected_venue;
+      submission.verified = true;
 
-      // Store in localStorage as pending review
-      var pending = [];
-      try { pending = JSON.parse(localStorage.getItem("okc_pending_events") || "[]"); } catch(e) {}
-      pending.push(submission);
-      localStorage.setItem("okc_pending_events", JSON.stringify(pending));
-
-      status.style.color = "#1a9e5c";
-      status.textContent = "Verified! Your event has been submitted for review and will appear within 24 hours.";
-      btn.textContent = "Submitted ✓";
-      showSubmitPopup(true);
-      // Clear fields
-      ["sub-name","sub-date","sub-venue","sub-url","sub-desc","sub-contact","sub-hh-time"].forEach(function(id) {
-        document.getElementById(id).value = "";
-      });
+      // Send to Google Sheet for review
+      sendToGoogleSheet(submission, status, btn, true);
     } else {
       status.style.color = "#c0392b";
       status.textContent = "Could not verify: " + (result.reason || "Please check the URL and event details.");
@@ -5367,17 +5356,45 @@ function submitEvent() {
     }
   })
   .catch(function() {
-    // If API unavailable, store anyway with unverified flag
+    // If API unavailable, send to Google Sheet anyway with unverified flag
     submission.verified = false;
-    var pending = [];
-    try { pending = JSON.parse(localStorage.getItem("okc_pending_events") || "[]"); } catch(e) {}
-    pending.push(submission);
-    localStorage.setItem("okc_pending_events", JSON.stringify(pending));
-    status.style.color = "#b07d10";
-    status.textContent = "Submitted for manual review. We will verify and add within 24 hours.";
-    btn.textContent = "Submitted";
+    sendToGoogleSheet(submission, status, btn, false);
+  });
+}
+
+// Google Sheet submission endpoint — replace with your deployed Apps Script URL
+var GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbx18bq_F9v48ppoBHQeBev40qDiMYVhBWR7jUI8-VuCZHQzIZcoM_TpbLkjSYMl8Xof/exec";
+
+function sendToGoogleSheet(submission, status, btn, verified) {
+  fetch(GOOGLE_SHEET_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(submission)
+  })
+  .then(function() {
+    if (verified) {
+      status.style.color = "#1a9e5c";
+      status.textContent = "Verified! Your event has been submitted for review.";
+      btn.textContent = "Submitted \u2713";
+    } else {
+      status.style.color = "#b07d10";
+      status.textContent = "Submitted for manual review. We will verify and add shortly.";
+      btn.textContent = "Submitted";
+    }
+    showSubmitPopup(verified);
+    // Clear fields
+    ["sub-name","sub-date","sub-venue","sub-url","sub-desc","sub-contact","sub-hh-time"].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.value = "";
+    });
+    setTimeout(function() { btn.disabled = false; btn.textContent = "Submit for Review"; }, 4000);
+  })
+  .catch(function() {
+    status.style.color = "#c0392b";
+    status.textContent = "Submission failed. Please try again.";
     btn.disabled = false;
-    showSubmitPopup(false);
+    btn.textContent = "Submit for Review";
   });
 }
 
