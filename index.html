@@ -253,6 +253,21 @@ header{padding:32px 0 20px;border-bottom:1px solid var(--border2);margin-bottom:
 .cx{padding:4px 8px;background:transparent;border:none;cursor:pointer;color:var(--muted);font-size:18px;line-height:1}
 .cx:hover{color:var(--text)}
 
+/* ── UPVOTE / LIKE BUTTON ── */
+.upvote-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:20px;border:none;background:rgba(43,181,181,.75);font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;color:#fff;cursor:pointer;user-select:none;box-shadow:0 1px 4px rgba(43,181,181,.2)}
+.upvote-btn:hover{background:rgba(43,181,181,.75)}
+.upvote-btn.voted{background:rgba(43,181,181,.75)}
+.upvote-btn .uv-icon{font-size:14px;transition:transform .2s}
+.upvote-btn.voted .uv-icon{transform:scale(1.1)}
+.upvote-btn .uv-count{font-variant-numeric:tabular-nums}
+.upvote-btn .uv-label{font-weight:400;color:rgba(255,255,255,.85);font-size:11px}
+.upvote-btn.voted .uv-label{color:#fff}
+.upvote-sm{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:14px;border:1px solid var(--border2);background:var(--surface);font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;user-select:none;white-space:nowrap}
+.upvote-sm:hover{border-color:var(--accent);color:var(--accent);background:rgba(44,95,170,.04)}
+.upvote-sm.voted{border-color:var(--accent);color:var(--accent);background:rgba(44,95,170,.06)}
+.upvote-sm .uv-icon{font-size:11px}
+.ev-vote{flex-shrink:0;display:inline-flex;align-items:center;gap:1px;font-size:8px;font-weight:700;opacity:.65;margin-left:auto;padding-left:3px}
+
 /* Sources footer */
 .src-section{margin-top:24px;padding-top:18px;border-top:1px solid var(--border2)}
 .src-section-title{font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;font-weight:500;margin-bottom:8px}
@@ -4511,10 +4526,19 @@ function openD(j) {
       +'<div class="dname">'+ev.name+'</div>'
       +'<div class="dmeta"><span>&#128205; '+ev.venue+'</span><span>&#128197; '+ds+'</span>'+(ev.district?'<span>&#127463; '+ev.district+'</span>':'')+'</div>'
       +'<div class="ddesc">'+ev.desc+'</div>'
-      +'<div class="dactions"><button class="gcal-btn" id="gca"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Add to Google Calendar</button>'+tb+'</div>'
+      +'<div class="dactions"><button class="gcal-btn" id="gca"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Add to Google Calendar</button>'+tb+'<span id="detail-vote-slot"></span></div>'
     +'</div>'
   +'</div>';
   document.getElementById("gca").onclick = function() { addGCal(ev); };
+  // Inject upvote button
+  window._lastDetailEv = ev;
+  var vk = voteKey(ev);
+  var voted = hasVotedLocal(vk);
+  var slot = document.getElementById("detail-vote-slot");
+  if (slot && typeof votesDB !== "undefined") {
+    slot.innerHTML = '<button class="upvote-btn'+(voted?' voted':'')+'" data-vkey="'+vk+'" onclick="event.stopPropagation();toggleVote(window._lastDetailEv,this)"><span class="uv-icon">&#9650;</span><span class="uv-count">0</span><span class="uv-label">interested</span></button>';
+    loadVoteBtn(vk);
+  }
   dp.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 
@@ -4728,7 +4752,7 @@ function showMoreSearchResults() {
     var hhBadge = ev.cat === "happyhour" ? '<span style="font-size:10px;padding:2px 6px;border-radius:3px;background:var(--happyhour-bg);color:var(--happyhour);border:1px solid var(--happyhour-bd);margin-left:4px;font-weight:500">HAPPY HOUR</span>' : "";
     var distBadge = ev.district ? '<span style="font-size:10px;color:var(--muted);margin-left:4px">\u00B7 '+ev.district+'</span>' : "";
     var sidx = allEvents.indexOf(ev);
-    html += '<div class="search-list-item" onclick="openSearchDetail('+sidx+')"><div class="sli-date" style="background:'+col+'18;color:'+col+'"><div class="sli-month">'+mon+'</div><div class="sli-day">'+day+'</div></div><div class="sli-info"><div class="sli-name">'+ev.name+fb+hhBadge+'</div><div class="sli-venue">&#128205; '+ev.venue+distBadge+'</div><div class="sli-desc">'+ev.desc+'</div><span class="sli-tag" style="background:'+col+'15;color:'+col+'">'+( CLAB[ev.cat]||ev.cat)+'</span>'+(ev.cat2?'<span class="sli-tag" style="background:'+(CAT_COLORS[ev.cat2]||"#888")+'15;color:'+(CAT_COLORS[ev.cat2]||"#888")+';margin-left:4px">'+(CLAB[ev.cat2]||ev.cat2)+'</span>':'')+'</div><div class="sli-actions"><button class="sli-gcal" onclick="event.stopPropagation();addGCal(allEvents['+sidx+'])">+ Cal</button></div></div>';
+    html += '<div class="search-list-item" onclick="openSearchDetail('+sidx+')"><div class="sli-date" style="background:'+col+'18;color:'+col+'"><div class="sli-month">'+mon+'</div><div class="sli-day">'+day+'</div></div><div class="sli-info"><div class="sli-name">'+ev.name+fb+hhBadge+'</div><div class="sli-venue">&#128205; '+ev.venue+distBadge+'</div><div class="sli-desc">'+ev.desc+'</div><span class="sli-tag" style="background:'+col+'15;color:'+col+'">'+( CLAB[ev.cat]||ev.cat)+'</span>'+(ev.cat2?'<span class="sli-tag" style="background:'+(CAT_COLORS[ev.cat2]||"#888")+'15;color:'+(CAT_COLORS[ev.cat2]||"#888")+';margin-left:4px">'+(CLAB[ev.cat2]||ev.cat2)+'</span>':'')+'</div><div class="sli-actions"><button class="sli-gcal" onclick="event.stopPropagation();addGCal(allEvents['+sidx+'])">+ Cal</button><button class="upvote-sm'+(hasVotedLocal(voteKey(ev))?' voted':'')+'" data-vkey="'+voteKey(ev)+'" onclick="event.stopPropagation();toggleVote(allEvents['+sidx+'],this)"><span class="uv-icon">&#9650;</span><span class="uv-count">0</span></button></div></div>';
   }
   searchShown = end;
 
@@ -4737,6 +4761,13 @@ function showMoreSearchResults() {
   if (oldBtn) oldBtn.remove();
 
   list.insertAdjacentHTML("beforeend", html);
+
+  // Load vote counts for newly added buttons
+  if (typeof loadVoteBtn === "function") {
+    list.querySelectorAll('.upvote-sm[data-vkey]').forEach(function(btn) {
+      loadVoteBtn(btn.dataset.vkey);
+    });
+  }
 
   // Add "show more" button if there are more results
   if (searchShown < searchMatches.length) {
@@ -4913,7 +4944,9 @@ function renderCal() {
     var eh = sh.map(function(ev) {
       var idx = allEvents.indexOf(ev);
       var nm = ev.name.replace(/"/g,"&quot;").replace(/'/g,"&#39;");
-      return '<div class="ev '+ev.cat+(ev.confirmed?" conf":"")+(ev.free?" free-ev":"")+'" title="'+nm+'" onclick="openIdx('+idx+')">'+ev.name+'</div>';
+      var vk = typeof voteKey==="function" ? voteKey(ev) : "";
+      var ck = ev.confirmed ? ' \u2713' : "";
+      return '<div class="ev '+ev.cat+(ev.free?" free-ev":"")+'" title="'+nm+'" onclick="openIdx('+idx+')" style="display:flex;align-items:center;gap:2px"><span style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+ev.name+(ck?'<span style="opacity:.55;font-size:9px">'+ck+'</span>':'')+'</span>'+(vk?'<span class="ev-vote ev-vote-live" data-vkey="'+vk+'"></span>':'')+'</div>';
     }).join("");
     var mh = ex>0 ? '<div class="more" onclick="showMore('+calY+','+calM+','+d+')">+'+ex+' more</div>' : "";
     h+='<div class="cell'+(it?" today":"")+(dow===0||dow===6?" wknd":"")+(new Date(calY,calM,d)<new Date(today.getFullYear(),today.getMonth(),today.getDate())?" past":"")+'"><div class="cnum">'+d+'</div>'+eh+mh+'</div>';
@@ -4923,6 +4956,22 @@ function renderCal() {
   grid.innerHTML = h;
   syncDistrictHeight();
   renderFilterList();
+  // Load vote counts for visible calendar cell pills
+  if (typeof votesDB !== "undefined") {
+    var seen = {};
+    grid.querySelectorAll('.ev-vote-live[data-vkey]').forEach(function(el) {
+      var k = el.dataset.vkey;
+      if (!seen[k]) {
+        seen[k] = true;
+        votesDB.child(k).once("value", function(snap) {
+          var c = snap.val() || 0;
+          document.querySelectorAll('.ev-vote-live[data-vkey="'+k+'"]').forEach(function(e) {
+            e.textContent = c > 0 ? "\u25B2"+c : "";
+          });
+        });
+      }
+    });
+  }
 }
 
 // ── FILTERED EVENT LIST (below calendar) ──
@@ -5676,6 +5725,137 @@ window.addEventListener('resize', syncDistrictHeight);
   // Update footer total — runs here because the footer DOM is now guaranteed to exist
   var ftc = document.getElementById("footer-event-count");
   if (ftc && typeof allEvents !== "undefined") ftc.textContent = allEvents.length.toLocaleString();
+</script>
+
+<!-- ══════════════════════════════════════════════════════════
+     FIREBASE VOTING SYSTEM — anonymous, 1 vote per browser per event
+     ══════════════════════════════════════════════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+// ──────────────────────────────────────────────────
+// PASTE YOUR FIREBASE CONFIG BELOW (from Firebase Console → Project Settings → Your Apps)
+// ──────────────────────────────────────────────────
+var firebaseConfig = {
+  apiKey: "AIzaSyC90_UyDoBIsUV6y6kpnyaIUCHHyl0LLas",
+  authDomain: "okc-super-cal.firebaseapp.com",
+  databaseURL: "https://okc-super-cal-default-rtdb.firebaseio.com",
+  projectId: "okc-super-cal",
+  storageBucket: "okc-super-cal.firebasestorage.app",
+  messagingSenderId: "484568696588",
+  appId: "1:484568696588:web:e26ebaf879df4462436b29"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+var votesDB = firebase.database().ref("votes");
+
+// ── VOTE KEY: generate a safe key from event name + date ──
+function voteKey(ev) {
+  var raw = (ev.name + "_" + ev.date).toLowerCase();
+  // Firebase keys can't contain . # $ [ ] /
+  return raw.replace(/[.#$\[\]\/\s]+/g, "_").replace(/_+/g, "_").substring(0, 128);
+}
+
+// ── LOCAL STORAGE GUARD ──
+function hasVotedLocal(key) {
+  try { var v = JSON.parse(localStorage.getItem("okcsupercal_votes") || "{}"); return !!v[key]; }
+  catch(e) { return false; }
+}
+function setVotedLocal(key, voted) {
+  try {
+    var v = JSON.parse(localStorage.getItem("okcsupercal_votes") || "{}");
+    if (voted) v[key] = 1; else delete v[key];
+    localStorage.setItem("okcsupercal_votes", JSON.stringify(v));
+  } catch(e) {}
+}
+
+// ── TOGGLE VOTE ──
+function toggleVote(ev, btn) {
+  var key = voteKey(ev);
+  var alreadyVoted = hasVotedLocal(key);
+  var ref = votesDB.child(key);
+
+  if (alreadyVoted) {
+    // Remove vote
+    ref.transaction(function(current) { return Math.max((current || 1) - 1, 0); });
+    setVotedLocal(key, false);
+    if (btn) { btn.classList.remove("voted"); }
+  } else {
+    // Add vote
+    ref.transaction(function(current) { return (current || 0) + 1; });
+    setVotedLocal(key, true);
+    if (btn) {
+      btn.classList.add("voted");
+      btn.style.transform = "scale(1.15)";
+      setTimeout(function(){ btn.style.transform = "scale(1.05)"; }, 100);
+      setTimeout(function(){ btn.style.transform = ""; }, 200);
+      showVoteToast();
+    }
+  }
+  // Update count display after a small delay for the transaction
+  setTimeout(function() { refreshVoteCount(key); }, 300);
+}
+
+// ── REFRESH A SINGLE VOTE COUNT across all matching elements ──
+function refreshVoteCount(key) {
+  votesDB.child(key).once("value", function(snap) {
+    var count = snap.val() || 0;
+    document.querySelectorAll('[data-vkey="'+key+'"] .uv-count').forEach(function(el) {
+      el.textContent = count;
+    });
+    // Update the vote badge in calendar cell pills
+    document.querySelectorAll('.ev-vote-live[data-vkey="'+key+'"]').forEach(function(el) {
+      el.textContent = count > 0 ? "\u25B2" + count : "";
+    });
+  });
+}
+
+// ── GET VOTE COUNT (one-time read) ──
+function getVoteCount(key, callback) {
+  votesDB.child(key).once("value", function(snap) {
+    callback(snap.val() || 0);
+  });
+}
+
+// ── TOAST NOTIFICATION ──
+function showVoteToast() {
+  var existing = document.querySelector('.vote-toast');
+  if (existing) existing.remove();
+  var t = document.createElement('div');
+  t.className = 'vote-toast';
+  t.textContent = "You're interested! Vote counted.";
+  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(8px);background:#1a2035;border-radius:8px;padding:10px 20px;font-size:13px;color:#fff;opacity:0;transition:opacity .2s,transform .2s;z-index:999;white-space:nowrap;box-shadow:0 4px 16px rgba(26,32,53,.2);font-family:DM Sans,sans-serif';
+  document.body.appendChild(t);
+  requestAnimationFrame(function(){
+    t.style.opacity = '1';
+    t.style.transform = 'translateX(-50%) translateY(0)';
+  });
+  setTimeout(function(){
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(8px)';
+    setTimeout(function(){ t.remove(); }, 200);
+  }, 2000);
+}
+
+// ── BUILD UPVOTE BUTTON HTML ──
+function upvoteBtnHTML(ev, size) {
+  var key = voteKey(ev);
+  var voted = hasVotedLocal(key);
+  if (size === "sm") {
+    return '<button class="upvote-sm'+(voted?" voted":"")+'" data-vkey="'+key+'" onclick="event.stopPropagation();toggleVote(window._voteEvt_'+key.replace(/[^a-z0-9_]/g,"")+'||{name:this.closest(\'[data-ename]\').dataset.ename,date:this.closest(\'[data-edate]\').dataset.edate},this)"><span class="uv-icon">\u25B2</span><span class="uv-count">0</span></button>';
+  }
+  return '<button class="upvote-btn'+(voted?" voted":"")+'" data-vkey="'+key+'" onclick="event.stopPropagation();toggleVote(window._lastDetailEv,this)"><span class="uv-icon">\u25B2</span><span class="uv-count">0</span><span class="uv-label">interested</span></button>';
+}
+
+// ── LOAD VOTE COUNT FOR A BUTTON after it's in the DOM ──
+function loadVoteBtn(key) {
+  getVoteCount(key, function(count) {
+    document.querySelectorAll('[data-vkey="'+key+'"] .uv-count').forEach(function(el) {
+      el.textContent = count;
+    });
+  });
+}
 </script>
 </body>
 </html>
