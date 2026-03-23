@@ -4536,7 +4536,7 @@ function openD(j) {
   var voted = hasVotedLocal(vk);
   var slot = document.getElementById("detail-vote-slot");
   if (slot && typeof votesDB !== "undefined") {
-    slot.innerHTML = '<button class="upvote-btn'+(voted?' voted':'')+'" data-vkey="'+vk+'" onclick="event.stopPropagation();toggleVote(window._lastDetailEv,this)"><span class="uv-icon">&#9650;</span><span class="uv-count">0</span><span class="uv-label">interested</span></button>';
+    slot.innerHTML = '<button class="upvote-btn'+(voted?' voted':'')+'" data-vkey="'+vk+'" onclick="event.stopPropagation();toggleVote(window._lastDetailEv,this)"><span class="uv-icon">&#9650;</span><span class="uv-count">0</span><span class="uv-label">likes</span></button>';
     loadVoteBtn(vk);
   }
   dp.scrollIntoView({behavior:"smooth",block:"nearest"});
@@ -5824,7 +5824,7 @@ function showVoteToast() {
   if (existing) existing.remove();
   var t = document.createElement('div');
   t.className = 'vote-toast';
-  t.textContent = "You're interested! Vote counted.";
+  t.textContent = "Liked! Your vote has been counted.";
   t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(8px);background:#1a2035;border-radius:8px;padding:10px 20px;font-size:13px;color:#fff;opacity:0;transition:opacity .2s,transform .2s;z-index:999;white-space:nowrap;box-shadow:0 4px 16px rgba(26,32,53,.2);font-family:DM Sans,sans-serif';
   document.body.appendChild(t);
   requestAnimationFrame(function(){
@@ -5845,7 +5845,7 @@ function upvoteBtnHTML(ev, size) {
   if (size === "sm") {
     return '<button class="upvote-sm'+(voted?" voted":"")+'" data-vkey="'+key+'" onclick="event.stopPropagation();toggleVote(window._voteEvt_'+key.replace(/[^a-z0-9_]/g,"")+'||{name:this.closest(\'[data-ename]\').dataset.ename,date:this.closest(\'[data-edate]\').dataset.edate},this)"><span class="uv-icon">\u25B2</span><span class="uv-count">0</span></button>';
   }
-  return '<button class="upvote-btn'+(voted?" voted":"")+'" data-vkey="'+key+'" onclick="event.stopPropagation();toggleVote(window._lastDetailEv,this)"><span class="uv-icon">\u25B2</span><span class="uv-count">0</span><span class="uv-label">interested</span></button>';
+  return '<button class="upvote-btn'+(voted?" voted":"")+'" data-vkey="'+key+'" onclick="event.stopPropagation();toggleVote(window._lastDetailEv,this)"><span class="uv-icon">\u25B2</span><span class="uv-count">0</span><span class="uv-label">likes</span></button>';
 }
 
 // ── LOAD VOTE COUNT FOR A BUTTON after it's in the DOM ──
