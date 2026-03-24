@@ -113,7 +113,7 @@ body::before{content:"";position:fixed;inset:0;background:linear-gradient(160deg
 .app{max-width:1460px;margin:0 auto;padding:0 20px 40px;position:relative;z-index:1}
 
 /* Header */
-header{background:linear-gradient(to right,#4f5bd5 0%,#2c5faa 38%,#a0a0cc 55%,#e09820 64%,#c01050 72%,#f06080 78%,#e85050 83%,#2d7878 91%,#1a2228 100%);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(44,95,170,.2);margin-bottom:16px}
+header{background:#2c5faa;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(44,95,170,.2);margin-bottom:16px}
 .hdr-logo{display:flex;align-items:center}
 .hdr-logo .logo-okc,.hdr-logo .logo-cal{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.15em;color:#5bbce4;text-shadow:0 3px 8px rgba(0,0,0,.25)}
 .hdr-logo .logo-super{font-family:'Handelson Three','Brush Script MT',cursive;font-size:52px;color:#fff;text-shadow:0 3px 8px rgba(0,0,0,.25);line-height:1}
@@ -522,7 +522,7 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 
 
 
-.dist-item{display:flex;align-items:center;justify-content:space-between;padding:4px 10px 4px 20px;cursor:pointer;font-size:10.5px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.3;transition:background .1s;gap:6px}
+.dist-item{display:flex;align-items:center;justify-content:space-between;padding:4px 10px 4px 12px;cursor:pointer;font-size:10.5px;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.3;transition:background .1s;gap:6px}
 .dist-item:hover{background:var(--surface2)}
 .dist-item.dist-active{background:var(--accent);color:#fff}
 .dist-name{flex:1;line-height:1.3;font-size:10.5px}
@@ -533,12 +533,43 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 
 /* ── District Panel ──────────────────────────────────────────────────── */
 #cal-sidebar-wrap{display:flex;gap:12px;align-items:flex-start;flex-direction:row}
-#district-panel{width:180px;flex-shrink:0;position:sticky;top:12px;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:10px;background:var(--bg);overflow:hidden}
+#district-panel{width:180px;flex-shrink:0;position:sticky;top:12px;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:10px;background:#fff;overflow:hidden}
 #district-panel-header{padding:10px 12px 8px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.07em;color:var(--text);border-bottom:1px solid var(--border);flex-shrink:0}
 #district-panel-list{overflow-y:scroll;flex:1;padding:4px 0}
 #district-panel-list::-webkit-scrollbar{width:5px}
 #district-panel-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 @media(max-width:640px){}
+
+/* ── Sticky + Edge-to-edge Header ── */
+header{position:sticky;top:0;z-index:1000;margin-left:-20px;margin-right:-20px;width:calc(100% + 40px)}
+
+/* ── Mobile-only elements hidden on desktop ── */
+#district-panel-mobile,
+#hh-dist-mobile-row,
+#hh-section-mobile{display:none!important}
+
+/* ── Mobile Responsive ── */
+@media(max-width:768px){
+  header{flex-direction:column!important;align-items:center!important;text-align:center!important;padding:14px 16px!important;gap:8px!important}
+  .hdr-logo{justify-content:center!important}
+  .hdr-btns{justify-content:center!important}
+  .filter-hh-row{flex-direction:column!important}
+  .filter-hh-row .frow{width:100%!important;order:-2!important}
+  .filter-hh-row .hh-section{display:none!important}
+  #district-panel{display:none!important}
+  #hh-dist-mobile-row{display:flex!important;gap:8px;align-items:stretch;width:100%;margin-bottom:8px}
+  #hh-section-mobile{display:block!important;flex:1 1 50%!important;min-width:0!important;margin-bottom:0!important}
+  #district-panel-mobile{display:flex!important;flex-direction:column;flex:1 1 50%;min-width:0;max-height:150px;border:1px solid var(--border);border-radius:10px;padding:0;background:#fff;overflow:hidden}
+  #district-panel-mobile #district-panel-header-mobile{padding:10px 12px 8px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.07em;color:var(--text);border-bottom:1px solid var(--border);flex-shrink:0}
+  #district-panel-mobile #district-panel-list-mobile{overflow-y:auto;flex:1;padding:4px 0}
+  #district-panel-mobile .dist-item{padding-left:14px!important}
+  #cal-sidebar-wrap{flex-direction:column!important}
+  #cal-sidebar-wrap #cal-view{min-width:0!important;width:100%!important}
+  .cgrid{gap:1px!important}
+  .cell{min-height:60px!important}
+  .mnav{flex-wrap:wrap!important;justify-content:center!important;gap:4px!important}
+  .mlbl{font-size:22px!important;min-width:auto!important}
+}
 </style>
 </head>
 <body>
@@ -619,6 +650,29 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
   </div>
 </div>
 </div><!-- end filter-hh-row -->
+
+<!-- Mobile: HH + Districts side by side (hidden on desktop via CSS) -->
+<div id="hh-dist-mobile-row">
+  <div id="hh-section-mobile" style="flex:1 1 50%;min-width:0;border:1.5px solid #e0e0e0;border-radius:10px;background:#fff;overflow:hidden">
+    <div style="padding:10px 12px 8px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.07em;color:var(--text);border-bottom:1px solid var(--border)">HAPPY HOURS</div>
+    <div style="padding:4px 10px 4px 14px;display:flex;align-items:center;justify-content:space-between;font-size:10.5px;color:var(--text);font-family:'DM Sans',sans-serif">
+      <span>Total Venues</span>
+      <span class="dist-count" id="hh-venue-count-mobile">177</span>
+    </div>
+    <div style="padding:4px 10px 4px 14px;display:flex;align-items:center;gap:6px">
+      <label class="hh-main-toggle" style="font-size:10px">
+        <input type="checkbox" id="hh-toggle-mobile" checked onchange="toggleHH()">
+        <span class="hh-switch" style="transform:scale(0.75);transform-origin:left center"></span>
+        Show on Calendar
+      </label>
+    </div>
+    <div style="padding:2px 10px 6px 14px;display:flex;gap:4px">
+      <button class="hh-pill" onclick="toggleHHPatio()" style="font-size:9px;padding:2px 6px">Patio <span class="hh-count" id="hh-patio-count-mobile" style="font-size:8px">0</span></button>
+      <button class="hh-pill" onclick="toggleHHRoof()" style="font-size:9px;padding:2px 6px">Rooftop <span class="hh-count" id="hh-roof-count-mobile" style="font-size:8px">0</span></button>
+    </div>
+  </div>
+  <div id="district-panel-mobile"></div>
+</div>
 
 <div id="submit-panel" style="display:none">
   <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:24px 28px;margin-bottom:18px">
@@ -5751,6 +5805,32 @@ function syncDistrictHeight() {
   if (h > 0) panel.style.height = h + 'px';
 }
 window.addEventListener('resize', syncDistrictHeight);
+
+/* ── Mobile: clone district items into mobile panel ── */
+(function initMobileDistricts(){
+  var src = document.getElementById('district-panel');
+  var dest = document.getElementById('district-panel-mobile');
+  if(!src || !dest) return;
+  // Clone header
+  var hdr = src.querySelector('#district-panel-header');
+  if(hdr){ var h2 = hdr.cloneNode(true); h2.id='district-panel-header-mobile'; dest.appendChild(h2); }
+  // Clone list
+  var list = src.querySelector('#district-panel-list');
+  if(list){
+    var l2 = list.cloneNode(true);
+    l2.id='district-panel-list-mobile';
+    // Fix IDs on cloned items to avoid duplicates
+    l2.querySelectorAll('[id]').forEach(function(el){ el.id = el.id + '-mobile'; });
+    dest.appendChild(l2);
+  }
+})();
+
+/* ── Mobile: sync HH counts to mobile clone ── */
+(function syncMobileHH(){
+  var vc = document.getElementById('hh-venue-count');
+  var vcM = document.getElementById('hh-venue-count-mobile');
+  if(vc && vcM) vcM.textContent = vc.textContent;
+})();
 </script>
 
 <!-- ── Calendar Footer Disclaimer ── -->
