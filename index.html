@@ -12,8 +12,49 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OKC Super Calendar</title>
-<meta name="description" content="Every event in Oklahoma City. One calendar. 3,200+ events, 173 happy hours, 25+ districts. Free, live, and updated nightly.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.okcsupercal.com">
+<title>OKC Super Calendar — Every Event in Oklahoma City</title>
+<meta name="description" content="The most complete Oklahoma City events calendar. 3,200+ events, 173 happy hours, 25+ districts. Live music, food, arts, festivals, comedy, family events, and more. Free, updated nightly.">
+<meta name="keywords" content="Oklahoma City events, OKC events, things to do in OKC, OKC calendar, Oklahoma City concerts, OKC happy hours, OKC festivals, OKC live music, Oklahoma City things to do this weekend, OKC family events, OKC food events, Oklahoma City arts">
+
+<!-- Structured Data: WebSite (helps Google show sitelinks & search box) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "OKC Super Calendar",
+  "alternateName": "OKC SuperCal",
+  "url": "https://www.okcsupercal.com",
+  "description": "The most complete Oklahoma City events calendar. 3,200+ events, 173 happy hours, 25+ districts. Updated nightly.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.okcsupercal.com?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<!-- Structured Data: Local events collection (helps Google show rich event results) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Oklahoma City Events Calendar",
+  "description": "A comprehensive calendar of events happening in Oklahoma City including concerts, happy hours, festivals, art shows, comedy, food events, and more.",
+  "url": "https://www.okcsupercal.com",
+  "about": {
+    "@type": "City",
+    "name": "Oklahoma City",
+    "sameAs": "https://en.wikipedia.org/wiki/Oklahoma_City"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "OKC Super Calendar",
+    "url": "https://www.okcsupercal.com"
+  }
+}
+</script>
 
 <!-- Open Graph (Facebook, LinkedIn, iMessage, Slack, etc.) -->
 <meta property="og:title" content="OKC Super Calendar">
@@ -32,6 +73,14 @@
 <meta name="twitter:image" content="https://gcatny.github.io/okc-events/og-image.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%233b7de0'/%3E%3Cstop offset='100%25' stop-color='%232c5faa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Bebas Neue,Arial,sans-serif' font-weight='700' font-size='28' fill='white' letter-spacing='1'%3ESC%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Handelson Three';
+  src: url('https://db.onlinewebfonts.com/t/4aedb9283857944b5870ed258b2904e6.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/4aedb9283857944b5870ed258b2904e6.woff') format('woff');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+</style>
 <style>
 :root{
   --bg:#f0f2f5;--surface:#fff;--surface2:#e8ebf0;
@@ -64,13 +113,16 @@ body::before{content:"";position:fixed;inset:0;background:linear-gradient(160deg
 .app{max-width:1460px;margin:0 auto;padding:0 20px 40px;position:relative;z-index:1}
 
 /* Header */
-header{padding:32px 0 20px;border-bottom:1px solid var(--border2);margin-bottom:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;font-weight:500;margin-bottom:4px}
-.logo{font-family:"Bebas Neue",sans-serif;font-size:clamp(36px,6vw,62px);line-height:.9;letter-spacing:.02em;color:var(--text)}
-.logo span{color:var(--accent)}
-.logo-sub{font-size:13px;color:var(--muted);margin-top:6px;font-weight:300}
-.hdr-r{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-.updated{font-size:11px;color:var(--muted)}
+header{background:linear-gradient(to right,#4f5bd5 0%,#2c5faa 38%,#a0a0cc 55%,#e09820 64%,#c01050 72%,#f06080 78%,#e85050 83%,#2d7878 91%,#1a2228 100%);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(44,95,170,.2);margin-bottom:16px}
+.hdr-logo{display:flex;align-items:center}
+.hdr-logo .logo-okc,.hdr-logo .logo-cal{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.15em;color:#5bbce4;text-shadow:0 3px 8px rgba(0,0,0,.25)}
+.hdr-logo .logo-super{font-family:'Handelson Three','Brush Script MT',cursive;font-size:52px;color:#fff;text-shadow:0 3px 8px rgba(0,0,0,.25);line-height:1}
+.hdr-logo .logo-cal{margin-left:10px}
+.hdr-btns{display:flex;align-items:center;gap:8px}
+.hdr-btns button{padding:7px 16px;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer}
+.btn-reset{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:rgba(255,255,255,.9)}
+.btn-submit{border:none;background:#1aae8e;color:#fff}
+.eyebrow,.logo,.logo-sub,.hdr-r,.updated{display:none}
 .status-bar{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:2px}
 .sdot{width:8px;height:8px;border-radius:50%;background:#ccc;flex-shrink:0;transition:background .3s}
 .sdot.loading{background:#f5a623;animation:pdot 1s ease-in-out infinite}
@@ -113,6 +165,11 @@ header{padding:32px 0 20px;border-bottom:1px solid var(--border2);margin-bottom:
 .refresh-all:hover{opacity:.88}
 .refresh-all:disabled{opacity:.5;cursor:not-allowed}
 
+/* Filter + HH row layout */
+.filter-hh-row{display:flex;gap:12px;align-items:flex-start}
+.filter-hh-row .frow{flex:1 1 0;min-width:0}
+.filter-hh-row .hh-section{width:180px;flex-shrink:0;margin-bottom:0}
+
 /* Filters */
 .frow{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
 .flbl{font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-right:4px}
@@ -147,7 +204,7 @@ header{padding:32px 0 20px;border-bottom:1px solid var(--border2);margin-bottom:
 .cnav{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .nb{width:32px;height:32px;border:1px solid var(--border2);border-radius:4px;background:var(--surface);cursor:pointer;color:var(--muted);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .nb:hover{border-color:var(--accent);color:var(--accent)}
-.mlbl{font-family:"Bebas Neue",sans-serif;font-size:28px;letter-spacing:.06em;flex:1;color:var(--text)}
+.mlbl{font-family:"Bebas Neue",sans-serif;font-size:28px;letter-spacing:.06em;color:var(--text);text-align:center;min-width:160px}
 .ecnt{font-size:12px;color:var(--muted)}
 .dlbls{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;margin-bottom:3px}
 .dlbl{text-align:center;font-size:10px;color:var(--muted);padding:4px 0;font-weight:500;letter-spacing:.1em}
@@ -188,24 +245,25 @@ header{padding:32px 0 20px;border-bottom:1px solid var(--border2);margin-bottom:
 .ev.farmersmarket{background:var(--farmersmarket-bg);color:var(--farmersmarket);border-left-color:var(--farmersmarket)}
 
 /* ── Happy Hour Section ── */
-.hh-section{background:var(--surface);border:1px solid var(--happyhour-bd);border-radius:10px;padding:14px 18px;margin-bottom:16px}
-.hh-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.hh-icon{color:var(--happyhour);flex-shrink:0}
-.hh-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.05em;color:var(--happyhour)}
-.hh-count{font-size:10px;padding:1px 7px;border-radius:8px;background:rgba(196,122,30,.12);color:var(--happyhour);font-weight:600}
-.hh-toggle-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.hh-main-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text)}
+.hh-section{background:var(--surface);border:1.5px solid #e0e0e0;border-radius:12px;padding:10px 12px;margin-bottom:16px}
+.hh-header{display:flex;align-items:center;gap:6px;margin-bottom:4px;justify-content:flex-start;white-space:nowrap}
+.hh-icon{color:#5bbce4;flex-shrink:0}
+.hh-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:.05em;color:#2c5faa;white-space:nowrap}
+.hh-count{font-size:10px;padding:1px 7px;border-radius:8px;background:#e8eef7;color:#2c5faa;border:1px solid #b3c7e6;font-weight:600}
+.hh-toggle-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:0}
+.hh-main-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:11px;font-weight:500;color:#2c5faa}
 .hh-main-toggle input{display:none}
-.hh-switch{width:36px;height:20px;background:var(--happyhour);border-radius:10px;position:relative;transition:background .2s;flex-shrink:0}
+.hh-switch{width:36px;height:20px;background:#5bbce4;border-radius:10px;position:relative;transition:background .2s;flex-shrink:0;transform:scale(0.85);transform-origin:left center}
 .hh-switch::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.15);transform:translateX(16px)}
 .hh-section.hh-off .hh-switch{background:var(--border2)}
 .hh-section.hh-off .hh-switch::after{transform:translateX(0)}
 .hh-section.hh-off{opacity:.6}
-.hh-divider{width:1px;height:20px;background:var(--border2)}
-.hh-sub-toggles{display:flex;gap:8px;align-items:center}
-.hh-pill{font-size:11px;padding:4px 12px;border-radius:16px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .15s;display:flex;align-items:center;gap:5px}
-.hh-pill:hover{border-color:var(--happyhour-bd)}
-.hh-pill.active{border-color:var(--happyhour-bd);color:var(--happyhour);background:var(--happyhour-bg)}
+.hh-divider{display:none}
+.hh-sub-toggles{display:flex;gap:4px;align-items:center;flex-basis:100%;margin-top:4px}
+.hh-pill{font-size:10px;padding:3px 8px;border-radius:16px;border:1px solid #b3c7e6;background:var(--surface);color:#2c5faa;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .15s;display:flex;align-items:center;gap:5px}
+.hh-pill:hover{border-color:#2c5faa}
+.hh-pill .hh-count{font-size:9px;padding:1px 4px}
+.hh-pill.active{border-color:#2c5faa;color:#2c5faa;background:#e8eef7}
 .ev.conf::after{content:" \u2713";opacity:.55;font-size:9px}
 .ev.search-match{outline:2px solid var(--accent);outline-offset:1px;opacity:1!important}
 .more{font-size:10px;color:var(--muted);cursor:pointer;padding:0 2px}
@@ -468,7 +526,7 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 .dist-item:hover{background:var(--surface2)}
 .dist-item.dist-active{background:var(--accent);color:#fff}
 .dist-name{flex:1;line-height:1.3;font-size:10.5px}
-.dist-count{font-size:10px;color:var(--muted);flex-shrink:0;min-width:24px;text-align:right;margin-left:auto;display:inline-block}
+.dist-count{font-size:10.5px;color:#2c5faa;flex-shrink:0;min-width:24px;text-align:center;margin-left:4px;display:inline-block;background:#f0f0f0;border:1px solid #e0e0e0;border-radius:12px;padding:1px 8px}
 .dist-item.dist-active .dist-count{color:rgba(255,255,255,.7)}
 
 @media(max-width:640px){}
@@ -487,17 +545,16 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 <div class="app">
 
 <header>
-  <div>
-    <div class="eyebrow">Oklahoma City</div>
-    <div class="logo">OKC<span> Super</span><br>Calendar</div>
+  <div class="hdr-logo">
+    <span class="logo-okc">OKC</span>
+    <span class="logo-super">Super</span>
+    <span class="logo-cal">CAL</span>
   </div>
-  <div class="hdr-r" style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;justify-content:center">
-    <div class="updated" id="upd" style="font-size:11px;color:var(--muted);text-align:right"></div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <button id="reset-all-btn" onclick="resetAll()" style="padding:7px 16px;background:#2bb5b5;color:#fff;border:none;border-radius:6px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;letter-spacing:.02em;white-space:nowrap">&#8634; Reset All Filters</button>
-      <button onclick="toggleSubmit()" style="padding:7px 16px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;letter-spacing:.02em;white-space:nowrap">+ Submit Event</button>
-    </div>
+  <div class="hdr-btns">
+    <button class="btn-reset" id="reset-all-btn" onclick="resetAll()">&#8634; Reset</button>
+    <button class="btn-submit" onclick="toggleSubmit()">+ Submit Event</button>
   </div>
+  <div class="updated" id="upd"></div>
 </header>
 
 <!-- Search Bar -->
@@ -510,7 +567,8 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
   </div>
 </div>
 
-<!-- Category Filters -->
+<!-- Category Filters + Happy Hours -->
+<div class="filter-hh-row">
 <div class="frow">
   <span class="flbl">Filter</span>
   <button id="toggle-all-btn" onclick="toggleAllCats()" style="font-size:11px;padding:3px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer;font-family:inherit;transition:background .15s,color .15s,border-color .15s">Deselect All</button>
@@ -536,13 +594,12 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
   <button class="fp fashion active" onclick="toggleF('fashion')">Fashion</button>
   <button class="fp farmersmarket active" onclick="toggleF('farmersmarket')">Farmers Market</button>
 </div>
-
 <!-- Happy Hour Section -->
 <div class="hh-section" id="hh-section">
   <div class="hh-header">
-    <svg class="hh-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2L16 2"/><path d="M12 14V22"/><path d="M8 22H16"/><path d="M6 2L8 10C8 13 10 14 12 14C14 14 16 13 16 10L18 2"/></svg>
     <span class="hh-title">HAPPY HOURS</span>
-    <span class="hh-count" id="hh-venue-count">177 venues</span>
+    <svg class="hh-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5bbce4" stroke-width="2"><path d="M8 2L16 2"/><path d="M12 14V22"/><path d="M8 22H16"/><path d="M6 2L8 10C8 13 10 14 12 14C14 14 16 13 16 10L18 2"/></svg>
+    <span class="hh-count" id="hh-venue-count">177</span>
   </div>
   <div class="hh-toggle-row">
     <label class="hh-main-toggle">
@@ -561,6 +618,7 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
     </div>
   </div>
 </div>
+</div><!-- end filter-hh-row -->
 
 <div id="submit-panel" style="display:none">
   <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:24px 28px;margin-bottom:18px">
@@ -780,7 +838,7 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
     <button class="nb" onclick="chM(-1)">&#8592;</button>
     <span class="mlbl" id="mlbl"></span>
     <button class="nb" onclick="chM(1)">&#8594;</button>
-    <button onclick="goToday()" style="font-size:11px;padding:2px 12px;border-radius:16px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;margin-left:6px;transition:background .15s,color .15s" onmouseover="this.style.background='var(--accent)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--accent)'">Today</button>
+    <button onclick="goToday()" style="font-size:11px;padding:4px 14px;border-radius:6px;border:none;background:linear-gradient(135deg,#4f5bd5 0%,#2c5faa 100%);color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">Today</button>
     <span class="ecnt" id="ecnt"></span>
   </div>
   <div id="mobile-event-list"></div>
@@ -3965,8 +4023,6 @@ var BASE = [
   {name:"Science Museum OKC - Family Science Night",venue:"Science Museum Oklahoma",date:"2026-04-17",desc:"Regular family evening events at Science Museum OKC with hands-on science activities, planetarium shows, and special programming.",cat:"family",confirmed:false,source:"Science Museum Oklahoma - sciencemuseumok.org",tickets:"https://www.sciencemuseumok.org/smoevents/",free:false,district:"Adventure District"},
   {name:"VisitOKC - This Month in OKC",venue:"Oklahoma City",date:"2026-04-01",desc:"Check visitokc.com/events/this-month-in-okc for the complete monthly guide to OKC events including festivals, sports, concerts, arts, and dining highlights curated by the OKC tourism bureau.",cat:"fest",confirmed:false,source:"VisitOKC - visitokc.com/events",tickets:"https://www.visitokc.com/events/this-month-in-okc/",free:false,district:"Downtown / City Center"},
   {name:"Paseo FEAST",venue:"Paseo Arts District",date:"2026-09-12",desc:"Paseo FEAST - the Paseo Arts District annual food and art event celebrating local restaurants, artists, and the community. One of OKC best fall events.",cat:"food",confirmed:false,source:"The Paseo Arts District - thepaseo.org",tickets:"https://www.thepaseo.org",free:false,district:"Paseo Arts District"},
-  {name:"Breakthrough T1D Oklahoma City Gala",venue:"Omni Oklahoma City Hotel",date:"2026-05-02",desc:"Annual Breakthrough T1D Gala. Dinner, expansive auction, and inspirational stories.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"Breakthrough T1D",tickets:"https://www.breakthrought1d.org/oklahoma/events/breakthrough-t1d-oklahoma-city-gala-2026/",free:false,district:"Downtown / City Center"},
-  {name:"St. Jude Evening of Hope Gala",venue:"Omni Oklahoma City Hotel",date:"2026-05-09",desc:"7th Annual St. Jude Evening of Hope Gala celebrating milestones in the fight against childhood cancer.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"St. Jude",tickets:"https://www.stjude.org/get-involved/find-an-event/dinners-and-galas/evening-of-hope-oklahoma-city.html",free:false,district:"Downtown / City Center"},
   {name:"Taste of OKC - BBBS Gala",venue:"OKC Convention Center",date:"2026-05-30",desc:"Big Brothers Big Sisters annual Taste of OKC fundraising gala supporting youth mentoring.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"Big Brothers Big Sisters Oklahoma",tickets:"https://bigoklahoma.org/tasteofokc",free:false,district:"Downtown / City Center"},
   {name:"OKC Zoo Gala: Making Tracks",venue:"Oklahoma City Zoo",date:"2026-06-05",desc:"2026 OKC Zoo Gala presented by Expand Energy. Supports free Zoo field trips for every Oklahoma third grader.",cat:"fundraiser",cat2:"fashion",confirmed:true,source:"Oklahoma Zoological Society",tickets:"https://www.ozsgiving.org/zoogala",free:false,district:"Adventure District"},
   {name:"Independence Day - 4th of July",venue:"Scissortail Park / Bricktown",date:"2026-07-04",desc:"OKC 4th of July with fireworks and live music at Scissortail Park, Bricktown, and Myriad Gardens.",cat:"fest",confirmed:true,source:"City of OKC",tickets:null,free:true,district:"Downtown / City Center"},
@@ -4611,7 +4667,7 @@ function updateHHCounts() {
   var vc = document.getElementById("hh-venue-count");
   var pc = document.getElementById("hh-patio-count");
   var rc = document.getElementById("hh-roof-count");
-  if (vc) vc.textContent = venueCount + " venues";
+  if (vc) vc.textContent = venueCount;
   if (pc) pc.textContent = patioCount;
   if (rc) rc.textContent = roofCount;
 }
