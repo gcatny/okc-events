@@ -245,12 +245,13 @@ header{background:#2c5faa;padding:14px 28px;display:flex;align-items:center;just
 .ev.farmersmarket{background:var(--farmersmarket-bg);color:var(--farmersmarket);border-left-color:var(--farmersmarket)}
 
 /* ── Happy Hour Section ── */
-.hh-section{background:var(--surface);border:1.5px solid #e0e0e0;border-radius:12px;padding:10px 12px;margin-bottom:16px}
-.hh-header{display:flex;align-items:center;gap:6px;margin-bottom:4px;justify-content:flex-start;white-space:nowrap}
-.hh-icon{color:#5bbce4;flex-shrink:0}
-.hh-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:.05em;color:#2c5faa;white-space:nowrap}
+.hh-section{background:#fff;border:1.5px solid #e0e0e0;border-radius:12px;padding:0;margin-bottom:16px;overflow:hidden}
+.hh-header{padding:10px 12px 8px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.07em;color:var(--text);border-bottom:1px solid var(--border);margin-bottom:0}
+.hh-header .hh-icon,.hh-header .hh-count{display:none}
+.hh-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.07em;color:var(--text)}
 .hh-count{font-size:10px;padding:1px 7px;border-radius:8px;background:#e8eef7;color:#2c5faa;border:1px solid #b3c7e6;font-weight:600}
-.hh-toggle-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:0}
+.hh-venue-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px 4px 12px;font-size:10.5px;color:var(--text);font-family:'DM Sans',sans-serif}
+.hh-toggle-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:0;padding:4px 10px 4px 12px}
 .hh-main-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:11px;font-weight:500;color:#2c5faa}
 .hh-main-toggle input{display:none}
 .hh-switch{width:36px;height:20px;background:#5bbce4;border-radius:10px;position:relative;transition:background .2s;flex-shrink:0;transform:scale(0.85);transform-origin:left center}
@@ -259,7 +260,7 @@ header{background:#2c5faa;padding:14px 28px;display:flex;align-items:center;just
 .hh-section.hh-off .hh-switch::after{transform:translateX(0)}
 .hh-section.hh-off{opacity:.6}
 .hh-divider{display:none}
-.hh-sub-toggles{display:flex;gap:4px;align-items:center;flex-basis:100%;margin-top:4px}
+.hh-sub-toggles{display:flex;gap:4px;align-items:center;flex-basis:100%;margin-top:0;padding:2px 10px 6px 12px}
 .hh-pill{font-size:10px;padding:3px 8px;border-radius:16px;border:1px solid #b3c7e6;background:var(--surface);color:#2c5faa;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .15s;display:flex;align-items:center;gap:5px}
 .hh-pill:hover{border-color:#2c5faa}
 .hh-pill .hh-count{font-size:9px;padding:1px 4px}
@@ -533,7 +534,7 @@ footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);disp
 
 /* ── District Panel ──────────────────────────────────────────────────── */
 #cal-sidebar-wrap{display:flex;gap:12px;align-items:flex-start;flex-direction:row}
-#district-panel{width:180px;flex-shrink:0;position:sticky;top:12px;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:10px;background:#fff;overflow:hidden}
+#district-panel{width:180px;flex-shrink:0;position:sticky;top:12px;display:flex;flex-direction:column;border:1.5px solid #e0e0e0;border-radius:12px;background:#fff;overflow:hidden}
 #district-panel-header{padding:10px 12px 8px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.07em;color:var(--text);border-bottom:1px solid var(--border);flex-shrink:0}
 #district-panel-list{overflow-y:scroll;flex:1;padding:4px 0}
 #district-panel-list::-webkit-scrollbar{width:5px}
@@ -559,10 +560,10 @@ header{position:sticky;top:0;z-index:1000;margin-left:-20px;margin-right:-20px;w
   #district-panel{display:none!important}
   #hh-dist-mobile-row{display:flex!important;gap:8px;align-items:stretch;width:100%;margin-bottom:8px}
   #hh-section-mobile{display:block!important;flex:1 1 50%!important;min-width:0!important;margin-bottom:0!important}
-  #district-panel-mobile{display:flex!important;flex-direction:column;flex:1 1 50%;min-width:0;max-height:150px;border:1px solid var(--border);border-radius:10px;padding:0;background:#fff;overflow:hidden}
+  #district-panel-mobile{display:flex!important;flex-direction:column;flex:1 1 50%;min-width:0;max-height:150px;border:1.5px solid #e0e0e0;border-radius:10px;padding:0;background:#fff;overflow:hidden}
   #district-panel-mobile #district-panel-header-mobile{padding:10px 12px 8px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.07em;color:var(--text);border-bottom:1px solid var(--border);flex-shrink:0}
   #district-panel-mobile #district-panel-list-mobile{overflow-y:auto;flex:1;padding:4px 0}
-  #district-panel-mobile .dist-item{padding-left:14px!important}
+  #district-panel-mobile .dist-item{padding-left:12px!important}
   #cal-sidebar-wrap{flex-direction:column!important}
   #cal-sidebar-wrap #cal-view{min-width:0!important;width:100%!important}
   .cgrid{gap:1px!important}
@@ -628,9 +629,11 @@ header{position:sticky;top:0;z-index:1000;margin-left:-20px;margin-right:-20px;w
 <!-- Happy Hour Section -->
 <div class="hh-section" id="hh-section">
   <div class="hh-header">
-    <span class="hh-title">HAPPY HOURS</span>
-    <svg class="hh-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5bbce4" stroke-width="2"><path d="M8 2L16 2"/><path d="M12 14V22"/><path d="M8 22H16"/><path d="M6 2L8 10C8 13 10 14 12 14C14 14 16 13 16 10L18 2"/></svg>
-    <span class="hh-count" id="hh-venue-count">177</span>
+    <span class="hh-title">Happy Hours</span>
+  </div>
+  <div class="hh-venue-row">
+    <span>Total Venues</span>
+    <span class="dist-count" id="hh-venue-count">177</span>
   </div>
   <div class="hh-toggle-row">
     <label class="hh-main-toggle">
@@ -653,7 +656,7 @@ header{position:sticky;top:0;z-index:1000;margin-left:-20px;margin-right:-20px;w
 
 <!-- Mobile: HH + Districts side by side (hidden on desktop via CSS) -->
 <div id="hh-dist-mobile-row">
-  <div id="hh-section-mobile" style="flex:1 1 50%;min-width:0;border:1.5px solid #e0e0e0;border-radius:10px;background:#fff;overflow:hidden">
+  <div class="hh-section" id="hh-section-mobile" style="flex:1 1 50%;min-width:0;border:1.5px solid #e0e0e0;border-radius:10px;background:#fff;overflow:hidden">
     <div style="padding:10px 12px 8px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.07em;color:var(--text);border-bottom:1px solid var(--border)">HAPPY HOURS</div>
     <div style="padding:4px 10px 4px 12px;display:flex;align-items:center;justify-content:space-between;font-size:10.5px;color:var(--text);font-family:'DM Sans',sans-serif">
       <span>Total Venues</span>
@@ -661,17 +664,56 @@ header{position:sticky;top:0;z-index:1000;margin-left:-20px;margin-right:-20px;w
     </div>
     <div style="padding:4px 10px 4px 12px;display:flex;align-items:center;gap:6px">
       <label class="hh-main-toggle" style="font-size:10px">
-        <input type="checkbox" id="hh-toggle-mobile" checked onchange="toggleHH()">
+        <input type="checkbox" id="hh-toggle-mobile" checked onchange="toggleHH('mobile')">
         <span class="hh-switch" style="transform:scale(0.75);transform-origin:left center"></span>
         Show on Calendar
       </label>
     </div>
     <div style="padding:2px 10px 6px 12px;display:flex;gap:4px">
-      <button class="hh-pill" onclick="toggleHHPatio()" style="font-size:9px;padding:2px 6px">Patio <span class="hh-count" id="hh-patio-count-mobile" style="font-size:8px">0</span></button>
-      <button class="hh-pill" onclick="toggleHHRoof()" style="font-size:9px;padding:2px 6px">Rooftop <span class="hh-count" id="hh-roof-count-mobile" style="font-size:8px">0</span></button>
+      <button class="hh-pill" id="hh-patio-btn-mobile" onclick="toggleHHPatio()" style="font-size:9px;padding:2px 6px">Patio <span class="hh-count" id="hh-patio-count-mobile" style="font-size:8px">0</span></button>
+      <button class="hh-pill" id="hh-roof-btn-mobile" onclick="toggleHHRoof()" style="font-size:9px;padding:2px 6px">Rooftop <span class="hh-count" id="hh-roof-count-mobile" style="font-size:8px">0</span></button>
     </div>
   </div>
-  <div id="district-panel-mobile"></div>
+  <div id="district-panel-mobile">
+    <div id="district-panel-header-mobile" style="padding:10px 12px 8px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.07em;color:var(--text);border-bottom:1px solid var(--border)">Districts</div>
+    <div id="district-panel-list-mobile" style="overflow-y:auto;flex:1;padding:4px 0">
+      <div class="dist-item" data-key="39th Street District" onclick="distClick(document.getElementById('disti-39th_street'))"><span class="dist-name">39th Street District</span><span class="dist-count">1</span></div>
+      <div class="dist-item" data-key="Adventure District" onclick="distClick(document.getElementById('disti-adventure'))"><span class="dist-name">Adventure District</span><span class="dist-count">603</span></div>
+      <div class="dist-item" data-key="Asian District" onclick="distClick(document.getElementById('disti-asian_district'))"><span class="dist-name">Asian District</span><span class="dist-count">4</span></div>
+      <div class="dist-item" data-key="Automobile Alley" onclick="distClick(document.getElementById('disti-automobile_alley'))"><span class="dist-name">Automobile Alley</span><span class="dist-count">477</span></div>
+      <div class="dist-item" data-key="Boathouse District" onclick="distClick(document.getElementById('disti-boathouse'))"><span class="dist-name">Boathouse District</span><span class="dist-count">5</span></div>
+      <div class="dist-item" data-key="Bricktown" onclick="distClick(document.getElementById('disti-bricktown'))"><span class="dist-name">Bricktown</span><span class="dist-count">190</span></div>
+      <div class="dist-item" data-key="Capitol Hill" onclick="distClick(document.getElementById('disti-capitol_hill'))"><span class="dist-name">Capitol Hill</span><span class="dist-count">6</span></div>
+      <div class="dist-item" data-key="Chisholm Creek" onclick="distClick(document.getElementById('disti-chisholm_creek'))"><span class="dist-name">Chisholm Creek</span><span class="dist-count">0</span></div>
+      <div class="dist-item" data-key="Classen Curve / OAK" onclick="distClick(document.getElementById('disti-classen_curve'))"><span class="dist-name">Classen Curve / OAK</span><span class="dist-count">14</span></div>
+      <div class="dist-item" data-key="Deep Deuce" onclick="distClick(document.getElementById('disti-deep_deuce'))"><span class="dist-name">Deep Deuce</span><span class="dist-count">1</span></div>
+      <div class="dist-item" data-key="Downtown / City Center" onclick="distClick(document.getElementById('disti-downtown'))"><span class="dist-name">Downtown / City Center</span><span class="dist-count">1089</span></div>
+      <div class="dist-item" data-key="East End District" onclick="distClick(document.getElementById('disti-east_end'))"><span class="dist-name">East End District</span><span class="dist-count">1</span></div>
+      <div class="dist-item" data-key="Edmond" onclick="distClick(document.getElementById('disti-edmond'))"><span class="dist-name">Edmond</span><span class="dist-count">7</span></div>
+      <div class="dist-item" data-key="Farmers Market District" onclick="distClick(document.getElementById('disti-farmers_market'))"><span class="dist-name">Farmers Market District</span><span class="dist-count">0</span></div>
+      <div class="dist-item" data-key="Film Row / West Village" onclick="distClick(document.getElementById('disti-filmrow'))"><span class="dist-name">Film Row / West Village</span><span class="dist-count">25</span></div>
+      <div class="dist-item" data-key="Lake Hefner" onclick="distClick(document.getElementById('disti-lake_hefner'))"><span class="dist-name">Lake Hefner</span><span class="dist-count">2</span></div>
+      <div class="dist-item" data-key="Midtown" onclick="distClick(document.getElementById('disti-midtown'))"><span class="dist-name">Midtown</span><span class="dist-count">16</span></div>
+      <div class="dist-item" data-key="Midwest City" onclick="distClick(document.getElementById('disti-midwest_city'))"><span class="dist-name">Midwest City</span><span class="dist-count">2</span></div>
+      <div class="dist-item" data-key="Moore" onclick="distClick(document.getElementById('disti-moore'))"><span class="dist-name">Moore</span><span class="dist-count">1</span></div>
+      <div class="dist-item" data-key="Mustang" onclick="distClick(document.getElementById('disti-mustang'))"><span class="dist-name">Mustang</span><span class="dist-count">1</span></div>
+      <div class="dist-item" data-key="Norman" onclick="distClick(document.getElementById('disti-norman'))"><span class="dist-name">Norman</span><span class="dist-count">5</span></div>
+      <div class="dist-item" data-key="OKC State Capitol" onclick="distClick(document.getElementById('disti-okc_state_capitol'))"><span class="dist-name">OKC State Capitol</span><span class="dist-count">215</span></div>
+      <div class="dist-item" data-key="Stillwater" onclick="distClick(document.getElementById('disti-stillwater'))"><span class="dist-name">Stillwater</span><span class="dist-count">1</span></div>
+      <div class="dist-item" data-key="NW OKC" onclick="distClick(document.getElementById('disti-outside'))"><span class="dist-name">NW OKC</span><span class="dist-count">93</span></div>
+      <div class="dist-item" data-key="Paseo Arts District" onclick="distClick(document.getElementById('disti-paseo'))"><span class="dist-name">Paseo Arts District</span><span class="dist-count">27</span></div>
+      <div class="dist-item" data-key="Plaza District" onclick="distClick(document.getElementById('disti-plaza'))"><span class="dist-name">Plaza District</span><span class="dist-count">286</span></div>
+      <div class="dist-item" data-key="Stockyards City" onclick="distClick(document.getElementById('disti-stockyards'))"><span class="dist-name">Stockyards City</span><span class="dist-count">1</span></div>
+      <div class="dist-item" data-key="The Village" onclick="distClick(document.getElementById('disti-village'))"><span class="dist-name">The Village</span><span class="dist-count">2</span></div>
+      <div class="dist-item" data-key="Uptown 23rd" onclick="distClick(document.getElementById('disti-uptown_23rd'))"><span class="dist-name">Uptown 23rd</span><span class="dist-count">40</span></div>
+      <div class="dist-item" data-key="Western Avenue" onclick="distClick(document.getElementById('disti-western_ave'))"><span class="dist-name">Western Avenue</span><span class="dist-count">1</span></div>
+      <div class="dist-item" data-key="South OKC" onclick="distClick(document.getElementById('disti-south_okc'))"><span class="dist-name">South OKC</span><span class="dist-count">0</span></div>
+      <div class="dist-item" data-key="Tulsa" onclick="distClick(document.getElementById('disti-tulsa'))"><span class="dist-name">Tulsa</span><span class="dist-count">0</span></div>
+      <div class="dist-item" data-key="Out of Town" onclick="distClick(document.getElementById('disti-out_of_town'))"><span class="dist-name">Out of Town</span><span class="dist-count">0</span></div>
+      <div class="dist-item" data-key="Yukon" onclick="distClick(document.getElementById('disti-yukon'))"><span class="dist-name">Yukon</span><span class="dist-count">0</span></div>
+      <div class="dist-item" data-key="Wheeler District" onclick="distClick(document.getElementById('disti-wheeler'))"><span class="dist-name">Wheeler District</span><span class="dist-count">3</span></div>
+    </div>
+  </div>
 </div>
 
 <div id="submit-panel" style="display:none">
@@ -4663,18 +4705,28 @@ function openD(j) {
 function closeD() { document.getElementById("dp").className = "detail"; }
 
 // ── HAPPY HOUR TOGGLE FUNCTIONS ──
-function toggleHH() {
-  HH_ON = document.getElementById("hh-toggle").checked;
+function toggleHH(src) {
+  var dt = document.getElementById("hh-toggle");
+  var mt = document.getElementById("hh-toggle-mobile");
+  // Sync both checkboxes based on which was clicked
+  if (src === 'mobile' && mt && dt) { dt.checked = mt.checked; }
+  else if (dt && mt) { mt.checked = dt.checked; }
+  HH_ON = dt ? dt.checked : (mt ? mt.checked : false);
   var section = document.getElementById("hh-section");
+  var sectionM = document.getElementById("hh-section-mobile");
   if (HH_ON) {
     activeF.add("happyhour");
-    section.classList.remove("hh-off");
+    if(section) section.classList.remove("hh-off");
+    if(sectionM) sectionM.classList.remove("hh-off");
   } else {
     activeF.delete("happyhour");
-    section.classList.add("hh-off");
+    if(section) section.classList.add("hh-off");
+    if(sectionM) sectionM.classList.add("hh-off");
     HH_PATIO = false; HH_ROOF = false;
-    document.getElementById("hh-patio-btn").classList.remove("active");
-    document.getElementById("hh-roof-btn").classList.remove("active");
+    var pb = document.getElementById("hh-patio-btn"); if(pb) pb.classList.remove("active");
+    var rb = document.getElementById("hh-roof-btn"); if(rb) rb.classList.remove("active");
+    var pbM = document.getElementById("hh-patio-btn-mobile"); if(pbM) pbM.classList.remove("active");
+    var rbM = document.getElementById("hh-roof-btn-mobile"); if(rbM) rbM.classList.remove("active");
   }
   if (DIST_ACTIVE || activeF.size < ALL_CATS.length) jumpToNextMatch();
   if (searchQuery) renderSearchResults(); else renderCal();
@@ -4685,7 +4737,8 @@ function toggleHH() {
 function toggleHHPatio() {
   if (!HH_ON) return;
   HH_PATIO = !HH_PATIO;
-  document.getElementById("hh-patio-btn").classList.toggle("active", HH_PATIO);
+  var pb = document.getElementById("hh-patio-btn"); if(pb) pb.classList.toggle("active", HH_PATIO);
+  var pbM = document.getElementById("hh-patio-btn-mobile"); if(pbM) pbM.classList.toggle("active", HH_PATIO);
   if (DIST_ACTIVE || HH_PATIO || HH_ROOF) jumpToNextMatch();
   if (searchQuery) renderSearchResults(); else renderCal();
   updateDistCounts();
@@ -4694,7 +4747,8 @@ function toggleHHPatio() {
 function toggleHHRoof() {
   if (!HH_ON) return;
   HH_ROOF = !HH_ROOF;
-  document.getElementById("hh-roof-btn").classList.toggle("active", HH_ROOF);
+  var rb = document.getElementById("hh-roof-btn"); if(rb) rb.classList.toggle("active", HH_ROOF);
+  var rbM = document.getElementById("hh-roof-btn-mobile"); if(rbM) rbM.classList.toggle("active", HH_ROOF);
   if (DIST_ACTIVE || HH_PATIO || HH_ROOF) jumpToNextMatch();
   if (searchQuery) renderSearchResults(); else renderCal();
   updateDistCounts();
@@ -4724,6 +4778,13 @@ function updateHHCounts() {
   if (vc) vc.textContent = venueCount;
   if (pc) pc.textContent = patioCount;
   if (rc) rc.textContent = roofCount;
+  // Sync mobile clones
+  var vcM = document.getElementById("hh-venue-count-mobile");
+  var pcM = document.getElementById("hh-patio-count-mobile");
+  var rcM = document.getElementById("hh-roof-count-mobile");
+  if (vcM) vcM.textContent = venueCount;
+  if (pcM) pcM.textContent = patioCount;
+  if (rcM) rcM.textContent = roofCount;
 }
 
 function toggleF(f) {
@@ -4758,10 +4819,14 @@ function toggleAllCats() {
   var hhToggle = document.getElementById("hh-toggle");
   var hhSection = document.getElementById("hh-section");
   if (hhToggle) hhToggle.checked = HH_ON;
+  var hhToggleM = document.getElementById("hh-toggle-mobile"); if(hhToggleM) hhToggleM.checked = HH_ON;
   if (hhSection) hhSection.classList.toggle("hh-off", !HH_ON);
+  var hhSectionM = document.getElementById("hh-section-mobile"); if(hhSectionM) hhSectionM.classList.toggle("hh-off", !HH_ON);
   if (!HH_ON) { HH_PATIO = false; HH_ROOF = false;
-    document.getElementById("hh-patio-btn").classList.remove("active");
-    document.getElementById("hh-roof-btn").classList.remove("active");
+    var pb = document.getElementById("hh-patio-btn"); if(pb) pb.classList.remove("active");
+    var rb = document.getElementById("hh-roof-btn"); if(rb) rb.classList.remove("active");
+    var pbM = document.getElementById("hh-patio-btn-mobile"); if(pbM) pbM.classList.remove("active");
+    var rbM = document.getElementById("hh-roof-btn-mobile"); if(rbM) rbM.classList.remove("active");
   }
   updateToggleBtn();
   updateDistCounts();
@@ -5241,12 +5306,16 @@ function resetAll() {
   HH_ON = true; HH_PATIO = false; HH_ROOF = false;
   var hhToggle = document.getElementById("hh-toggle");
   if (hhToggle) hhToggle.checked = true;
+  var hhToggleM = document.getElementById("hh-toggle-mobile"); if(hhToggleM) hhToggleM.checked = true;
   var hhSection = document.getElementById("hh-section");
   if (hhSection) hhSection.classList.remove("hh-off");
+  var hhSectionM = document.getElementById("hh-section-mobile"); if(hhSectionM) hhSectionM.classList.remove("hh-off");
   var pb = document.getElementById("hh-patio-btn");
   var rb = document.getElementById("hh-roof-btn");
   if (pb) pb.classList.remove("active");
   if (rb) rb.classList.remove("active");
+  var pbM = document.getElementById("hh-patio-btn-mobile"); if(pbM) pbM.classList.remove("active");
+  var rbM = document.getElementById("hh-roof-btn-mobile"); if(rbM) rbM.classList.remove("active");
   // Clear district
   DIST_ACTIVE = null;
   document.querySelectorAll('.dist-item').forEach(function(i){ i.classList.remove('dist-active'); });
@@ -5806,27 +5875,8 @@ function syncDistrictHeight() {
 }
 window.addEventListener('resize', syncDistrictHeight);
 
-/* ── Mobile: clone district items into mobile panel ── */
-(function initMobileDistricts(){
-  var src = document.getElementById('district-panel');
-  var dest = document.getElementById('district-panel-mobile');
-  if(!src || !dest) return;
-  // Clone header
-  var hdr = src.querySelector('#district-panel-header');
-  if(hdr){ var h2 = hdr.cloneNode(true); h2.id='district-panel-header-mobile'; dest.appendChild(h2); }
-  // Clone list
-  var list = src.querySelector('#district-panel-list');
-  if(list){
-    var l2 = list.cloneNode(true);
-    l2.id='district-panel-list-mobile';
-    // Fix IDs on cloned items to avoid duplicates
-    l2.querySelectorAll('[id]').forEach(function(el){ el.id = el.id + '-mobile'; });
-    dest.appendChild(l2);
-  }
-})();
-
-/* ── Mobile: sync HH counts to mobile clone ── */
-(function syncMobileHH(){
+/* ── Mobile: sync HH + district counts to mobile clones ── */
+(function syncMobileCounts(){
   var vc = document.getElementById('hh-venue-count');
   var vcM = document.getElementById('hh-venue-count-mobile');
   if(vc && vcM) vcM.textContent = vc.textContent;
